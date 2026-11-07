@@ -1,24 +1,31 @@
 {
- "generated_at": "2026-11-07T20:41:41.092105+00:00",
+ "generated_at": "2026-11-07T20:47:49.170550+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
- "source": "captured fixtures copied; offline dataset loaded (50000 users)",
+ "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
  "tests_list": "ab_tests_list.json",
  "tests": [
-  "ab_test_get_onboarding.json",
-  "ab_test_get_main_na.json",
-  "ab_test_get_settings_completed.json",
-  "ab_test_get_ai_limit_draft.json"
+  "ab_test_get_b2c90b2b-59b0-48fc-b821-b90061d1ae1e.json",
+  "ab_test_get_fa529c42-4d24-4dde-b63a-e15fda1aa93d.json",
+  "ab_test_get_35299a82-0d41-4b50-a874-bf86e11c33d0.json",
+  "ab_test_get_7c4c06ef-f5da-45a3-9ec1-05d644e78f03.json"
  ],
  "metrics_list": "ab_tests_metrics_list.json",
  "metrics_trees": {
   "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": {
-   "lifetime": "ab_test_metrics_get_onboarding_lifetime.json",
-   "country": "ab_test_metrics_get_onboarding_by_country.json"
+   "lifetime": "ab_test_metrics_tree_b2c90b2b-59b0-48fc-b821-b90061d1ae1e_lifetime.json"
+  },
+  "fa529c42-4d24-4dde-b63a-e15fda1aa93d": {
+   "lifetime": "ab_test_metrics_tree_fa529c42-4d24-4dde-b63a-e15fda1aa93d_lifetime.json"
+  },
+  "35299a82-0d41-4b50-a874-bf86e11c33d0": {
+   "lifetime": "ab_test_metrics_tree_35299a82-0d41-4b50-a874-bf86e11c33d0_lifetime.json"
   }
  },
  "metrics_totals": {
-  "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": "ab_test_metrics_total_onboarding.json"
+  "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": "ab_test_metrics_total_b2c90b2b-59b0-48fc-b821-b90061d1ae1e.json",
+  "fa529c42-4d24-4dde-b63a-e15fda1aa93d": "ab_test_metrics_total_fa529c42-4d24-4dde-b63a-e15fda1aa93d.json",
+  "35299a82-0d41-4b50-a874-bf86e11c33d0": "ab_test_metrics_total_35299a82-0d41-4b50-a874-bf86e11c33d0.json"
  },
  "flows": "flows_list.json",
  "flow_metrics": "flows_metrics_list.json",

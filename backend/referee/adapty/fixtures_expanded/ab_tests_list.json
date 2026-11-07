@@ -1,69 +1,69 @@
 {
-  "data": [
-    {
-      "ab_test_id": "fa529c42-4d24-4dde-b63a-e15fda1aa93d",
-      "title": "Main: 3 plans vs lifetime anchor (NA)",
-      "type": "flow",
-      "state": "live",
-      "placement": {
-        "placement_id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
-        "title": "Main paywall"
-      },
-      "segment_ids": [
-        "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
-      ],
-      "priority": 0,
-      "started_at": "2026-11-07T04:07:57.949947Z",
-      "stopped_at": null
-    },
-    {
-      "ab_test_id": "b2c90b2b-59b0-48fc-b821-b90061d1ae1e",
-      "title": "Onboarding: annual trial vs weekly first",
-      "type": "flow",
-      "state": "live",
-      "placement": {
-        "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
-        "title": "Onboarding"
-      },
-      "segment_ids": [],
-      "priority": 0,
-      "started_at": "2026-11-07T04:07:55.077750Z",
-      "stopped_at": null
-    },
-    {
-      "ab_test_id": "7c4c06ef-f5da-45a3-9ec1-05d644e78f03",
-      "title": "AI limit: Pro vs 3 plans",
-      "type": "flow",
-      "state": "draft",
-      "placement": {
-        "placement_id": "0dfdf0d2-f36a-4b02-9b85-a654ecc3182e",
-        "title": "AI edits limit reached"
-      },
-      "segment_ids": [],
-      "priority": 0,
-      "started_at": null,
-      "stopped_at": null
-    },
-    {
-      "ab_test_id": "35299a82-0d41-4b50-a874-bf86e11c33d0",
-      "title": "Settings: upgrade vs lifetime anchor",
-      "type": "flow",
-      "state": "completed",
-      "placement": {
-        "placement_id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
-        "title": "Settings - Upgrade"
-      },
-      "segment_ids": [],
-      "priority": 0,
-      "started_at": "2026-11-07T04:08:00.750911Z",
-      "stopped_at": "2026-11-07T04:08:02.385791Z"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "count": 4,
-      "page": 1,
-      "pages": 1
-    }
+ "data": [
+  {
+   "ab_test_id": "b2c90b2b-59b0-48fc-b821-b90061d1ae1e",
+   "title": "Onboarding: annual trial vs weekly first",
+   "type": "flow",
+   "state": "live",
+   "placement": {
+    "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+    "title": "Onboarding"
+   },
+   "segment_ids": [],
+   "priority": 0,
+   "started_at": "2026-10-29T17:00:00.000000Z",
+   "stopped_at": null
+  },
+  {
+   "ab_test_id": "fa529c42-4d24-4dde-b63a-e15fda1aa93d",
+   "title": "Main: 3 plans vs lifetime anchor (NA)",
+   "type": "flow",
+   "state": "live",
+   "placement": {
+    "placement_id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
+    "title": "Main paywall"
+   },
+   "segment_ids": [
+    "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
+   ],
+   "priority": 0,
+   "started_at": "2026-10-29T17:00:00.000000Z",
+   "stopped_at": null
+  },
+  {
+   "ab_test_id": "35299a82-0d41-4b50-a874-bf86e11c33d0",
+   "title": "Settings: upgrade vs lifetime anchor",
+   "type": "flow",
+   "state": "completed",
+   "placement": {
+    "placement_id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
+    "title": "Settings - Upgrade"
+   },
+   "segment_ids": [],
+   "priority": 0,
+   "started_at": "2026-09-08T17:00:00.000000Z",
+   "stopped_at": "2026-10-08T17:00:00.000000Z"
+  },
+  {
+   "ab_test_id": "7c4c06ef-f5da-45a3-9ec1-05d644e78f03",
+   "title": "AI limit: Pro vs 3 plans",
+   "type": "flow",
+   "state": "draft",
+   "placement": {
+    "placement_id": "0dfdf0d2-f36a-4b02-9b85-a654ecc3182e",
+    "title": "AI edits limit reached"
+   },
+   "segment_ids": [],
+   "priority": 0,
+   "started_at": null,
+   "stopped_at": null
   }
+ ],
+ "meta": {
+  "pagination": {
+   "count": 4,
+   "page": 1,
+   "pages": 1
+  }
+ }
 }

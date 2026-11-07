@@ -1,0 +1,33 @@
+{
+ "ab_test_id": "35299a82-0d41-4b50-a874-bf86e11c33d0",
+ "title": "Settings: upgrade vs lifetime anchor",
+ "type": "flow",
+ "state": "completed",
+ "placement": {
+  "placement_id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
+  "title": "Settings - Upgrade"
+ },
+ "segment_ids": [],
+ "priority": 0,
+ "started_at": "2026-09-08T17:00:00.000000Z",
+ "stopped_at": "2026-10-08T17:00:00.000000Z",
+ "goal": "Earlier test - stopped with a winner",
+ "paywalls": [],
+ "flows": [
+  {
+   "flow_id": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
+   "flow_name": "Settings - Upgrade",
+   "weight": 50,
+   "title": "A",
+   "variation_id": "3af81889-7ed3-4c57-83eb-c0201255e170"
+  },
+  {
+   "flow_id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
+   "flow_name": "Main - Lifetime anchor",
+   "weight": 50,
+   "title": "B",
+   "variation_id": "b0f2ae00-ea84-426d-bc99-82657c46e215"
+  }
+ ],
+ "created_at": "2026-09-08T17:00:00.000000Z"
+}

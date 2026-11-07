@@ -11,7 +11,7 @@ Ground rules
 | # | Target | Status |
 |---|---|---|
 | 1 | Analyse the captured and offline data, design the dataset, generator skeleton, fixture-set switch in the store and settings | done |
-| 2 | Time: backdate the live tests to nine days of traffic with per-day points (`values`) and realistic trial maturation | pending |
+| 2 | Time: backdate the live tests to nine days of traffic with per-day points (`values`) and realistic trial maturation | done |
 | 3 | Three-arm live test on the Main paywall for All users, sample reached: a CALL_WINNER scenario with Holm correction | pending |
 | 4 | Live win-back test on the Payers segment sized to WAIT_SAMPLE with a decision date a few days out | pending |
 | 5 | Two more completed tests with flow metrics so the audit shows grades A and C, confirmed and inconclusive | pending |
@@ -34,3 +34,4 @@ Facts that shape the expansion (from `expand_seed.py analyze`)
 
 Log
 - Iteration 1 (7 Nov 2026 evening): captured set measured; offline dataset profiled; generator skeleton (`analyze`, `build`) and manifest-based fixture loading added; `ADAPTY_FIXTURES` switch wired through settings, client and health.
+- Iteration 2: the generator now aggregates the offline users and transactions into Adapty-shaped answers. The dataset is shifted so its last install lands on the demo clock (`--now`, default 7 Nov 2026 17:00 UTC); the backend freezes its clock to the manifest's clock in mock mode so dossiers stay consistent whenever the demo runs. Live tests are backdated nine days; the Settings test ran 60 to 30 days ago. Per arm: purchases, trials, finished and converted trials (so `active_trials_rate` is real), refunds, payers, revenue per viewer, P2BB and the 99% range from a seeded normal approximation of revenue per viewer, p-value from the two-proportion test. Each variation carries ten per-day `values` points (installs of the day plus the money moved that day), a screen funnel and product nodes. Result: Onboarding 1,020 vs 975 viewers, 269 open trials, still WAIT_TRIAL_LAG with the leader flippable; Main NA 140 vs 156 viewers, NOT_DECIDABLE (2,402 per arm, 145 days away); Settings audit grade C, realized revenue reversed the call. Assumption: the per-day point shape (metric keys plus `x`) mirrors the analytics chart points; the captured lifetime answers have empty `values`, so the real daily shape was not observed.
