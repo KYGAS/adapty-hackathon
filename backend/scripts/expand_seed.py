@@ -211,8 +211,9 @@ FLOW_NAMES = {
     "onb_weekly_eur": "Onboarding - Weekly first (EUR prices)",
     "winback_annual": "Win-back - Annual offer",
     "main_holiday": "Main - Holiday sale",
+    "onb_weekly_anchor": "Onboarding - Weekly first (annual anchor)",
 }
-SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual", "main_holiday"}
+SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual", "main_holiday", "onb_weekly_anchor"}
 FLOW_STATUS = {"main_holiday": "draft"}
 SYNTHETIC_PLACEMENTS = [
     {"developer_id": "trial_reminder", "title": "Trial ending reminder", "is_active": True, "type": "flow"},
@@ -248,7 +249,7 @@ SCENARIO: list[TestSpec] = [
     TestSpec("b2c90b2b-59b0-48fc-b821-b90061d1ae1e", "Onboarding: annual trial vs weekly first",
              "Find which onboarding offer maximises 60-day revenue per install", "onboarding", None,
              (ArmSpec("onb_trial", 50, "A"), ArmSpec("onb_weekly", 50, "B")), "live", started_days_ago=9,
-             source_title="Onboarding: annual trial vs weekly first", exclude_segments=("eu1",)),
+             source_title="Onboarding: annual trial vs weekly first", exclude_segments=("eu1", "na")),
     TestSpec("fa529c42-4d24-4dde-b63a-e15fda1aa93d", "Main: 3 plans vs lifetime anchor (NA)",
              "Does a lifetime anchor lift annual share in North America?", "main", "na",
              (ArmSpec("main", 50, "A"), ArmSpec("main_lifetime", 50, "B")), "live", started_days_ago=9,
@@ -280,7 +281,15 @@ SCENARIO: list[TestSpec] = [
     TestSpec("9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44", "Onboarding NA: weekly first vs annual trial",
              "Which onboarding offer maximises 60-day revenue per install in the US and Canada?", "onboarding", "na",
              (ArmSpec("onb_weekly", 50, "A", source_flow_key="onb_weekly"), ArmSpec("onb_trial", 50, "B", source_flow_key="onb_trial")),
-             "completed", started_days_ago=120, stopped_days_ago=60, winner_flow_key="onb_weekly"),
+             "completed", started_days_ago=120, stopped_days_ago=70, winner_flow_key="onb_weekly"),
+    # Live follow-up on the same segment: weekly-first users split in two shards, the second relabelled as a copy
+    # variant. Same population, sample reached, so the honest verdict is CALL_NO_DIFFERENCE.
+    TestSpec("f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88", "Onboarding NA v2: weekly first vs annual anchor copy",
+             "Does mentioning the annual price on the weekly-first paywall change 60-day revenue per install in the US and Canada?",
+             "onboarding", "na",
+             (ArmSpec("onb_weekly", 50, "A", source_flow_key="onb_weekly", shard=(0, 2)),
+              ArmSpec("onb_weekly_anchor", 50, "B", source_flow_key="onb_weekly", shard=(1, 2))),
+             "live", started_days_ago=69),
     # Completed, badly run: five days on the win-back placement for the Payers segment, a handful of payers, stopped with
     # the new annual offer declared winner. The kind of call the referee exists to prevent.
     TestSpec("c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55", "Win-back: monthly vs annual offer",

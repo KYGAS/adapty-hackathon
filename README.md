@@ -55,7 +55,8 @@ Copy `.env.example` to `.env`. Everything has a demo default.
 
 | Variable | Meaning |
 |---|---|
-| `ADAPTY_MODE` | `mock` serves the captured fixtures; `live` calls api-admin.adapty.io |
+| `ADAPTY_MODE` | `mock` serves fixtures; `live` calls api-admin.adapty.io |
+| `ADAPTY_FIXTURES` | `expanded` (default): ten tests over four months built from the offline Lumen dataset, clock frozen at 7 Nov 2026 17:00 UTC; `captured`: the real one-day answers. See `docs/demo-dataset-plan.md` |
 | `ADAPTY_TOKEN` | developer token; empty reads `%LOCALAPPDATA%\adapty\config.json` from `adapty auth login` |
 | `REFEREE_ALLOW_LIVE_WRITES` | `false` by default: approved actions are logged but never reach a live app |
 | `LLM_PROVIDER` | `auto`, `cli` (Claude Code subscription), `api` (`ANTHROPIC_API_KEY`), `template` |

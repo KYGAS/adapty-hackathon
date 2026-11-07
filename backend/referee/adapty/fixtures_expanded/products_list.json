@@ -149,13 +149,13 @@
    "price_usd": 34.99,
    "vendor_products": {
     "app_store": {
-     "id": "84e0deb6-0c4c-4726-a10f-9d98271d137e",
+     "id": "ffd3fedc-be44-422c-885b-129d84273d4c",
      "product_id": "lumen.annual_holiday",
      "base_plan_id": null,
      "store_status": null
     },
     "play_store": {
-     "id": "ffd3fedc-be44-422c-885b-129d84273d4c",
+     "id": "f93196fc-759a-4a70-9a54-ecf3ba785586",
      "product_id": "lumen_annual_holiday",
      "base_plan_id": "annual-holiday",
      "store_status": null

@@ -89,3 +89,12 @@ def test_leader_cannot_flip_without_pending_revenue():
     assert not leader_could_flip(1527.9, 285, none, 0.0, 254, none)
     assert not leader_could_flip(100.0, 0, none, 50.0, 10, none)
     assert not leader_could_flip(100.0, 10, none, 50.0, 0, none)
+
+
+def test_immaterial_open_trials_do_not_count_as_trial_lag():
+    # Two near-equal arms with $9,000 each and a dozen open weekly trials: a no-difference question, not a wait.
+    small = PendingRevenue(12, 5, 6, 7, 35.0, 42.0, 49.0)
+    assert not leader_could_flip(9000.0, 1200, small, 8950.0, 1200, small)
+    # The same open trials matter when the leader has almost no revenue yet.
+    assert leader_could_flip(100.0, 1200, small, 90.0, 1200, small)
+    assert leader_could_flip(0.0, 254, small, 0.0, 285, small)

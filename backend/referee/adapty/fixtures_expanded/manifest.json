@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T21:46:01.547392+00:00",
+ "generated_at": "2026-11-07T21:54:46.801209+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
  "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
@@ -12,6 +12,7 @@
   "ab_test_get_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json",
   "ab_test_get_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33.json",
   "ab_test_get_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44.json",
+  "ab_test_get_f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88.json",
   "ab_test_get_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55.json",
   "ab_test_get_e7a2d9c4-6b1f-4f3e-8c7d-0a5b3e9f1c66.json"
  ],
@@ -47,6 +48,11 @@
    "country": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_country.json",
    "store": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_store.json"
   },
+  "f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88": {
+   "lifetime": "ab_test_metrics_tree_f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88_lifetime.json",
+   "country": "ab_test_metrics_tree_f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88_country.json",
+   "store": "ab_test_metrics_tree_f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88_store.json"
+  },
   "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": {
    "lifetime": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_lifetime.json",
    "country": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_country.json",
@@ -60,6 +66,7 @@
   "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11": "ab_test_metrics_total_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json",
   "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33": "ab_test_metrics_total_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33.json",
   "9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44": "ab_test_metrics_total_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44.json",
+  "f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88": "ab_test_metrics_total_f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88.json",
   "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "ab_test_metrics_total_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55.json"
  },
  "flows": "flows_list.json",
@@ -71,7 +78,7 @@
  "winners": {
   "35299a82-0d41-4b50-a874-bf86e11c33d0": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
   "9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44": "00ac93b0-487c-46a3-a72c-748fc64feadc",
-  "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "108b9a50-2682-4369-99a3-4867133483cc"
+  "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "fc4cd776-c98c-42fd-9532-8cef2ad9ea89"
  },
  "charts": {
   "revenue": "analytics_chart_revenue_week_by_product.json",

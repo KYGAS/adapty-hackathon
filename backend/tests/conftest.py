@@ -28,7 +28,8 @@ def catalog() -> Catalog:
 
 @pytest.fixture
 def settings(tmp_path) -> Settings:
-    return Settings(llm_provider="template", fixed_now=NOW, data_dir=tmp_path / "data")
+    # The API tests pin the captured set: its numbers are the ones the assertions quote.
+    return Settings(llm_provider="template", fixed_now=NOW, data_dir=tmp_path / "data", adapty_fixtures="captured")
 
 
 @pytest.fixture

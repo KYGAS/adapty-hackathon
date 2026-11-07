@@ -102,7 +102,23 @@
    ],
    "priority": 0,
    "started_at": "2026-07-10T17:00:00.000000Z",
-   "stopped_at": "2026-09-08T17:00:00.000000Z"
+   "stopped_at": "2026-08-29T17:00:00.000000Z"
+  },
+  {
+   "ab_test_id": "f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88",
+   "title": "Onboarding NA v2: weekly first vs annual anchor copy",
+   "type": "flow",
+   "state": "live",
+   "placement": {
+    "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+    "title": "Onboarding"
+   },
+   "segment_ids": [
+    "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
+   ],
+   "priority": 0,
+   "started_at": "2026-08-30T17:00:00.000000Z",
+   "stopped_at": null
   },
   {
    "ab_test_id": "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55",
@@ -130,7 +146,7 @@
     "title": "Win-back"
    },
    "segment_ids": [
-    "cfc2b411-9a00-4c49-81b2-d4411355b4db"
+    "a72bfd4a-839f-4a05-a12b-3cbd3b6c2959"
    ],
    "priority": 0,
    "started_at": null,
@@ -139,7 +155,7 @@
  ],
  "meta": {
   "pagination": {
-   "count": 9,
+   "count": 10,
    "page": 1,
    "pages": 1
   }

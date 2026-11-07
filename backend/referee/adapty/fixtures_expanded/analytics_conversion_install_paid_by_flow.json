@@ -109,9 +109,9 @@
     "key": "00ac93b0-487c-46a3-a72c-748fc64feadc",
     "title": "Onboarding - Weekly first",
     "is_total": false,
-    "value": 21.404068607897887,
-    "value_from": 12535,
-    "value_to": 2683,
+    "value": 20.78036723163842,
+    "value_from": 11328,
+    "value_to": 2354,
     "values": [
      {
       "x": "2026-07-01T00:00:00.000000+0000",
@@ -123,33 +123,33 @@
      },
      {
       "x": "2026-08-01T00:00:00.000000+0000",
-      "value": 22.2819216182048,
-      "value_from": 3164,
-      "value_to": 705,
+      "value": 22.155117609663062,
+      "value_from": 3146,
+      "value_to": 697,
       "value_from_unfinished": 0,
       "has_unfinished": false
      },
      {
       "x": "2026-09-01T00:00:00.000000+0000",
-      "value": 21.11111111111111,
-      "value_from": 3060,
-      "value_to": 646,
+      "value": 19.936204146730464,
+      "value_from": 2508,
+      "value_to": 500,
       "value_from_unfinished": 0,
       "has_unfinished": false
      },
      {
       "x": "2026-10-01T00:00:00.000000+0000",
-      "value": 21.32329883976168,
-      "value_from": 3189,
-      "value_to": 680,
+      "value": 19.955073006364657,
+      "value_from": 2671,
+      "value_to": 533,
       "value_from_unfinished": 0,
       "has_unfinished": false
      },
      {
       "x": "2026-11-01T00:00:00.000000+0000",
-      "value": 16.207951070336392,
-      "value_from": 654,
-      "value_to": 106,
+      "value": 14.57943925233645,
+      "value_from": 535,
+      "value_to": 78,
       "value_from_unfinished": 0,
       "has_unfinished": false
      }
@@ -456,7 +456,7 @@
     ]
    },
    {
-    "key": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+    "key": "108b9a50-2682-4369-99a3-4867133483cc",
     "title": "Onboarding - Weekly first (EUR prices)",
     "is_total": false,
     "value": 25.653206650831358,
@@ -506,7 +506,57 @@
     ]
    },
    {
-    "key": "108b9a50-2682-4369-99a3-4867133483cc",
+    "key": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+    "title": "Onboarding - Weekly first (annual anchor)",
+    "is_total": false,
+    "value": 27.257663628831814,
+    "value_from": 1207,
+    "value_to": 329,
+    "values": [
+     {
+      "x": "2026-07-01T00:00:00.000000+0000",
+      "value": 0.0,
+      "value_from": 0,
+      "value_to": 0,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-08-01T00:00:00.000000+0000",
+      "value": 44.44444444444444,
+      "value_from": 18,
+      "value_to": 8,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-09-01T00:00:00.000000+0000",
+      "value": 26.44927536231884,
+      "value_from": 552,
+      "value_to": 146,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-10-01T00:00:00.000000+0000",
+      "value": 28.37837837837838,
+      "value_from": 518,
+      "value_to": 147,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-11-01T00:00:00.000000+0000",
+      "value": 23.52941176470588,
+      "value_from": 119,
+      "value_to": 28,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     }
+    ]
+   },
+   {
+    "key": "fc4cd776-c98c-42fd-9532-8cef2ad9ea89",
     "title": "Win-back - Annual offer",
     "is_total": false,
     "value": 20.0,

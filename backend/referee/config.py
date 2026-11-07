@@ -56,7 +56,7 @@ def read_cli_token() -> str | None:
 @dataclass(frozen=True)
 class Settings:
     adapty_mode: str = "mock"
-    adapty_fixtures: str = "captured"
+    adapty_fixtures: str = "expanded"
     adapty_app_id: str = DEFAULT_APP_ID
     adapty_token: str | None = None
     adapty_api_url: str = DEFAULT_API_URL
@@ -96,7 +96,7 @@ def settings_from_env() -> Settings:
     origins = tuple(o.strip() for o in env.get("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip())
     return Settings(
         adapty_mode=mode if mode in {"mock", "live"} else "mock",
-        adapty_fixtures=env.get("ADAPTY_FIXTURES", "captured").strip().lower() or "captured",
+        adapty_fixtures=env.get("ADAPTY_FIXTURES", "expanded").strip().lower() or "expanded",
         adapty_app_id=env.get("ADAPTY_APP_ID", DEFAULT_APP_ID),
         adapty_token=token,
         adapty_api_url=env.get("ADAPTY_API_URL", DEFAULT_API_URL).rstrip("/"),

@@ -13,6 +13,7 @@
     "Onboarding - Annual trial": ["annual_trial", "weekly"],
     "Onboarding - Weekly first": ["weekly", "annual"],
     "Onboarding - Weekly first (EUR prices)": ["weekly", "annual"],
+    "Onboarding - Weekly first (annual anchor)": ["weekly", "annual"],
     "Main - 3 plans": ["annual", "monthly", "weekly"],
     "Main - Lifetime anchor": ["annual", "monthly", "lifetime"],
     "Main - Social proof": ["annual", "monthly", "weekly"],
@@ -23,7 +24,7 @@
     "Main - Holiday sale": ["annual_holiday", "monthly"]
   },
   "placement_flows": {
-    "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first", "Onboarding - Weekly first (EUR prices)"],
+    "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first", "Onboarding - Weekly first (EUR prices)", "Onboarding - Weekly first (annual anchor)"],
     "main": ["Main - 3 plans", "Main - Lifetime anchor", "Main - Social proof"],
     "ai_limit_reached": ["AI limit reached - Pro"],
     "settings_upgrade": ["Settings - Upgrade"],

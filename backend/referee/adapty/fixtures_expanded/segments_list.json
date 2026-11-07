@@ -16,12 +16,12 @@
    "description": "Users from the US and Canada"
   },
   {
-   "id": "cfc2b411-9a00-4c49-81b2-d4411355b4db",
+   "id": "a72bfd4a-839f-4a05-a12b-3cbd3b6c2959",
    "title": "Churn risk",
    "description": "Payers whose subscription is set not to renew"
   },
   {
-   "id": "a72bfd4a-839f-4a05-a12b-3cbd3b6c2959",
+   "id": "d681dbfd-f6e3-40fe-a7f2-f9e86d2906f0",
    "title": "Trial users",
    "description": "Users in an active free trial"
   }

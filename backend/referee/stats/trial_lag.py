@@ -82,9 +82,17 @@ def project_pending_revenue(pending_trials: int, rate: RateEstimate, prices_usd:
 
 
 def leader_could_flip(leader_revenue: float, leader_views: int, leader_pending: PendingRevenue,
-                      other_revenue: float, other_views: int, other_pending: PendingRevenue) -> bool:
-    """True when the trailing arm's optimistic revenue per viewer reaches the leader's pessimistic one."""
+                      other_revenue: float, other_views: int, other_pending: PendingRevenue,
+                      materiality: float = 0.05) -> bool:
+    """True when the trailing arm's optimistic revenue per viewer reaches the leader's pessimistic one, and the open
+    trials are worth enough to matter (at least `materiality` of the leader's revenue). A near tie with a handful of
+    open trials is a no-difference question, not a trial-lag one."""
     if leader_views <= 0 or other_views <= 0:
+        return False
+    pending_total = leader_pending.revenue_expected + other_pending.revenue_expected
+    if pending_total <= 0.0:
+        return False
+    if leader_revenue > 0.0 and pending_total < materiality * leader_revenue:
         return False
     leader_floor = (leader_revenue + leader_pending.revenue_low) / leader_views
     other_ceiling = (other_revenue + other_pending.revenue_high) / other_views

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Icon from '../components/Icon';
 import { RangeCell, SERIES } from '../components/VariantTable';
@@ -7,6 +8,7 @@ import { Breadcrumb, ErrorBox, Skeleton, SortTh, StatusText, toast } from '../co
 import { adapty } from '../lib/api';
 import { durationBetween, fmtDate, money, num, pValue, pct } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
+import type { AdaptyMetricsRow } from '../lib/types';
 
 const METRICS: Array<[string, string]> = [
   ['Revenue', 'Total revenue from purchases after viewing the variant'],
@@ -25,13 +27,22 @@ const METRICS: Array<[string, string]> = [
   ['Net proceeds', 'Proceeds after taxes'],
 ];
 
+type GroupBy = 'flow' | 'country' | 'store';
+const GROUP_LABEL: Record<GroupBy, string> = { flow: 'Flow', country: 'Country', store: 'Store' };
+
 export default function ABTestMetricsPage() {
   const { id = '' } = useParams();
+  const [groupBy, setGroupBy] = useState<GroupBy>('flow');
   const page = useAsync(async () => {
     const detail = await adapty.getTest(id);
     const total = detail.state === 'draft' ? null : (await adapty.metricsTotal(id)).data;
     return { detail, total };
   }, [id]);
+  // Country and store breakdowns come from the metrics tree, the same call the dashboard's "Group by" makes.
+  const grouped = useAsync(async () => {
+    if (groupBy === 'flow' || !page.data || page.data.detail.state === 'draft') return null;
+    return (await adapty.metricsTree(id, { segmentation_by: groupBy })).data;
+  }, [id, groupBy, !!page.data]);
   const { data, error, loading, reload } = page;
   if (error) return <ErrorBox error={error} />;
   if (loading || !data) {
@@ -45,8 +56,35 @@ export default function ABTestMetricsPage() {
   const { detail, total } = data;
   const arms = total?.metrics ?? [];
   const totalRevenue = arms.reduce((s, a) => s + (a.revenue || 0), 0);
-  const leader = arms.reduce<typeof arms[number] | null>((best, a) => ((a.probability ?? 0) > (best?.probability ?? 0) ? a : best), null);
+  const leader = arms.reduce<AdaptyMetricsRow | null>((best, a) => ((a.probability ?? 0) > (best?.probability ?? 0) ? a : best), null);
   const sorted = [...arms].sort((a, b) => (b.probability ?? 0) - (a.probability ?? 0) || b.revenue - a.revenue);
+  const segmentsOf = (flowId: string | undefined): AdaptyMetricsRow[] =>
+    grouped.data?.items?.find((v) => v.flow_id === flowId)?.items?.filter((s) => s.level === 'segment') ?? [];
+
+  const metricCells = (a: AdaptyMetricsRow, winner: boolean, color: string, sortedCol: boolean, isSegment: boolean) => {
+    const cell = (content: React.ReactNode, sortedThis = false) => (
+      <td className={`is-right ${sortedThis ? 'is-sorted' : ''} ${winner ? 'is-winner' : ''}`}>{content}</td>
+    );
+    return (
+      <>
+        {cell(money(a.revenue), sortedCol)}
+        {isSegment ? <td className="is-right is-empty">-</td> : <RangeCell row={a} color={color} />}
+        {cell(isSegment || a.probability === undefined ? '-' : pct(a.probability, 2))}
+        {cell(isSegment ? '-' : pValue(a.p_value ?? null))}
+        {cell(num(a.purchases))}
+        {cell(num(a.trials))}
+        {cell(num(a.views))}
+        {cell(num(a.unique_profiles_views))}
+        {cell(pct(a.conversion_rate_purchases))}
+        {cell(pct(a.conversion_rate_trials, 1))}
+        {cell(money(a.arpu, { exact: true }))}
+        {cell(money(a.arppu, { exact: true }))}
+        {cell(money(a.proceeds))}
+        {cell(money(a.net_revenue))}
+      </>
+    );
+  };
+
   return (
     <>
       <div className="ad-page-header ad-page-header--center">
@@ -64,15 +102,19 @@ export default function ABTestMetricsPage() {
         <div className="ad-toolbar__group" style={{ gap: 16 }}>
           <div className="ad-menu-anchor">
             <button className="ad-dropdown-btn" data-menu-trigger="">
-              <Icon name="calendar" size={16} />{fmtDate(detail.started_at)} - today <span className="ad-dropdown-btn__sep" /> Lifetime <Icon name="chevron-down" size={16} />
+              <Icon name="calendar" size={16} />{fmtDate(detail.started_at)} - {detail.stopped_at ? fmtDate(detail.stopped_at) : 'today'} <span className="ad-dropdown-btn__sep" /> Lifetime <Icon name="chevron-down" size={16} />
             </button>
             <ul className="ad-menu ad-menu--left">
               <li className="ad-menu__item">Lifetime (flow tests report lifetime numbers without a date)</li>
             </ul>
           </div>
           <div className="ad-menu-anchor">
-            <button className="ad-dropdown-btn" data-menu-trigger="">Group by Flow <Icon name="chevron-down" size={16} /></button>
-            <ul className="ad-menu ad-menu--left"><li className="ad-menu__item">Flow</li><li className="ad-menu__item">Country</li><li className="ad-menu__item">Store</li></ul>
+            <button className="ad-dropdown-btn" data-menu-trigger="">Group by {GROUP_LABEL[groupBy]} <Icon name="chevron-down" size={16} /></button>
+            <ul className="ad-menu ad-menu--left">
+              {(['flow', 'country', 'store'] as GroupBy[]).map((g) => (
+                <li key={g} className="ad-menu__item" onClick={() => setGroupBy(g)}>{GROUP_LABEL[g]}</li>
+              ))}
+            </ul>
           </div>
         </div>
         <div className="ad-toolbar__group" style={{ gap: 16 }}>
@@ -109,11 +151,11 @@ export default function ABTestMetricsPage() {
       </div>
 
       {arms.length > 0 && (
-        <div className="ad-table-scroll rf-mb-24">
+        <div className={`ad-table-scroll rf-mb-24 ${grouped.loading ? 'is-loading' : ''}`} style={grouped.loading ? { opacity: 0.5 } : undefined}>
           <table className="ad-grid">
             <thead>
               <tr>
-                <th className="c-name" style={{ minWidth: 360 }}><Icon name="chevron-down" size={16} /> Flow</th>
+                <th className="c-name" style={{ minWidth: 360 }}><Icon name="chevron-down" size={16} /> {groupBy === 'flow' ? 'Flow' : `Flow / ${GROUP_LABEL[groupBy]}`}</th>
                 {METRICS.map(([m, help], i) => <SortTh key={m} label={m} right help={help} sorted={i === 0} />)}
               </tr>
             </thead>
@@ -121,37 +163,38 @@ export default function ABTestMetricsPage() {
               {sorted.map((a, i) => {
                 const flow = detail.flows.find((f) => f.flow_id === a.flow_id);
                 const winner = leader?.flow_id === a.flow_id && (a.probability ?? 0) > 50;
-                const cell = (content: React.ReactNode, sortedCol = false) => <td className={`is-right ${sortedCol ? 'is-sorted' : ''} ${winner ? 'is-winner' : ''}`}>{content}</td>;
+                const color = SERIES[i % SERIES.length];
+                const segments = groupBy === 'flow' ? [] : segmentsOf(a.flow_id);
                 return (
-                  <tr key={a.flow_id}>
-                    <td>
-                      <div className="ad-row" style={{ justifyContent: 'space-between' }}>
-                        <span className="ad-row">
-                          <Icon name="chevron-down" size={16} />
-                          <label className="ad-checkbox ad-checkbox--series" style={{ ['--series-color' as string]: SERIES[i % SERIES.length] }}>
-                            <input type="checkbox" defaultChecked />
-                            <span className="ad-checkbox__box"><svg viewBox="0 0 20 20"><path d="m4 10.5 4 4 8-9" /></svg></span>
-                            {a.title} <span className="rf-muted" style={{ marginLeft: 6 }}>{flow?.flow_name}</span>
-                          </label>
-                        </span>
-                        <span className="ad-pill ad-pill--grayborder">{a.weight}%</span>
-                      </div>
-                    </td>
-                    {cell(money(a.revenue), true)}
-                    <RangeCell row={a} color={SERIES[i % SERIES.length]} />
-                    {cell(a.probability === undefined ? '-' : pct(a.probability, 2))}
-                    {cell(pValue(a.p_value ?? null))}
-                    {cell(num(a.purchases))}
-                    {cell(num(a.trials))}
-                    {cell(num(a.views))}
-                    {cell(num(a.unique_profiles_views))}
-                    {cell(pct(a.conversion_rate_purchases))}
-                    {cell(pct(a.conversion_rate_trials, 1))}
-                    {cell(money(a.arpu, { exact: true }))}
-                    {cell(money(a.arppu, { exact: true }))}
-                    {cell(money(a.proceeds))}
-                    {cell(money(a.net_revenue))}
-                  </tr>
+                  <>
+                    <tr key={a.flow_id}>
+                      <td>
+                        <div className="ad-row" style={{ justifyContent: 'space-between' }}>
+                          <span className="ad-row">
+                            <Icon name={segments.length ? 'chevron-up' : 'chevron-down'} size={16} />
+                            <label className="ad-checkbox ad-checkbox--series" style={{ ['--series-color' as string]: color }}>
+                              <input type="checkbox" defaultChecked />
+                              <span className="ad-checkbox__box"><svg viewBox="0 0 20 20"><path d="m4 10.5 4 4 8-9" /></svg></span>
+                              {a.title} <span className="rf-muted" style={{ marginLeft: 6 }}>{flow?.flow_name}</span>
+                            </label>
+                          </span>
+                          <span className="ad-pill ad-pill--grayborder">{a.weight}%</span>
+                        </div>
+                      </td>
+                      {metricCells(a, winner, color, true, false)}
+                    </tr>
+                    {segments.map((s) => (
+                      <tr key={`${a.flow_id}-${s.title}`}>
+                        <td>
+                          <span className="ad-row" style={{ paddingLeft: 44, color: 'var(--black-800)' }}>
+                            <span style={{ width: 8, height: 8, borderRadius: 2, background: color, display: 'inline-block', marginRight: 8 }} />
+                            {s.title}
+                          </span>
+                        </td>
+                        {metricCells(s, false, color, false, true)}
+                      </tr>
+                    ))}
+                  </>
                 );
               })}
             </tbody>

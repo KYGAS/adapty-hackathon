@@ -32,14 +32,14 @@
     "users": 46,
     "installs": 46,
     "title": "A",
-    "variation_id": "7731dca2-83c8-4954-b9d1-5e4d206963e8",
+    "variation_id": "7218e994-305b-4abb-b6d2-3e1476e3e874",
     "flow_id": "16f65c46-6a6a-4ad8-81ab-14e5a4ae03bf",
     "weight": 50,
     "active_trials_rate": 0.0,
     "low_boundary": 0.0,
     "average_per_1000": 564.7826086956522,
     "upper_boundary": 1129.5652173913045,
-    "probability": 42.89,
+    "probability": 43.515,
     "p_value": 0.7158904196788196
    },
    {
@@ -73,14 +73,14 @@
     "users": 50,
     "installs": 50,
     "title": "B",
-    "variation_id": "eb4af77d-ae55-412f-a429-36b43c57be25",
-    "flow_id": "108b9a50-2682-4369-99a3-4867133483cc",
+    "variation_id": "c91f5b6b-967a-4488-a0be-9f33690056a2",
+    "flow_id": "fc4cd776-c98c-42fd-9532-8cef2ad9ea89",
     "weight": 50,
     "active_trials_rate": 0.0,
     "low_boundary": 0.0,
     "average_per_1000": 662.4,
     "upper_boundary": 1324.8,
-    "probability": 57.11000000000001,
+    "probability": 56.485,
     "p_value": 0.7158904196788196
    }
   ],
@@ -89,7 +89,7 @@
    "title": "Win-back: monthly vs annual offer",
    "goal": "Does an annual offer win back more revenue from lapsed payers?",
    "paywalls_group": {
-    "paywalls_group_id": "ba736b0b-1664-4007-8c63-3a51a968a943",
+    "paywalls_group_id": "7919b604-1495-4cf7-a620-4723cf712daf",
     "title": "Win-back: monthly vs annual offer"
    },
    "vars": {},

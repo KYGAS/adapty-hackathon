@@ -1,0 +1,35 @@
+{
+ "ab_test_id": "f3b9c6e1-2d7a-4e5f-b8c0-9a1d4f7e2b88",
+ "title": "Onboarding NA v2: weekly first vs annual anchor copy",
+ "type": "flow",
+ "state": "live",
+ "placement": {
+  "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+  "title": "Onboarding"
+ },
+ "segment_ids": [
+  "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
+ ],
+ "priority": 0,
+ "started_at": "2026-08-30T17:00:00.000000Z",
+ "stopped_at": null,
+ "goal": "Does mentioning the annual price on the weekly-first paywall change 60-day revenue per install in the US and Canada?",
+ "paywalls": [],
+ "flows": [
+  {
+   "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
+   "flow_name": "Onboarding - Weekly first",
+   "weight": 50,
+   "title": "A",
+   "variation_id": "eb4af77d-ae55-412f-a429-36b43c57be25"
+  },
+  {
+   "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+   "flow_name": "Onboarding - Weekly first (annual anchor)",
+   "weight": 50,
+   "title": "B",
+   "variation_id": "2431fbf3-f3f1-4c75-964c-4f81ac33794f"
+  }
+ ],
+ "created_at": "2026-08-30T17:00:00.000000Z"
+}

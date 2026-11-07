@@ -19,21 +19,21 @@
    "flow_name": "Main - Lifetime anchor",
    "weight": 34,
    "title": "A",
-   "variation_id": "1ec18fae-786b-4937-9941-d6df9e984d1a"
+   "variation_id": "6e209e2c-cdd2-4db3-92d0-b094296214ae"
   },
   {
    "flow_id": "63861760-06be-4776-8185-5e53536cc72d",
    "flow_name": "Main - 3 plans",
    "weight": 33,
    "title": "B",
-   "variation_id": "6e209e2c-cdd2-4db3-92d0-b094296214ae"
+   "variation_id": "7b4ef59a-746a-4d3b-808b-2755d3d0c8e4"
   },
   {
    "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
    "flow_name": "Main - Social proof",
    "weight": 33,
    "title": "C",
-   "variation_id": "7b4ef59a-746a-4d3b-808b-2755d3d0c8e4"
+   "variation_id": "24b4fbbe-4d2f-42c7-af02-d5d2588429dd"
   }
  ],
  "created_at": "2026-08-09T17:00:00.000000Z"
