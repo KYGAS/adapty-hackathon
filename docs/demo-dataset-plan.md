@@ -19,7 +19,7 @@ Ground rules
 | 7 | More placements, flows, products and segments (a paywall placement, a holiday flow, a churn-risk segment) | done |
 | 8 | Analytics: four months of weekly revenue by product and conversions by flow consistent with the new flows | done |
 | 9 | Cover every reachable verdict code, flip the default set for the demo, wire Group by country and store in the UI | done |
-| 10 | Validate (tests, route self-test, API end to end), document, commit, final report | pending |
+| 10 | Validate (tests, route self-test, API end to end), document, commit, final report | done |
 
 Source data
 
@@ -42,3 +42,23 @@ Log
 - Iteration 7: catalogue entities. Three placements ("Trial ending reminder" flow placement, "Export limit reached" paywall placement, an inactive "Holiday sale" paywall placement) so the Paywalls tab and the inactive state have content; two segments ("Churn risk", "Trial users"); a draft flow "Main - Holiday sale"; a product "Premium Annual (Holiday 30% off)" at $34.99; and a second draft test, "Win-back v2: annual offer vs monthly (churn risk)". Lists are now generated instead of copied: 8 placements, 5 segments, 8 products, 10 flows, 9 tests. The next-test ranking now puts idle placements with a ready draft first, then idle placements by revenue, then placements without traffic, then busy ones.
 - Iteration 8: analytics generated from the same users. Revenue by week over 18 weeks ($441,902 in total) segmented by store product exactly as Adapty keys it (iOS products under their id and title, Android under the Play id) and, new, by flow after test relabelling; install-to-paid by month and flow (19.4% overall, 10.8% on the annual-trial onboarding, 26.0% on the lifetime anchor); trial-to-paid by month and product with finished trials in `value_from` and running ones in `value_from_unfinished` (45.0% on 7,821 finished trials: 36.5% for the 7-day annual trial, 49.1% for the 3-day weekly trial). The store now picks charts and conversions by `chart_id`/`conversion_id` plus `segmentation`. The referee uses the per-product rates: each arm's trial-to-paid estimate is the account's product rates weighted by the trial plans that arm's viewers actually started (read from the metrics tree), so the annual-trial arm no longer borrows the weekly plan's conversion.
 - Iteration 9: verdict coverage and the default set. Added "Onboarding NA v2: weekly first vs annual anchor copy" (US and Canada, live for 69 days after the completed NA test, weekly-first users split in two shards, the second relabelled as "Onboarding - Weekly first (annual anchor)"): 1,228 vs 1,207 viewers against 1,121 needed, p-value 0.90, P2BB 77 vs 23: CALL_NO_DIFFERENCE, keep the control. The All-users Onboarding test now excludes both segments (460 vs 447 viewers, 85 open trials, still WAIT_TRIAL_LAG). Seven of the nine verdict codes appear in the set (WAIT_TRIAL_LAG, NOT_DECIDABLE, CALL_WINNER, WAIT_SAMPLE, CALL_NO_DIFFERENCE, COMPLETED, NOT_STARTED). WAIT_MIN_RUNTIME and INSUFFICIENT_PAYERS need a sample reached within a week or with under 50 payers, which Lumen's traffic never produces at the default 20% effect; both appear live in the UI by raising the planned minimum effect on a young test (for example 100% on the NA main paywall test). The trial-lag rule gained a materiality floor: open trials must be worth at least 5% of the leader's revenue before they block a call, so a near tie with a dozen open weekly trials is a no-difference question rather than a wait. `ADAPTY_FIXTURES` now defaults to `expanded`; the API tests pin `captured`. The metrics page's "Group by" control is wired: Country and Store fetch the breakdown tree and show one indented row per segment under each variant.
+- Iteration 10: validation. 129 backend tests pass with the statistics at 100% branch coverage; two generator runs produce identical files (54 files, only `generated_at` differs); a route self-test on the expanded set makes 86 calls across every test, placement, flow, segment, product, analytics and referee endpoint with zero failures, template memos pass the number guard for all ten tests, and a proxied stop is refused with 403. Frontend type-check and production build pass.
+
+## The expanded set in one table
+
+| Test | Audience | State | Viewers per arm | Referee |
+|---|---|---|---|---|
+| Onboarding: annual trial vs weekly first | All users (minus EU1 and NA) | live, 9 days | 460 / 447 | WAIT_TRIAL_LAG, safe call 15 Nov |
+| Onboarding EU: weekly first vs EUR prices | Europe Tier-1 | live, 95 days | 1,297 / 1,263 | WAIT_SAMPLE, sample reached 10 Nov |
+| Onboarding NA v2: weekly first vs annual anchor copy | US and Canada | live, 69 days | 1,228 / 1,207 | CALL_NO_DIFFERENCE |
+| Main paywall: lifetime anchor vs 3 plans vs social proof | All users | live, 90 days | 2,294 / 2,283 / 2,297 | CALL_WINNER (A) |
+| Main: 3 plans vs lifetime anchor (NA) | US and Canada | live, 9 days | 140 / 156 | NOT_DECIDABLE |
+| Onboarding NA: weekly first vs annual trial | US and Canada | completed, 50 days | 1,835 / 1,805 | audit A, confirmed |
+| Settings: upgrade vs lifetime anchor | All users | completed, 30 days | 422 / 421 | audit C, reversed |
+| Win-back: monthly vs annual offer | Payers | completed, 5 days | 46 / 50 | audit F, inconclusive |
+| AI limit: Pro vs 3 plans | All users | draft | | NOT_STARTED, ranked next |
+| Win-back v2: annual offer vs monthly (churn risk) | Churn risk | draft | | NOT_STARTED |
+
+Plus 8 placements (two paywall-type, one inactive), 12 flows (5 only in this set), 5 segments, 8 products, 18 weeks of revenue analytics and 5 months of conversions, all derived from the 50,000-user offline dataset shifted so its last install lands on the clock, 7 Nov 2026 17:00 UTC.
+
+Regenerate with `cd backend && python -X utf8 scripts/expand_seed.py build [--now ISO]`; switch sets with `ADAPTY_FIXTURES`.
