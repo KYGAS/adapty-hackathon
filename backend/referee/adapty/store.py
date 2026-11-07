@@ -91,7 +91,8 @@ class Store:
             self.placement_details[detail["id"]] = detail
         self.segments = load(manifest.get("segments", "segments_list.json"), base)
         self.products = load(manifest.get("products", "products_list.json"), base)
-        self.chart = load(manifest["charts"]["revenue"], base)
+        # Keys are "<chart_id>" or "<chart_id>:<segmentation>" (same for conversions).
+        self.charts = {key: load(name, base) for key, name in manifest["charts"].items()}
         self.conversions = {key: load(name, base) for key, name in manifest["conversions"].items()}
         # Winners of completed tests (the API does not echo the stop body; the seed stopped the Settings test
         # with "Settings - Upgrade" as the winner).
@@ -192,9 +193,20 @@ class Store:
         rows = [r for r in self.flow_metrics["data"] if not wanted or r["flow_id"] in wanted]
         return {"data": copy.deepcopy(rows)}
 
+    @staticmethod
+    def _pick(table: dict[str, dict], ident: str, segmentation: str | None, fallback: str) -> dict:
+        for key in (f"{ident}:{segmentation}" if segmentation else None, ident, fallback):
+            if key and key in table:
+                return copy.deepcopy(table[key])
+        return copy.deepcopy(next(iter(table.values())))
+
     def conversion(self, body: Any) -> dict:
-        conversion_id = (body or {}).get("conversion_id", "install-paid")
-        return copy.deepcopy(self.conversions.get(conversion_id, self.conversions["install-paid"]))
+        body = body or {}
+        return self._pick(self.conversions, body.get("conversion_id", "install-paid"), body.get("segmentation"), "install-paid")
+
+    def chart(self, body: Any) -> dict:
+        body = body or {}
+        return self._pick(self.charts, body.get("chart_id", "revenue"), body.get("segmentation"), "revenue")
 
     # ------------------------------------------------------------ writes (mocked)
     def create_test(self, body: Any) -> dict:
@@ -271,7 +283,7 @@ class Store:
             ("GET", app + r"/placements/(?P<id>[^/]+)/$", lambda m, q, b: self.get_placement(m["id"])),
             ("GET", app + r"/segments/$", lambda m, q, b: copy.deepcopy(self.segments)),
             ("GET", app + r"/products/$", lambda m, q, b: copy.deepcopy(self.products)),
-            ("POST", app + r"/analytics/metrics/$", lambda m, q, b: copy.deepcopy(self.chart)),
+            ("POST", app + r"/analytics/metrics/$", lambda m, q, b: self.chart(b)),
             ("POST", app + r"/analytics/conversion/$", lambda m, q, b: self.conversion(b)),
         ]
         return [(method, re.compile(pattern), fn) for method, pattern, fn in table]

@@ -1,81 +1,181 @@
 {
-  "data": {
-    "value": 44.09148665819568,
-    "value_from": 787,
-    "value_to": 347,
-    "compare": null,
-    "segments": [
-      {
-        "key": null,
-        "title": "Conversion rate from trial to paid",
-        "is_total": true,
-        "value": 44.09148665819568,
-        "value_from": 787,
-        "value_to": 347,
-        "values": [
-          {
-            "x": "2026-07-01T00:00:00.000000+0000",
-            "value": 43.712574850299404,
-            "value_from": 167,
-            "value_to": 73,
-            "value_from_unfinished": 0,
-            "has_unfinished": false
-          },
-          {
-            "x": "2026-08-01T00:00:00.000000+0000",
-            "value": 42.65402843601896,
-            "value_from": 211,
-            "value_to": 90,
-            "value_from_unfinished": 0,
-            "has_unfinished": false
-          },
-          {
-            "x": "2026-09-01T00:00:00.000000+0000",
-            "value": 51.91256830601093,
-            "value_from": 183,
-            "value_to": 95,
-            "value_from_unfinished": 0,
-            "has_unfinished": false
-          },
-          {
-            "x": "2026-10-01T00:00:00.000000+0000",
-            "value": 38.23529411764706,
-            "value_from": 204,
-            "value_to": 78,
-            "value_from_unfinished": 0,
-            "has_unfinished": false
-          },
-          {
-            "x": "2026-11-01T00:00:00.000000+0000",
-            "value": 50,
-            "value_from": 22,
-            "value_to": 11,
-            "value_from_unfinished": 164,
-            "has_unfinished": true
-          }
-        ]
-      }
+ "data": {
+  "value": 45.0070323488045,
+  "value_from": 7821,
+  "value_to": 3520,
+  "compare": null,
+  "segments": [
+   {
+    "key": "total",
+    "title": "Total",
+    "is_total": true,
+    "value": 45.0070323488045,
+    "value_from": 7821,
+    "value_to": 3520,
+    "values": [
+     {
+      "x": "2026-07-01T00:00:00.000000+0000",
+      "value": 44.55511288180611,
+      "value_from": 1506,
+      "value_to": 671,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-08-01T00:00:00.000000+0000",
+      "value": 45.707317073170735,
+      "value_from": 2050,
+      "value_to": 937,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-09-01T00:00:00.000000+0000",
+      "value": 45.25993883792049,
+      "value_from": 1962,
+      "value_to": 888,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-10-01T00:00:00.000000+0000",
+      "value": 44.24612494128699,
+      "value_from": 2129,
+      "value_to": 942,
+      "value_from_unfinished": 9,
+      "has_unfinished": true
+     },
+     {
+      "x": "2026-11-01T00:00:00.000000+0000",
+      "value": 47.12643678160919,
+      "value_from": 174,
+      "value_to": 82,
+      "value_from_unfinished": 272,
+      "has_unfinished": true
+     }
     ]
+   },
+   {
+    "key": "ed2c0f9d-4935-4c3b-901b-93c5b942bfff",
+    "title": "Premium Annual (7-day trial)",
+    "is_total": false,
+    "value": 36.524127108670065,
+    "value_from": 2549,
+    "value_to": 931,
+    "values": [
+     {
+      "x": "2026-07-01T00:00:00.000000+0000",
+      "value": 38.582677165354326,
+      "value_from": 508,
+      "value_to": 196,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-08-01T00:00:00.000000+0000",
+      "value": 35.450516986706056,
+      "value_from": 677,
+      "value_to": 240,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-09-01T00:00:00.000000+0000",
+      "value": 37.23723723723724,
+      "value_from": 666,
+      "value_to": 248,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-10-01T00:00:00.000000+0000",
+      "value": 35.38681948424069,
+      "value_from": 698,
+      "value_to": 247,
+      "value_from_unfinished": 9,
+      "has_unfinished": true
+     },
+     {
+      "x": "2026-11-01T00:00:00.000000+0000",
+      "value": 0.0,
+      "value_from": 0,
+      "value_to": 0,
+      "value_from_unfinished": 147,
+      "has_unfinished": true
+     }
+    ]
+   },
+   {
+    "key": "0334d3e2-b118-48fe-a19d-99b0ad49c36b",
+    "title": "Premium Weekly (3-day trial)",
+    "is_total": false,
+    "value": 49.10849772382397,
+    "value_from": 5272,
+    "value_to": 2589,
+    "values": [
+     {
+      "x": "2026-07-01T00:00:00.000000+0000",
+      "value": 47.59519038076152,
+      "value_from": 998,
+      "value_to": 475,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-08-01T00:00:00.000000+0000",
+      "value": 50.7647487254188,
+      "value_from": 1373,
+      "value_to": 697,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-09-01T00:00:00.000000+0000",
+      "value": 49.382716049382715,
+      "value_from": 1296,
+      "value_to": 640,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-10-01T00:00:00.000000+0000",
+      "value": 48.56743535988819,
+      "value_from": 1431,
+      "value_to": 695,
+      "value_from_unfinished": 0,
+      "has_unfinished": false
+     },
+     {
+      "x": "2026-11-01T00:00:00.000000+0000",
+      "value": 47.12643678160919,
+      "value_from": 174,
+      "value_to": 82,
+      "value_from_unfinished": 125,
+      "has_unfinished": true
+     }
+    ]
+   }
+  ]
+ },
+ "meta": {
+  "query": {
+   "timezone": "UTC",
+   "timezone_source": "app",
+   "conversion_id": "trial-paid",
+   "filters": {
+    "date": [
+     "2026-07-01",
+     "2026-11-07"
+    ]
+   },
+   "segmentation": "store_product_id",
+   "period_unit": "month"
   },
-  "meta": {
-    "query": {
-      "timezone": "UTC",
-      "timezone_source": "app",
-      "conversion_id": "trial-paid",
-      "filters": {
-        "date": [
-          "2026-07-01",
-          "2026-11-07"
-        ]
-      },
-      "segmentation": null,
-      "period_unit": "month"
-    },
-    "recommended_period": null,
-    "definitions": {
-      "value": "If Х - the number of trials taken during the selected date, and Y - the number of subscriptions after these trials taken any time later, then Conversion = (Y / X) * 100%.",
-      "revenue_basis": null,
-      "freshness": "Transactions, installs, paywall views and flow events reach the analytics at least 15 minutes after Adapty receives them. Numbers of past days can still change: a refund that the store reports later takes the revenue out of the day of its purchase."
-    }
+  "recommended_period": null,
+  "definitions": {
+   "value": "If Х - the number of trials taken during the selected date, and Y - the number of subscriptions after these trials taken any time later, then Conversion = (Y / X) * 100%.",
+   "revenue_basis": null,
+   "freshness": "Transactions, installs, paywall views and flow events reach the analytics at least 15 minutes after Adapty receives them. Numbers of past days can still change: a refund that the store reports later takes the revenue out of the day of its purchase."
   }
+ }
 }

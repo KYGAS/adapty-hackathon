@@ -60,6 +60,7 @@ def narration_view(dossier: TestDossier, audit: AuditResult | None = None) -> di
             "revenue_range_reliable": a.range_reliable,
             "trial_products": [f"{p.title} ({p.trial_days}-day trial, ${p.price_usd})" for p in a.trial_products],
             "trial_days": a.trial_days_max, "open_trials": a.trials_pending, "matured_trials": a.trials_matured,
+            "trial_to_paid_pct": pct(a.trial_to_paid.rate, 1), "trial_to_paid_source": a.trial_to_paid_source,
             "open_trials_expected_conversions": r(a.pending.conversions_expected, 0),
             "open_trials_revenue_usd": {"low": r(a.pending.revenue_low, 0), "expected": r(a.pending.revenue_expected, 0), "high": r(a.pending.revenue_high, 0)},
             "projected_revenue_per_viewer_usd": {"low": r(a.projected_rpv_low), "expected": r(a.projected_rpv_expected), "high": r(a.projected_rpv_high)},

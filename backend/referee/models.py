@@ -41,6 +41,7 @@ class ArmInput(BaseModel):
     p_value: float | None = None
     active_trials_rate: float | None = None
     products: list[TrialProduct] = Field(default_factory=list)
+    trial_mix: dict[str, int] = Field(default_factory=dict)  # product title -> trials started on it (from the metrics tree)
 
 
 class TestInput(BaseModel):
@@ -63,6 +64,7 @@ class HistoryInput(BaseModel):
     trials_started: int = 0
     trials_paid: int = 0
     source: str = "analytics conversion trial-paid"
+    by_product: dict[str, tuple[int, int]] = Field(default_factory=dict)  # product title -> (trials started, trials paid)
 
 
 class Assumptions(BaseModel):
@@ -126,6 +128,8 @@ class ArmStats(BaseModel):
     trials_matured: int
     maturation_fraction: float
     matures_at: datetime | None
+    trial_to_paid: RateEstimateModel
+    trial_to_paid_source: str
     pending: PendingRevenueModel
     projected_rpv_low: float
     projected_rpv_expected: float

@@ -35,13 +35,36 @@ def _days(value: timedelta) -> float:
     return value.total_seconds() / 86400.0
 
 
-def _arm_stats(arm: ArmInput, rate: RateEstimate, now: datetime, days_running: float, assumptions: Assumptions,
-               warnings: list[str]) -> tuple[ArmStats, PendingRevenue]:
+def _trial_rate_for(trial_products: list, trial_mix: dict[str, int], history: HistoryInput,
+                    fallback: RateEstimate) -> tuple[RateEstimate, str]:
+    """Trial-to-paid rate for an arm: the account's per-product rates, weighted by which trial plans this arm's
+    viewers actually started (from the metrics tree), else pooled over the arm's trial plans, else the account total."""
+    known = [p for p in trial_products if p.title in history.by_product]
+    if not known:
+        return fallback, "account history, all trial plans"
+    estimates = {p.title: trial_to_paid_estimate(*history.by_product[p.title]) for p in known}
+    weights = {p.title: trial_mix.get(p.title, 0) for p in known}
+    total_weight = sum(weights.values())
+    if total_weight > 0:
+        rate = sum(estimates[t].rate * w for t, w in weights.items()) / total_weight
+        low = sum(estimates[t].low * w for t, w in weights.items()) / total_weight
+        high = sum(estimates[t].high * w for t, w in weights.items()) / total_weight
+        sample = sum(estimates[t].sample_size for t in weights)
+        mix = ", ".join(f"{t} {w / total_weight:.0%}" for t, w in weights.items() if w)
+        return RateEstimate(rate, low, high, sample), f"account history weighted by this arm's trial mix ({mix})"
+    started = sum(history.by_product[p.title][0] for p in known)
+    paid = sum(history.by_product[p.title][1] for p in known)
+    return trial_to_paid_estimate(started, paid), "account history for " + ", ".join(p.title for p in known)
+
+
+def _arm_stats(arm: ArmInput, history: HistoryInput, fallback_rate: RateEstimate, now: datetime, days_running: float,
+               assumptions: Assumptions, warnings: list[str]) -> tuple[ArmStats, PendingRevenue]:
     views = arm.views
     # Paid conversion is a share of viewers, so it counts paying users, not purchases (renewals would inflate it).
     cr = arm.payers / views if views else 0.0
     ci = wilson_interval(min(arm.payers, views), views) if views else wilson_interval(0, 0)
     trial_products = [p for p in arm.products if p.trial_days > 0]
+    rate, rate_source = _trial_rate_for(trial_products, arm.trial_mix, history, fallback_rate)
     trial_days_max = max((p.trial_days for p in trial_products), default=0)
     prices = [p.price_usd for p in trial_products]
     if arm.trials > 0 and not trial_products:
@@ -71,6 +94,7 @@ def _arm_stats(arm: ArmInput, rate: RateEstimate, now: datetime, days_running: f
         range_reliable=range_reliable,
         trial_products=trial_products, trial_days_max=trial_days_max,
         trials_pending=pending, trials_matured=matured, maturation_fraction=maturation, matures_at=maturity,
+        trial_to_paid=RateEstimateModel(**rate.__dict__), trial_to_paid_source=rate_source,
         pending=PendingRevenueModel(**projected.__dict__),
         projected_rpv_low=(arm.revenue + projected.revenue_low) / views if views else 0.0,
         projected_rpv_expected=(arm.revenue + projected.revenue_expected) / views if views else 0.0,
@@ -120,7 +144,7 @@ def build_dossier(test: TestInput, history: HistoryInput, app_id: str, now: date
     arm_stats: list[ArmStats] = []
     pending_by_flow: dict[str, PendingRevenue] = {}
     for arm in test.arms:
-        stats, projected = _arm_stats(arm, rate, now, days_running, assumptions, warnings)
+        stats, projected = _arm_stats(arm, history, rate, now, days_running, assumptions, warnings)
         arm_stats.append(stats)
         pending_by_flow[arm.flow_id] = projected
     if not arm_stats:

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T21:34:42.315071+00:00",
+ "generated_at": "2026-11-07T21:46:01.547392+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
  "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
@@ -74,10 +74,14 @@
   "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "108b9a50-2682-4369-99a3-4867133483cc"
  },
  "charts": {
-  "revenue": "analytics_chart_revenue_week_by_product.json"
+  "revenue": "analytics_chart_revenue_week_by_product.json",
+  "revenue:store_product_id": "analytics_chart_revenue_week_by_product.json",
+  "revenue:flow_id": "analytics_chart_revenue_week_by_flow.json"
  },
  "conversions": {
   "install-paid": "analytics_conversion_install_paid_by_flow.json",
-  "trial-paid": "analytics_conversion_trial_paid.json"
+  "install-paid:flow_id": "analytics_conversion_install_paid_by_flow.json",
+  "trial-paid": "analytics_conversion_trial_paid.json",
+  "trial-paid:store_product_id": "analytics_conversion_trial_paid.json"
  }
 }

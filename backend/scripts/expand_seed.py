@@ -655,6 +655,7 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
     ref = Reference(rng, clock)
     shift = shift_to_clock(users, clock)
     synthetic_flow_users: dict[str, list[User]] = {}
+    effective_flow: dict[str, str] = {}  # user -> flow key after test relabelling
     out.mkdir(parents=True, exist_ok=True)
     for stale in out.glob("*.json"):
         stale.unlink()
@@ -683,6 +684,8 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         for arm in spec.arms:
             if arm.flow_key in SYNTHETIC_FLOWS:
                 synthetic_flow_users.setdefault(arm.flow_key, []).extend(arms_users[arm.flow_key])
+            for u in arms_users[arm.flow_key]:
+                effective_flow[u.user_id] = arm.flow_key
         arms = [aggregate_arm(ref, spec, arm, arms_users[arm.flow_key], started or end, end, rng) for arm in spec.arms]
         if spec.state != "draft":
             bayesian_fields(arms, rng)
@@ -752,12 +755,151 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
     write_json(out / "placements_list.json", page(ref.placements))
     write_json(out / "segments_list.json", page(ref.segments))
     write_json(out / "products_list.json", page(ref.products))
-    for name in ("analytics_chart_revenue_week_by_product.json", "analytics_conversion_install_paid_by_flow.json", "analytics_conversion_trial_paid.json"):
-        shutil.copy2(CAPTURED / name, out / name)
+    build_analytics(users, clock, ref, effective_flow, out, manifest)
     write_json(out / "manifest.json", manifest)
     print(f"wrote {len(list(out.glob('*.json')))} files to {out}  (clock {clock.isoformat()}, shift {shift.days} days)")
     for line in summary:
         print(" ", line)
+
+
+# ----------------------------------------------------------------------------- analytics
+
+
+def period_starts(first: datetime, clock: datetime, unit: str) -> list[datetime]:
+    if unit == "week":
+        start = (first - timedelta(days=first.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+        out = []
+        while start <= clock:
+            out.append(start)
+            start += timedelta(days=7)
+        return out
+    start = first.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    out = []
+    while start <= clock:
+        out.append(start)
+        start = (start.replace(year=start.year + 1, month=1) if start.month == 12 else start.replace(month=start.month + 1))
+    return out
+
+
+def period_index(starts: list[datetime], when: datetime) -> int:
+    index = 0
+    for i, s in enumerate(starts):
+        if when >= s:
+            index = i
+    return index
+
+
+def _meta(captured_name: str, clock: datetime, first: datetime, **query_overrides) -> dict:
+    meta = load_json(CAPTURED / captured_name)["meta"]
+    meta["query"]["filters"]["date"] = [first.date().isoformat(), clock.date().isoformat()]
+    meta["query"].update(query_overrides)
+    return meta
+
+
+def build_analytics(users: dict[str, User], clock: datetime, ref: Reference, effective_flow: dict[str, str], out: Path, manifest: dict) -> None:
+    """Revenue by week (by store product and by flow), install-to-paid by month and flow, trial-to-paid by month and product."""
+    paid = [(u, t) for u in users.values() for t in u.tx if not t.is_trial and t.purchased_at <= clock]
+    first_install = min(u.install_at for u in users.values())
+    weeks = period_starts(first_install, clock, "week")
+    months = period_starts(first_install, clock, "month")
+    x_of = lambda s: s.strftime("%Y-%m-%dT00:00:00.000000+0000")  # noqa: E731
+
+    def series(buckets: dict[str, list[float]], key: str, title: str, is_total: bool) -> dict:
+        values = buckets[key]
+        return {"key": key, "title": title, "is_total": is_total, "value": sum(values),
+                "values": [{"x": x_of(s), "value": v} for s, v in zip(weeks, values)]}
+
+    # revenue by store product (iOS products appear under their Adapty id and title, Android ones under the Play id)
+    by_store: dict[str, list[float]] = defaultdict(lambda: [0.0] * len(weeks))
+    titles: dict[str, str] = {}
+    for u, t in paid:
+        i = period_index(weeks, t.purchased_at)
+        by_store["total"][i] += t.price_usd
+        product = ref.catalog.by_key.get(t.product)
+        if u.platform == "iOS" and product is not None:
+            key, title = product.product_id, product.title
+        else:
+            android = t.store_product_id.replace(".", "_")
+            key, title = f"play_store:{android}", android
+        by_store[key][i] += t.price_usd
+        titles[key] = title
+    segments = [series(by_store, "total", "Total", True)] + [series(by_store, k, titles[k], False) for k in sorted(titles, key=lambda k: -sum(by_store[k]))]
+    write_json(out / "analytics_chart_revenue_week_by_product.json", {
+        "data": {"value": sum(by_store["total"]), "compare": None, "segments": segments},
+        "meta": _meta("analytics_chart_revenue_week_by_product.json", clock, weeks[0])})
+    manifest["charts"] = {"revenue": "analytics_chart_revenue_week_by_product.json",
+                          "revenue:store_product_id": "analytics_chart_revenue_week_by_product.json"}
+
+    # revenue by flow (after test relabelling)
+    by_flow: dict[str, list[float]] = defaultdict(lambda: [0.0] * len(weeks))
+    for u, t in paid:
+        i = period_index(weeks, t.purchased_at)
+        by_flow["total"][i] += t.price_usd
+        by_flow[effective_flow.get(u.user_id, u.flow)][i] += t.price_usd
+    flow_segments = [series(by_flow, "total", "Total", True)]
+    for key in sorted((k for k in by_flow if k != "total"), key=lambda k: -sum(by_flow[k])):
+        seg = series(by_flow, key, FLOW_NAMES.get(key, key), False)
+        seg["key"] = ref.flow_id(key) if key in FLOW_NAMES else key
+        flow_segments.append(seg)
+    write_json(out / "analytics_chart_revenue_week_by_flow.json", {
+        "data": {"value": sum(by_flow["total"]), "compare": None, "segments": flow_segments},
+        "meta": _meta("analytics_chart_revenue_week_by_product.json", clock, weeks[0], segmentation="flow_id")})
+    manifest["charts"]["revenue:flow_id"] = "analytics_chart_revenue_week_by_flow.json"
+
+    # install -> paid by month and flow
+    def conversion_segment(key: str, title: str, is_total: bool, rows: list[tuple[int, int, int]]) -> dict:
+        total_from = sum(r[0] for r in rows)
+        total_to = sum(r[1] for r in rows)
+        return {"key": key, "title": title, "is_total": is_total, "value": (total_to / total_from * 100.0) if total_from else 0.0,
+                "value_from": total_from, "value_to": total_to,
+                "values": [{"x": x_of(s), "value": (to / frm * 100.0) if frm else 0.0, "value_from": frm, "value_to": to,
+                            "value_from_unfinished": unf, "has_unfinished": unf > 0} for s, (frm, to, unf) in zip(months, rows)]}
+
+    installs: dict[str, list[list[int]]] = defaultdict(lambda: [[0, 0, 0] for _ in months])
+    for u in users.values():
+        i = period_index(months, u.install_at)
+        paid_user = 1 if any(not t.is_trial and t.purchased_at <= clock for t in u.tx) else 0
+        for key in ("total", effective_flow.get(u.user_id, u.flow)):
+            installs[key][i][0] += 1
+            installs[key][i][1] += paid_user
+    conv_segments = [conversion_segment("total", "Total", True, [tuple(r) for r in installs["total"]])]
+    for key in sorted((k for k in installs if k != "total"), key=lambda k: -sum(r[0] for r in installs[k])):
+        conv_segments.append(conversion_segment(ref.flow_id(key) if key in FLOW_NAMES else key, FLOW_NAMES.get(key, key), False, [tuple(r) for r in installs[key]]))
+    total = conv_segments[0]
+    write_json(out / "analytics_conversion_install_paid_by_flow.json", {
+        "data": {"value": total["value"], "value_from": total["value_from"], "value_to": total["value_to"], "compare": None, "segments": conv_segments},
+        "meta": _meta("analytics_conversion_install_paid_by_flow.json", clock, months[0])})
+    manifest["conversions"] = {"install-paid": "analytics_conversion_install_paid_by_flow.json",
+                               "install-paid:flow_id": "analytics_conversion_install_paid_by_flow.json"}
+
+    # trial -> paid by month and product (finished trials in value_from, running ones in value_from_unfinished)
+    trials: dict[str, list[list[int]]] = defaultdict(lambda: [[0, 0, 0] for _ in months])
+    for u in users.values():
+        for t in u.tx:
+            if not t.is_trial or t.purchased_at > clock:
+                continue
+            i = period_index(months, t.purchased_at)
+            finished = t.expires_at is not None and t.expires_at <= clock
+            converted = finished and any(p.product == t.product and not p.is_trial and t.purchased_at <= p.purchased_at <= clock for p in u.tx)
+            product = ref.catalog.by_key.get(t.product)
+            for key in ("total", product.title if product else t.product):
+                if finished:
+                    trials[key][i][0] += 1
+                    trials[key][i][1] += 1 if converted else 0
+                else:
+                    trials[key][i][2] += 1
+    trial_segments = [conversion_segment("total", "Total", True, [tuple(r) for r in trials["total"]])]
+    for key in sorted(k for k in trials if k != "total"):
+        product_id = next((pid for pid, p in ref.catalog.products.items() if p.title == key), key)
+        trial_segments.append(conversion_segment(product_id, key, False, [tuple(r) for r in trials[key]]))
+    total = trial_segments[0]
+    write_json(out / "analytics_conversion_trial_paid.json", {
+        "data": {"value": total["value"], "value_from": total["value_from"], "value_to": total["value_to"], "compare": None, "segments": trial_segments},
+        "meta": _meta("analytics_conversion_trial_paid.json", clock, months[0], segmentation="store_product_id")})
+    manifest["conversions"]["trial-paid"] = "analytics_conversion_trial_paid.json"
+    manifest["conversions"]["trial-paid:store_product_id"] = "analytics_conversion_trial_paid.json"
+    print(f"  analytics: {len(weeks)} weeks of revenue (${sum(by_store['total']):,.0f}), {len(months)} months of conversions, "
+          f"trial-to-paid {total['value']:.1f}% on {total['value_from']:,} finished trials")
 
 
 def main() -> None:

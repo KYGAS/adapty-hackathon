@@ -56,6 +56,8 @@ export interface ArmStats {
   trials_matured: number;
   maturation_fraction: number;
   matures_at: string | null;
+  trial_to_paid: RateEstimate;
+  trial_to_paid_source: string;
   pending: PendingRevenue;
   projected_rpv_low: number;
   projected_rpv_expected: number;

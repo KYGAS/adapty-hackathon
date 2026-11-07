@@ -24,9 +24,9 @@ def _num(value: Any, default: float = 0.0) -> float:
         return default
 
 
-def products_by_arm(tree: dict | None) -> dict[str, list[tuple[str, str]]]:
-    """(product_id, title) pairs under each variation of a metrics tree, searching all screens."""
-    found: dict[str, list[tuple[str, str]]] = {}
+def products_by_arm(tree: dict | None) -> dict[str, list[tuple[str, str, int]]]:
+    """(product_id, title, trials) per product under each variation of a metrics tree, searching all screens."""
+    found: dict[str, list[tuple[str, str, int]]] = {}
     if not tree:
         return found
 
@@ -35,8 +35,8 @@ def products_by_arm(tree: dict | None) -> dict[str, list[tuple[str, str]]]:
         if level == "variation":
             variation = node.get("flow_id") or node.get("variation_id")
         if level == "product" and variation:
-            pair = (str(node.get("product_id") or node.get("store_product_id") or ""), str(node.get("title") or ""))
-            if pair not in found.setdefault(variation, []):
+            pair = (str(node.get("product_id") or node.get("store_product_id") or ""), str(node.get("title") or ""), int(_num(node.get("trials"))))
+            if all(p[0] != pair[0] for p in found.setdefault(variation, [])):
                 found[variation].append(pair)
         for child in node.get("items", []) or []:
             walk(child, variation)
@@ -53,9 +53,10 @@ def build_test_input(detail: dict, total: dict | None, tree: dict | None, catalo
     for flow in detail.get("flows", []):
         row = arm_rows.get(flow["flow_id"], {})
         pairs = tree_products.get(flow["flow_id"], [])
-        products = catalog.resolve([p for p, _ in pairs], [t for _, t in pairs]) if pairs else []
+        products = catalog.resolve([p for p, _, _ in pairs], [t for _, t, _ in pairs]) if pairs else []
         if not products:
             products = catalog.products_for_flow(flow.get("flow_name", ""))
+        trial_mix = {t: n for _, t, n in pairs if n > 0}
         arms.append(ArmInput(
             flow_id=flow["flow_id"],
             variation_id=flow.get("variation_id") or row.get("variation_id"),
@@ -74,6 +75,7 @@ def build_test_input(detail: dict, total: dict | None, tree: dict | None, catalo
             p_value=None if row.get("p_value") is None else _num(row.get("p_value")),
             active_trials_rate=None if row.get("active_trials_rate") is None else _num(row.get("active_trials_rate")),
             products=products,
+            trial_mix=trial_mix,
         ))
     placement = detail.get("placement") or {}
     return TestInput(
@@ -99,9 +101,12 @@ def build_history_input(conversion: dict | None) -> HistoryInput:
     # value_from already excludes trials that are still running (they are reported as value_from_unfinished).
     started = int(_num(conversion.get("value_from")))
     paid = int(_num(conversion.get("value_to")))
+    by_product: dict[str, tuple[int, int]] = {}
     for segment in conversion.get("segments", []) or []:
         if segment.get("is_total"):
             started = int(_num(segment.get("value_from")))
             paid = int(_num(segment.get("value_to")))
-            break
-    return HistoryInput(trials_started=started, trials_paid=paid)
+        elif segment.get("title") and segment.get("title") != "No Data":
+            by_product[str(segment["title"])] = (int(_num(segment.get("value_from"))), int(_num(segment.get("value_to"))))
+    source = "analytics conversion trial-paid" + (" by product" if by_product else "")
+    return HistoryInput(trials_started=started, trials_paid=paid, source=source, by_product=by_product)
