@@ -62,6 +62,10 @@ def decide(inp: DecisionInputs) -> Decision:
         return Decision(VerdictCode.WAIT_TRIAL_LAG, max(0.0, inp.days_to_maturity),
                         ("open_trials_can_flip_leader", "wait_for_maturation"))
 
+    if inp.min_views_per_arm == 0:
+        return Decision(VerdictCode.WAIT_SAMPLE, max(0.0, inp.min_runtime_days - inp.days_running),
+                        ("no_views_yet", "peeking_guard"))
+
     sample_reached = inp.required_views_per_arm is not None and inp.min_views_per_arm >= inp.required_views_per_arm
     if not sample_reached and (inp.required_views_per_arm is None or math.isinf(inp.days_to_sample)
                                or inp.days_to_sample > inp.max_wait_days):

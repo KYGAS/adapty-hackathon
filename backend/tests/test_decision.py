@@ -72,6 +72,13 @@ def test_wait_for_sample_with_eta():
     assert "peeking_guard" in d.reasons
 
 
+def test_fresh_test_without_views_waits_for_the_first_week():
+    d = decide(base(min_views_per_arm=0, required_views_per_arm=None, days_running=1.0, days_to_sample=math.inf))
+    assert d.code == VerdictCode.WAIT_SAMPLE
+    assert d.wait_days == 6.0
+    assert "no_views_yet" in d.reasons
+
+
 def test_not_decidable_when_sample_is_out_of_reach():
     assert decide(base(min_views_per_arm=300, days_to_sample=200.0)).code == VerdictCode.NOT_DECIDABLE
     assert decide(base(min_views_per_arm=300, days_to_sample=math.inf)).code == VerdictCode.NOT_DECIDABLE

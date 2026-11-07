@@ -242,17 +242,20 @@ def build_dossier(test: TestInput, history: HistoryInput, app_id: str, now: date
     )
 
     wait_days = decision.wait_days if not math.isinf(decision.wait_days) else (sample.days_to_sample or 0.0)
-    headline = _headline(decision.code.value, {
-        "pending": trial_lag.pending_trials_total, "maturity": fmt_date(maturity_date),
-        "required": required if required is not None else "an unknown number of",
-        "days": f"{days_to_sample:.0f}" if not math.isinf(days_to_sample) else "more than the limit of",
-        "max_wait": f"{assumptions.max_wait_days:.0f}",
-        "payers": leader.payers if leader else 0, "threshold": assumptions.payers_threshold,
-        "wait": f"{decision.wait_days:.1f}", "min_views": min_views, "sample_date": fmt_date(sample_date),
-        "leader": leader.title if leader else "nobody", "flow": leader.flow_name if leader else "the control",
-        "mde": f"{assumptions.mde_relative * 100:.0f}", "placement": test.placement_title or "its placement",
-        "stopped": fmt_date(test.stopped_at),
-    })
+    if "no_views_yet" in decision.reasons:
+        headline = f"Keep running: no viewers attributed yet. First read on {fmt_date(min_runtime_date)}."
+    else:
+        headline = _headline(decision.code.value, {
+            "pending": trial_lag.pending_trials_total, "maturity": fmt_date(maturity_date),
+            "required": required if required is not None else "an unknown number of",
+            "days": f"{days_to_sample:.0f}" if not math.isinf(days_to_sample) else "more than the limit of",
+            "max_wait": f"{assumptions.max_wait_days:.0f}",
+            "payers": leader.payers if leader else 0, "threshold": assumptions.payers_threshold,
+            "wait": f"{decision.wait_days:.1f}", "min_views": min_views, "sample_date": fmt_date(sample_date),
+            "leader": leader.title if leader else "nobody", "flow": leader.flow_name if leader else "the control",
+            "mde": f"{assumptions.mde_relative * 100:.0f}", "placement": test.placement_title or "its placement",
+            "stopped": fmt_date(test.stopped_at),
+        })
     verdict = Verdict(
         code=decision.code.value, headline=headline,
         leader_title=leader.title if leader else None, leader_flow_id=leader.flow_id if leader else None,
