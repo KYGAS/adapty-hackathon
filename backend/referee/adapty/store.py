@@ -17,13 +17,23 @@ from typing import Any, Callable
 from urllib.parse import parse_qs
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+FIXTURE_SETS = {"captured": FIXTURES, "expanded": Path(__file__).resolve().parent / "fixtures_expanded"}
 
 Query = dict[str, list[str]]
 Handler = Callable[[dict[str, str], Query, Any], Any]
 
 
-def load(name: str) -> Any:
-    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+def load(name: str, base: Path = FIXTURES) -> Any:
+    return json.loads((base / name).read_text(encoding="utf-8"))
+
+
+def fixtures_dir(fixture_set: str) -> Path:
+    path = FIXTURE_SETS.get(fixture_set)
+    if path is None:
+        raise ValueError(f"unknown fixture set {fixture_set!r}; expected one of {sorted(FIXTURE_SETS)}")
+    if not path.exists():
+        raise FileNotFoundError(f"fixture set {fixture_set!r} is not generated yet ({path}); run backend/scripts/expand_seed.py")
+    return path
 
 
 def _now_iso() -> str:
@@ -38,37 +48,54 @@ class BadRequest(Exception):
     pass
 
 
+CAPTURED_MANIFEST = {
+    "tests": ["ab_test_get_onboarding.json", "ab_test_get_main_na.json", "ab_test_get_settings_completed.json", "ab_test_get_ai_limit_draft.json"],
+    "metrics_list": "ab_tests_metrics_list.json",
+    "metrics_trees": {"b2c90b2b-59b0-48fc-b821-b90061d1ae1e": {"lifetime": "ab_test_metrics_get_onboarding_lifetime.json",
+                                                              "country": "ab_test_metrics_get_onboarding_by_country.json"}},
+    "metrics_totals": {"b2c90b2b-59b0-48fc-b821-b90061d1ae1e": "ab_test_metrics_total_onboarding.json"},
+    "placement_details": ["placement_get_onboarding.json"],
+    "winners": {"35299a82-0d41-4b50-a874-bf86e11c33d0": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa"},
+    "charts": {"revenue": "analytics_chart_revenue_week_by_product.json"},
+    "conversions": {"install-paid": "analytics_conversion_install_paid_by_flow.json", "trial-paid": "analytics_conversion_trial_paid.json"},
+}
+
+
 class Store:
-    def __init__(self) -> None:
+    """A fixture set is a folder of API answers plus a manifest.json naming which file answers what.
+    The captured folder predates manifests, so its mapping is built in."""
+
+    def __init__(self, fixture_set: str = "captured") -> None:
         self.lock = threading.RLock()
-        self.tests = load("ab_tests_list.json")
+        self.fixture_set = fixture_set
+        base = fixtures_dir(fixture_set)
+        manifest_path = base / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else CAPTURED_MANIFEST
+        self.manifest = manifest
+        self.tests = load(manifest.get("tests_list", "ab_tests_list.json"), base)
         self.test_details: dict[str, dict] = {}
-        for name in ("ab_test_get_onboarding.json", "ab_test_get_main_na.json",
-                     "ab_test_get_settings_completed.json", "ab_test_get_ai_limit_draft.json"):
-            detail = load(name)
+        for name in manifest["tests"]:
+            detail = load(name, base)
             self.test_details[detail["ab_test_id"]] = detail
-        self.metrics_list = load("ab_tests_metrics_list.json")
-        self.metrics_get = {
-            "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": {
-                None: load("ab_test_metrics_get_onboarding_lifetime.json"),
-                "country": load("ab_test_metrics_get_onboarding_by_country.json"),
-            }
-        }
-        self.metrics_total = {"b2c90b2b-59b0-48fc-b821-b90061d1ae1e": load("ab_test_metrics_total_onboarding.json")}
-        self.flows = load("flows_list.json")
-        self.flow_metrics = load("flows_metrics_list.json")
-        self.placements = load("placements_list.json")
-        self.placement_details = {"2d81af2b-6159-4416-924b-e3d927e468e5": load("placement_get_onboarding.json")}
-        self.segments = load("segments_list.json")
-        self.products = load("products_list.json")
-        self.chart = load("analytics_chart_revenue_week_by_product.json")
-        self.conversions = {
-            "install-paid": load("analytics_conversion_install_paid_by_flow.json"),
-            "trial-paid": load("analytics_conversion_trial_paid.json"),
-        }
-        # Known winners of completed tests (the API does not echo the stop body). The seed stopped the
-        # Settings test with "Settings - Upgrade" as the winner.
-        self.winners: dict[str, str] = {"35299a82-0d41-4b50-a874-bf86e11c33d0": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa"}
+        self.metrics_list = load(manifest["metrics_list"], base)
+        self.metrics_get: dict[str, dict[str | None, dict]] = {}
+        for test_id, trees in manifest.get("metrics_trees", {}).items():
+            self.metrics_get[test_id] = {(None if key == "lifetime" else key): load(name, base) for key, name in trees.items()}
+        self.metrics_total = {test_id: load(name, base) for test_id, name in manifest.get("metrics_totals", {}).items()}
+        self.flows = load(manifest.get("flows", "flows_list.json"), base)
+        self.flow_metrics = load(manifest.get("flow_metrics", "flows_metrics_list.json"), base)
+        self.placements = load(manifest.get("placements", "placements_list.json"), base)
+        self.placement_details = {}
+        for name in manifest.get("placement_details", []):
+            detail = load(name, base)
+            self.placement_details[detail["id"]] = detail
+        self.segments = load(manifest.get("segments", "segments_list.json"), base)
+        self.products = load(manifest.get("products", "products_list.json"), base)
+        self.chart = load(manifest["charts"]["revenue"], base)
+        self.conversions = {key: load(name, base) for key, name in manifest["conversions"].items()}
+        # Winners of completed tests (the API does not echo the stop body; the seed stopped the Settings test
+        # with "Settings - Upgrade" as the winner).
+        self.winners: dict[str, str] = dict(manifest.get("winners", {}))
 
     # ------------------------------------------------------------ reads
     def list_tests(self, query: Query) -> dict:

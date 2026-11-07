@@ -1,0 +1,16 @@
+{
+  "id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+  "developer_id": "onboarding",
+  "title": "Onboarding",
+  "is_active": true,
+  "type": "flow",
+  "audiences": [
+    {
+      "segment_ids": [],
+      "priority": 0,
+      "ab_test_id": "b2c90b2b-59b0-48fc-b821-b90061d1ae1e",
+      "ab_test_title": "Onboarding: annual trial vs weekly first",
+      "content_type": "flow_ab_test"
+    }
+  ]
+}

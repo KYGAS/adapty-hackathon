@@ -1,0 +1,81 @@
+{
+  "data": {
+    "value": 44.09148665819568,
+    "value_from": 787,
+    "value_to": 347,
+    "compare": null,
+    "segments": [
+      {
+        "key": null,
+        "title": "Conversion rate from trial to paid",
+        "is_total": true,
+        "value": 44.09148665819568,
+        "value_from": 787,
+        "value_to": 347,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 43.712574850299404,
+            "value_from": 167,
+            "value_to": 73,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 42.65402843601896,
+            "value_from": 211,
+            "value_to": 90,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 51.91256830601093,
+            "value_from": 183,
+            "value_to": 95,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 38.23529411764706,
+            "value_from": 204,
+            "value_to": 78,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 50,
+            "value_from": 22,
+            "value_to": 11,
+            "value_from_unfinished": 164,
+            "has_unfinished": true
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "query": {
+      "timezone": "UTC",
+      "timezone_source": "app",
+      "conversion_id": "trial-paid",
+      "filters": {
+        "date": [
+          "2026-07-01",
+          "2026-11-07"
+        ]
+      },
+      "segmentation": null,
+      "period_unit": "month"
+    },
+    "recommended_period": null,
+    "definitions": {
+      "value": "If Х - the number of trials taken during the selected date, and Y - the number of subscriptions after these trials taken any time later, then Conversion = (Y / X) * 100%.",
+      "revenue_basis": null,
+      "freshness": "Transactions, installs, paywall views and flow events reach the analytics at least 15 minutes after Adapty receives them. Numbers of past days can still change: a refund that the store reports later takes the revenue out of the day of its purchase."
+    }
+  }
+}

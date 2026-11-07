@@ -149,9 +149,9 @@ class _Base:
 class MockAdaptyClient(_Base):
     mode = "mock"
 
-    def __init__(self, app_id: str, store: Store | None = None):
+    def __init__(self, app_id: str, store: Store | None = None, fixture_set: str = "captured"):
         self.app_id = app_id
-        self.store = store or Store()
+        self.store = store or Store(fixture_set)
 
     def request(self, method: str, path: str, query: dict[str, Any] | None = None, body: Any = None) -> tuple[int, Any]:
         normalized = {k: [str(v)] for k, v in (query or {}).items()}
@@ -200,4 +200,4 @@ class LiveAdaptyClient(_Base):
 def make_client(settings: Settings) -> AdaptyClient:
     if settings.is_live:
         return LiveAdaptyClient(settings.adapty_app_id, settings.adapty_token or "", settings.adapty_api_url)
-    return MockAdaptyClient(settings.adapty_app_id)
+    return MockAdaptyClient(settings.adapty_app_id, fixture_set=settings.adapty_fixtures)

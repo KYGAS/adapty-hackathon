@@ -1,0 +1,41 @@
+{
+ "generated_at": "2026-11-07T20:41:41.092105+00:00",
+ "clock": "2026-11-07T17:00:00+00:00",
+ "seed": 20261107,
+ "source": "captured fixtures copied; offline dataset loaded (50000 users)",
+ "tests_list": "ab_tests_list.json",
+ "tests": [
+  "ab_test_get_onboarding.json",
+  "ab_test_get_main_na.json",
+  "ab_test_get_settings_completed.json",
+  "ab_test_get_ai_limit_draft.json"
+ ],
+ "metrics_list": "ab_tests_metrics_list.json",
+ "metrics_trees": {
+  "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": {
+   "lifetime": "ab_test_metrics_get_onboarding_lifetime.json",
+   "country": "ab_test_metrics_get_onboarding_by_country.json"
+  }
+ },
+ "metrics_totals": {
+  "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": "ab_test_metrics_total_onboarding.json"
+ },
+ "flows": "flows_list.json",
+ "flow_metrics": "flows_metrics_list.json",
+ "placements": "placements_list.json",
+ "placement_details": [
+  "placement_get_onboarding.json"
+ ],
+ "segments": "segments_list.json",
+ "products": "products_list.json",
+ "winners": {
+  "35299a82-0d41-4b50-a874-bf86e11c33d0": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa"
+ },
+ "charts": {
+  "revenue": "analytics_chart_revenue_week_by_product.json"
+ },
+ "conversions": {
+  "install-paid": "analytics_conversion_install_paid_by_flow.json",
+  "trial-paid": "analytics_conversion_trial_paid.json"
+ }
+}

@@ -35,6 +35,7 @@ def health(request: Request) -> dict[str, Any]:
     return {
         "ok": True,
         "adapty_mode": request.app.state.client.mode,
+        "fixture_set": getattr(getattr(request.app.state.client, "store", None), "fixture_set", None),
         "app_id": settings.adapty_app_id,
         "live_writes_allowed": settings.allow_live_writes,
         "llm_provider_setting": settings.llm_provider,

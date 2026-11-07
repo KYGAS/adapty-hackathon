@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": "75dae32c-b1a6-415b-a87b-834819e08a80",
+      "developer_id": "win_back",
+      "title": "Win-back",
+      "is_active": true,
+      "type": "flow"
+    },
+    {
+      "id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
+      "developer_id": "settings_upgrade",
+      "title": "Settings - Upgrade",
+      "is_active": true,
+      "type": "flow"
+    },
+    {
+      "id": "0dfdf0d2-f36a-4b02-9b85-a654ecc3182e",
+      "developer_id": "ai_limit_reached",
+      "title": "AI edits limit reached",
+      "is_active": true,
+      "type": "flow"
+    },
+    {
+      "id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
+      "developer_id": "main",
+      "title": "Main paywall",
+      "is_active": true,
+      "type": "flow"
+    },
+    {
+      "id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+      "developer_id": "onboarding",
+      "title": "Onboarding",
+      "is_active": true,
+      "type": "flow"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "count": 5,
+      "page": 1,
+      "pages": 1
+    }
+  }
+}

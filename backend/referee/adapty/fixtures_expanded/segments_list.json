@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "id": "0ad858a5-5fda-49f7-9186-b4d1a747825a",
+      "title": "Payers",
+      "description": "Users who paid at least once"
+    },
+    {
+      "id": "3c32882d-80a8-46c5-8c1e-ea5d6d3c843c",
+      "title": "Europe Tier-1",
+      "description": "UK, Germany, France, Netherlands, Sweden"
+    },
+    {
+      "id": "70d12a72-e25b-4fc2-bd5a-817c27cfa397",
+      "title": "US & Canada",
+      "description": "Users from the US and Canada"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pages": 1,
+      "count": 3
+    }
+  }
+}
