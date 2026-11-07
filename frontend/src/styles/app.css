@@ -1,0 +1,167 @@
+/* Referee additions on top of the Adapty style kit. Tokens only, no new colors. */
+
+:root {
+  --series-c: var(--green-400);
+  --series-d: var(--blue-400, #3d7bf6);
+}
+
+body {
+  background: var(--white);
+}
+
+.rf-mb-8 { margin-bottom: 8px; }
+.rf-mb-16 { margin-bottom: 16px; }
+.rf-mb-24 { margin-bottom: 24px; }
+.rf-mt-24 { margin-top: 24px; }
+.rf-mt-40 { margin-top: 40px; }
+.rf-gap-16 { gap: 16px; }
+.rf-right { text-align: right; }
+.rf-nowrap { white-space: nowrap; }
+.rf-mono { font-family: 'Fira Code', ui-monospace, monospace; font-size: 13px; }
+.rf-muted { color: var(--black-600); }
+.rf-strong { font-weight: 600; }
+.rf-tabular { font-variant-numeric: tabular-nums; }
+
+/* ---- verdict: colored text, not a chip (status rule from the guide) */
+.rf-verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.rf-verdict .ad-icon { width: 16px; height: 16px; }
+.rf-verdict--wait { color: var(--yellow-400, #b26b00); }
+.rf-verdict--call { color: var(--green-500); }
+.rf-verdict--blocked { color: var(--red-400); }
+.rf-verdict--neutral { color: var(--black-600); }
+.rf-verdict--done { color: var(--purple-400); }
+
+/* ---- referee panel on the metrics page */
+.rf-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .rf-panel-grid { grid-template-columns: 1fr; }
+}
+.rf-headline {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.rf-reasons { margin: 0; padding-left: 18px; color: var(--black-800); }
+.rf-reasons li { margin: 4px 0; }
+
+/* ---- key-value list inside panels */
+.rf-kv { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; margin: 0; }
+.rf-kv dt { color: var(--black-600); }
+.rf-kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---- progress bar (sample size) */
+.rf-progress { height: 6px; border-radius: 3px; background: var(--black-50); overflow: hidden; }
+.rf-progress > span { display: block; height: 100%; background: var(--purplePrimary); border-radius: 3px; }
+
+/* ---- charts */
+.rf-chart { width: 100%; height: auto; display: block; font-family: Inter, sans-serif; }
+.rf-chart text { fill: var(--black-800); font-size: 12px; }
+.rf-chart .rf-axis { stroke: var(--black-100); stroke-width: 1; }
+.rf-chart .rf-grid { stroke: var(--black-50); stroke-width: 1; }
+.rf-chart .rf-muted-text { fill: var(--black-600); }
+.rf-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--black-600); margin-top: 8px; }
+.rf-legend span::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 6px;
+  background: var(--swatch);
+  vertical-align: -1px;
+}
+.rf-tooltip {
+  position: fixed;
+  z-index: 10001;
+  pointer-events: none;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 0 18px rgba(1, 0, 48, 0.15);
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--blackPrimary);
+}
+.rf-tooltip b { display: block; margin-bottom: 2px; }
+
+/* ---- timeline */
+.rf-timeline-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--black-600); margin-top: 4px; }
+
+/* ---- actions */
+.rf-action {
+  border: 1px solid var(--black-100);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: grid;
+  gap: 8px;
+}
+.rf-action.is-recommended { border-color: var(--purplePrimary); }
+.rf-action__row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.rf-command {
+  font-family: 'Fira Code', ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 18px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-100);
+  border-radius: 4px;
+  padding: 8px 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+}
+.rf-risk--irreversible { color: var(--red-400); }
+.rf-risk--reversible { color: var(--yellow-400, #b26b00); }
+.rf-risk--none { color: var(--black-600); }
+
+/* ---- memo */
+.rf-memo h3 { font-size: 14px; line-height: 20px; font-weight: 600; margin: 12px 0 4px; }
+.rf-memo p, .rf-memo li { font-size: 14px; line-height: 22px; }
+.rf-memo ul { padding-left: 18px; margin: 4px 0; }
+.rf-memo code { font-family: 'Fira Code', ui-monospace, monospace; font-size: 12px; background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 4px; padding: 0 4px; }
+
+/* ---- grade */
+.rf-grade {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+.rf-grade--A, .rf-grade--B { background: var(--green-50); color: var(--green-500); }
+.rf-grade--C { background: var(--yellow-50); color: var(--yellow-400, #b26b00); }
+.rf-grade--D, .rf-grade--F { background: var(--red-50); color: var(--red-400); }
+
+/* ---- small inline table used in panels */
+.rf-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.rf-table th { text-align: left; font-size: 12px; font-weight: 500; color: var(--black-600); padding: 6px 8px; background: var(--silver); }
+.rf-table td { padding: 8px; border-bottom: 1px solid var(--black-50); font-variant-numeric: tabular-nums; }
+.rf-table th.is-right, .rf-table td.is-right { text-align: right; }
+.rf-table tr.is-leader td { background: var(--green-50); }
+
+.rf-error {
+  border: 1px solid var(--red-100, #f3c6c8);
+  background: var(--red-50, #fdf2f2);
+  color: var(--red-400);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.rf-mode-pill { margin-left: 8px; }
+
+/* keep the kit's layout: fixed sidebar, content offset */
+.ad-content { min-height: calc(100vh - 48px); }
