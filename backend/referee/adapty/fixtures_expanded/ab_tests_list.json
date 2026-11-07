@@ -57,11 +57,25 @@
    "priority": 0,
    "started_at": null,
    "stopped_at": null
+  },
+  {
+   "ab_test_id": "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11",
+   "title": "Main paywall: lifetime anchor vs 3 plans vs social proof",
+   "type": "flow",
+   "state": "live",
+   "placement": {
+    "placement_id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
+    "title": "Main paywall"
+   },
+   "segment_ids": [],
+   "priority": 0,
+   "started_at": "2026-08-09T17:00:00.000000Z",
+   "stopped_at": null
   }
  ],
  "meta": {
   "pagination": {
-   "count": 4,
+   "count": 5,
    "page": 1,
    "pages": 1
   }

@@ -39,7 +39,7 @@
     "low_boundary": 0.0,
     "average_per_1000": 4505.642857142858,
     "upper_boundary": 9011.285714285716,
-    "probability": 0.22999999999999998,
+    "probability": 0.245,
     "p_value": 0.05921170432130022
    },
    {
@@ -80,7 +80,7 @@
     "low_boundary": 0.0,
     "average_per_1000": 11350.192307692307,
     "upper_boundary": 22700.384615384613,
-    "probability": 99.77000000000001,
+    "probability": 99.75500000000001,
     "p_value": 0.05921170432130022
    }
   ],
@@ -89,7 +89,7 @@
    "title": "Main: 3 plans vs lifetime anchor (NA)",
    "goal": "Does a lifetime anchor lift annual share in North America?",
    "paywalls_group": {
-    "paywalls_group_id": "58d21200-7808-4dd5-b1b6-4dae8a594471",
+    "paywalls_group_id": "ef1ad3c0-3ffa-470f-872c-a28ee0f665c8",
     "title": "Main: 3 plans vs lifetime anchor (NA)"
    },
    "vars": {},

@@ -179,6 +179,9 @@ class ArmSpec:
     flow_key: str
     weight: int
     title: str
+    # Synthetic tests draw their viewers from users of an existing flow (source_flow_key), optionally one shard of them.
+    source_flow_key: str | None = None
+    shard: tuple[int, int] = (0, 1)
 
 
 @dataclass(frozen=True)
@@ -201,7 +204,10 @@ FLOW_NAMES = {
     "onb_trial": "Onboarding - Annual trial", "onb_weekly": "Onboarding - Weekly first", "main": "Main - 3 plans",
     "main_lifetime": "Main - Lifetime anchor", "ai_limit": "AI limit reached - Pro", "settings": "Settings - Upgrade",
     "winback": "Win-back - Monthly",
+    # flows that exist only in the expanded set
+    "main_social": "Main - Social proof",
 }
+SYNTHETIC_FLOWS = {"main_social"}
 SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers"}
 ONBOARDING_SCREENS = [("scr_welcome", "1. Welcome", 1.0), ("scr_goal", "2. Goal", 0.9), ("scr_paywall", "3. Paywall", 0.8)]
 PAYWALL_SCREEN = [("scr_paywall", "Paywall", 1.0)]
@@ -221,6 +227,14 @@ SCENARIO: list[TestSpec] = [
              stopped_days_ago=30, winner_flow_key="settings", source_title="Settings: upgrade vs lifetime anchor"),
     TestSpec("7c4c06ef-f5da-45a3-9ec1-05d644e78f03", "AI limit: Pro vs 3 plans", "Draft - planned for next sprint",
              "ai_limit_reached", None, (ArmSpec("ai_limit", 50, "A"), ArmSpec("main", 50, "B")), "draft", started_days_ago=None),
+    # Synthetic three-arm test: the non-NA users of the main paywall, with the lifetime anchor as control and the
+    # 3-plans users split in two shards, one of them relabelled as a new "social proof" flow.
+    TestSpec("3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11", "Main paywall: lifetime anchor vs 3 plans vs social proof",
+             "Which main paywall layout maximises revenue per viewer outside North America?", "main", None,
+             (ArmSpec("main_lifetime", 34, "A", source_flow_key="main_lifetime"),
+              ArmSpec("main", 33, "B", source_flow_key="main", shard=(0, 2)),
+              ArmSpec("main_social", 33, "C", source_flow_key="main", shard=(1, 2))),
+             "live", started_days_ago=90),
 ]
 
 
@@ -230,10 +244,17 @@ SCENARIO: list[TestSpec] = [
 class Reference:
     """Ids and names Adapty already assigned to Lumen: flows, placements, segments, products, variations."""
 
-    def __init__(self) -> None:
+    def __init__(self, rng: random.Random, clock: datetime) -> None:
         self.catalog = Catalog.load()
         self.flows = load_json(CAPTURED / "flows_list.json")["data"]
         self.flow_id_by_name = {f["name"]: f["id"] for f in self.flows}
+        for key in sorted(SYNTHETIC_FLOWS):
+            name = FLOW_NAMES[key]
+            if name not in self.flow_id_by_name:
+                flow_id = stable_uuid(rng)
+                self.flow_id_by_name[name] = flow_id
+                self.flows.append({"id": flow_id, "name": name, "status": "published", "creation_source": "flow_builder",
+                                   "updated_at": iso(clock - timedelta(days=91))})
         self.placements = load_json(CAPTURED / "placements_list.json")["data"]
         self.placement_by_key = {p["developer_id"]: p for p in self.placements}
         self.segments = load_json(CAPTURED / "segments_list.json")["data"]
@@ -247,6 +268,9 @@ class Reference:
 
     def flow_id(self, key: str) -> str:
         return self.flow_id_by_name[FLOW_NAMES[key]]
+
+    def flow_name(self, key: str) -> str:
+        return FLOW_NAMES[key]
 
     def variation_id(self, test_id: str, flow_id: str, rng: random.Random) -> str:
         if (test_id, flow_id) not in self.variation_ids:
@@ -482,13 +506,28 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
+def user_shard(user: User, count: int) -> int:
+    return int(user.user_id.lstrip("u") or "0") % count
+
+
 def test_users(users: dict[str, User], spec: TestSpec, start: datetime | None, end: datetime) -> dict[str, list[User]]:
+    """Viewers per arm. Real tests take the dataset's own assignment; synthetic tests take users of the placement who
+    were in no test, matched by source flow and shard."""
     by_flow: dict[str, list[User]] = {arm.flow_key: [] for arm in spec.arms}
-    if spec.source_title is None or start is None:
+    if start is None:
         return by_flow
-    for u in users.values():
-        if u.ab_test == spec.source_title and u.flow in by_flow and start <= u.install_at <= end:
-            by_flow[u.flow].append(u)
+    if spec.source_title is not None:
+        for u in users.values():
+            if u.ab_test == spec.source_title and u.flow in by_flow and start <= u.install_at <= end:
+                by_flow[u.flow].append(u)
+    else:
+        for arm in spec.arms:
+            source = arm.source_flow_key or arm.flow_key
+            index, count = arm.shard
+            for u in users.values():
+                if (u.ab_test is None and u.placement == spec.placement_key and u.flow == source
+                        and user_shard(u, count) == index and start <= u.install_at <= end):
+                    by_flow[arm.flow_key].append(u)
     for bucket in by_flow.values():
         bucket.sort(key=lambda u: u.install_at)
     return by_flow
@@ -496,8 +535,9 @@ def test_users(users: dict[str, User], spec: TestSpec, start: datetime | None, e
 
 def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None:
     rng = random.Random(seed)
-    ref = Reference()
+    ref = Reference(rng, clock)
     shift = shift_to_clock(users, clock)
+    synthetic_flow_users: dict[str, list[User]] = {}
     out.mkdir(parents=True, exist_ok=True)
     for stale in out.glob("*.json"):
         stale.unlink()
@@ -523,6 +563,9 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         placement = ref.placement_by_key[spec.placement_key]
         segment_ids = [ref.segment_id_by_title[SEGMENT_TITLES[spec.segment_key]]] if spec.segment_key else []
         arms_users = test_users(users, spec, started, end)
+        for arm in spec.arms:
+            if arm.flow_key in SYNTHETIC_FLOWS:
+                synthetic_flow_users.setdefault(arm.flow_key, []).extend(arms_users[arm.flow_key])
         arms = [aggregate_arm(ref, spec, arm, arms_users[arm.flow_key], started or end, end, rng) for arm in spec.arms]
         if spec.state != "draft":
             bayesian_fields(arms, rng)
@@ -570,12 +613,16 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
     # flows and their lifetime metrics across every placement
     flow_rows = []
     for key, name in FLOW_NAMES.items():
-        flow_users = [u for u in users.values() if u.flow == key and u.install_at <= clock]
+        if key in SYNTHETIC_FLOWS:
+            flow_users = synthetic_flow_users.get(key, [])
+        else:
+            flow_users = [u for u in users.values() if u.flow == key and u.install_at <= clock]
         block = strip_private(metric_block(flow_users, None, clock))
         block["flow_id"] = ref.flow_id(key)
         flow_rows.append(block)
     write_json(out / "flows_metrics_list.json", {"data": flow_rows})
-    for name in ("flows_list.json", "placements_list.json", "placement_get_onboarding.json", "segments_list.json", "products_list.json",
+    write_json(out / "flows_list.json", {"data": ref.flows, "meta": {"pagination": {"count": len(ref.flows), "page": 1, "pages": 1}}})
+    for name in ("placements_list.json", "placement_get_onboarding.json", "segments_list.json", "products_list.json",
                  "analytics_chart_revenue_week_by_product.json", "analytics_conversion_install_paid_by_flow.json", "analytics_conversion_trial_paid.json"):
         shutil.copy2(CAPTURED / name, out / name)
     write_json(out / "manifest.json", manifest)

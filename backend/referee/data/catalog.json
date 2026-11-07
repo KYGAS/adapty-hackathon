@@ -13,13 +13,14 @@
     "Onboarding - Weekly first": ["weekly", "annual"],
     "Main - 3 plans": ["annual", "monthly", "weekly"],
     "Main - Lifetime anchor": ["annual", "monthly", "lifetime"],
+    "Main - Social proof": ["annual", "monthly", "weekly"],
     "AI limit reached - Pro": ["pro_annual", "annual"],
     "Settings - Upgrade": ["annual", "lifetime"],
     "Win-back - Monthly": ["monthly"]
   },
   "placement_flows": {
     "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first"],
-    "main": ["Main - 3 plans", "Main - Lifetime anchor"],
+    "main": ["Main - 3 plans", "Main - Lifetime anchor", "Main - Social proof"],
     "ai_limit_reached": ["AI limit reached - Pro"],
     "settings_upgrade": ["Settings - Upgrade"],
     "win_back": ["Win-back - Monthly"]

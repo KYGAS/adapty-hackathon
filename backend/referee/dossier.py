@@ -38,8 +38,9 @@ def _days(value: timedelta) -> float:
 def _arm_stats(arm: ArmInput, rate: RateEstimate, now: datetime, days_running: float, assumptions: Assumptions,
                warnings: list[str]) -> tuple[ArmStats, PendingRevenue]:
     views = arm.views
-    cr = arm.purchases / views if views else 0.0
-    ci = wilson_interval(arm.purchases, views) if views else wilson_interval(0, 0)
+    # Paid conversion is a share of viewers, so it counts paying users, not purchases (renewals would inflate it).
+    cr = arm.payers / views if views else 0.0
+    ci = wilson_interval(min(arm.payers, views), views) if views else wilson_interval(0, 0)
     trial_products = [p for p in arm.products if p.trial_days > 0]
     trial_days_max = max((p.trial_days for p in trial_products), default=0)
     prices = [p.price_usd for p in trial_products]
@@ -136,7 +137,7 @@ def build_dossier(test: TestInput, history: HistoryInput, app_id: str, now: date
     pairwise: list[PairwiseTest] = []
     raw_p: list[float] = []
     candidates = [a for a in arm_stats if not a.is_control and a.views > 0 and control.views > 0]
-    results = [two_proportion_z_test(control.purchases, control.views, a.purchases, a.views) for a in candidates]
+    results = [two_proportion_z_test(min(control.payers, control.views), control.views, min(a.payers, a.views), a.views) for a in candidates]
     raw_p = [r.p_value for r in results]
     corrected = correct(raw_p, assumptions.correction, assumptions.alpha) if raw_p else []
     for arm, result, adj in zip(candidates, results, corrected):
@@ -157,13 +158,13 @@ def build_dossier(test: TestInput, history: HistoryInput, app_id: str, now: date
 
     # ---- sample size and minimum detectable effect
     total_views = sum(a.views for a in arm_stats)
-    total_purchases = sum(a.purchases for a in arm_stats)
-    if control.purchases > 0 and control.views > 0:
-        baseline, baseline_source = control.conversion_rate, "control conversion rate"
-    elif total_purchases > 0:
-        baseline, baseline_source = total_purchases / total_views, "pooled conversion rate (control has no purchases yet)"
+    total_payers = sum(min(a.payers, a.views) for a in arm_stats)
+    if control.payers > 0 and control.views > 0:
+        baseline, baseline_source = control.conversion_rate, "control paid conversion"
+    elif total_payers > 0:
+        baseline, baseline_source = total_payers / total_views, "pooled paid conversion (control has no payers yet)"
     else:
-        baseline, baseline_source = 0.0, "no purchases yet"
+        baseline, baseline_source = 0.0, "no payers yet"
     required = required_sample_size_per_arm(baseline, assumptions.mde_relative, assumptions.alpha, assumptions.power) \
         if 0.0 < baseline < 1.0 else None
     min_views = min(a.views for a in arm_stats)
