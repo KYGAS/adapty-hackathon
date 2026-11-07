@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T21:24:52.568929+00:00",
+ "generated_at": "2026-11-07T21:34:42.315071+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
  "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
@@ -12,7 +12,8 @@
   "ab_test_get_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json",
   "ab_test_get_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33.json",
   "ab_test_get_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44.json",
-  "ab_test_get_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55.json"
+  "ab_test_get_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55.json",
+  "ab_test_get_e7a2d9c4-6b1f-4f3e-8c7d-0a5b3e9f1c66.json"
  ],
  "metrics_list": "ab_tests_metrics_list.json",
  "metrics_trees": {
@@ -70,7 +71,7 @@
  "winners": {
   "35299a82-0d41-4b50-a874-bf86e11c33d0": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
   "9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44": "00ac93b0-487c-46a3-a72c-748fc64feadc",
-  "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "37b1584a-b022-4124-bf28-4fb98ea1269f"
+  "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": "108b9a50-2682-4369-99a3-4867133483cc"
  },
  "charts": {
   "revenue": "analytics_chart_revenue_week_by_product.json"

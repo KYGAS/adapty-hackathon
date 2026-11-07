@@ -1,0 +1,35 @@
+{
+ "ab_test_id": "e7a2d9c4-6b1f-4f3e-8c7d-0a5b3e9f1c66",
+ "title": "Win-back v2: annual offer vs monthly (churn risk)",
+ "type": "flow",
+ "state": "draft",
+ "placement": {
+  "placement_id": "75dae32c-b1a6-415b-a87b-834819e08a80",
+  "title": "Win-back"
+ },
+ "segment_ids": [
+  "cfc2b411-9a00-4c49-81b2-d4411355b4db"
+ ],
+ "priority": 0,
+ "started_at": null,
+ "stopped_at": null,
+ "goal": "Does the annual offer recover more revenue from payers about to churn?",
+ "paywalls": [],
+ "flows": [
+  {
+   "flow_id": "108b9a50-2682-4369-99a3-4867133483cc",
+   "flow_name": "Win-back - Annual offer",
+   "weight": 50,
+   "title": "A",
+   "variation_id": "af7c51cc-dc88-4c88-b67e-ba799fd79778"
+  },
+  {
+   "flow_id": "16f65c46-6a6a-4ad8-81ab-14e5a4ae03bf",
+   "flow_name": "Win-back - Monthly",
+   "weight": 50,
+   "title": "B",
+   "variation_id": "7218e994-305b-4abb-b6d2-3e1476e3e874"
+  }
+ ],
+ "created_at": "2026-11-04T17:00:00.000000Z"
+}

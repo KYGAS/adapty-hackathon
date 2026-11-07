@@ -6,7 +6,8 @@
     "4fc247e0-2643-44cc-841e-5247981656cd": {"key": "annual", "title": "Premium Annual", "store_product_id": "lumen.annual", "price_usd": 49.99, "trial_days": 0},
     "ed2c0f9d-4935-4c3b-901b-93c5b942bfff": {"key": "annual_trial", "title": "Premium Annual (7-day trial)", "store_product_id": "lumen.annual_trial", "price_usd": 49.99, "trial_days": 7},
     "2e73350f-ad79-4035-b951-2c2a177716b5": {"key": "lifetime", "title": "Premium Lifetime", "store_product_id": "lumen.lifetime", "price_usd": 99.99, "trial_days": 0},
-    "7e2aff3a-25ce-4576-a40f-484f8fdd1e17": {"key": "pro_annual", "title": "Pro Annual - AI Studio", "store_product_id": "lumen.pro_annual", "price_usd": 89.99, "trial_days": 0}
+    "7e2aff3a-25ce-4576-a40f-484f8fdd1e17": {"key": "pro_annual", "title": "Pro Annual - AI Studio", "store_product_id": "lumen.pro_annual", "price_usd": 89.99, "trial_days": 0},
+    "5b9e2c7a-1d4f-4a8b-9c3e-6f0d2b8a7e19": {"key": "annual_holiday", "title": "Premium Annual (Holiday 30% off)", "store_product_id": "lumen.annual_holiday", "price_usd": 34.99, "trial_days": 0, "_synthetic": true}
   },
   "flow_products": {
     "Onboarding - Annual trial": ["annual_trial", "weekly"],
@@ -18,13 +19,17 @@
     "AI limit reached - Pro": ["pro_annual", "annual"],
     "Settings - Upgrade": ["annual", "lifetime"],
     "Win-back - Monthly": ["monthly"],
-    "Win-back - Annual offer": ["annual", "monthly"]
+    "Win-back - Annual offer": ["annual", "monthly"],
+    "Main - Holiday sale": ["annual_holiday", "monthly"]
   },
   "placement_flows": {
     "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first", "Onboarding - Weekly first (EUR prices)"],
     "main": ["Main - 3 plans", "Main - Lifetime anchor", "Main - Social proof"],
     "ai_limit_reached": ["AI limit reached - Pro"],
     "settings_upgrade": ["Settings - Upgrade"],
-    "win_back": ["Win-back - Monthly", "Win-back - Annual offer"]
+    "win_back": ["Win-back - Monthly", "Win-back - Annual offer"],
+    "trial_reminder": [],
+    "export_limit_reached": [],
+    "holiday_sale": []
   }
 }

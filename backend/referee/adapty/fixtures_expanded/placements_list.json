@@ -1,46 +1,67 @@
 {
-  "data": [
-    {
-      "id": "75dae32c-b1a6-415b-a87b-834819e08a80",
-      "developer_id": "win_back",
-      "title": "Win-back",
-      "is_active": true,
-      "type": "flow"
-    },
-    {
-      "id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
-      "developer_id": "settings_upgrade",
-      "title": "Settings - Upgrade",
-      "is_active": true,
-      "type": "flow"
-    },
-    {
-      "id": "0dfdf0d2-f36a-4b02-9b85-a654ecc3182e",
-      "developer_id": "ai_limit_reached",
-      "title": "AI edits limit reached",
-      "is_active": true,
-      "type": "flow"
-    },
-    {
-      "id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
-      "developer_id": "main",
-      "title": "Main paywall",
-      "is_active": true,
-      "type": "flow"
-    },
-    {
-      "id": "2d81af2b-6159-4416-924b-e3d927e468e5",
-      "developer_id": "onboarding",
-      "title": "Onboarding",
-      "is_active": true,
-      "type": "flow"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "count": 5,
-      "page": 1,
-      "pages": 1
-    }
+ "data": [
+  {
+   "id": "75dae32c-b1a6-415b-a87b-834819e08a80",
+   "developer_id": "win_back",
+   "title": "Win-back",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "89eb1d46-d64f-4dec-b72f-97f348c0f19c",
+   "developer_id": "settings_upgrade",
+   "title": "Settings - Upgrade",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "0dfdf0d2-f36a-4b02-9b85-a654ecc3182e",
+   "developer_id": "ai_limit_reached",
+   "title": "AI edits limit reached",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
+   "developer_id": "main",
+   "title": "Main paywall",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+   "developer_id": "onboarding",
+   "title": "Onboarding",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "fc4cd776-c98c-42fd-9532-8cef2ad9ea89",
+   "developer_id": "trial_reminder",
+   "title": "Trial ending reminder",
+   "is_active": true,
+   "type": "flow"
+  },
+  {
+   "id": "3c62af76-edfd-449d-abe2-2ca7c8434b15",
+   "developer_id": "export_limit_reached",
+   "title": "Export limit reached",
+   "is_active": true,
+   "type": "paywall"
+  },
+  {
+   "id": "6d17171d-d36a-4a11-a9ee-cbfef317b970",
+   "developer_id": "holiday_sale",
+   "title": "Holiday sale",
+   "is_active": false,
+   "type": "paywall"
   }
+ ],
+ "meta": {
+  "pagination": {
+   "count": 8,
+   "page": 1,
+   "pages": 1
+  }
+ }
 }

@@ -119,11 +119,27 @@
    "priority": 0,
    "started_at": "2026-09-23T17:00:00.000000Z",
    "stopped_at": "2026-09-28T17:00:00.000000Z"
+  },
+  {
+   "ab_test_id": "e7a2d9c4-6b1f-4f3e-8c7d-0a5b3e9f1c66",
+   "title": "Win-back v2: annual offer vs monthly (churn risk)",
+   "type": "flow",
+   "state": "draft",
+   "placement": {
+    "placement_id": "75dae32c-b1a6-415b-a87b-834819e08a80",
+    "title": "Win-back"
+   },
+   "segment_ids": [
+    "cfc2b411-9a00-4c49-81b2-d4411355b4db"
+   ],
+   "priority": 0,
+   "started_at": null,
+   "stopped_at": null
   }
  ],
  "meta": {
   "pagination": {
-   "count": 8,
+   "count": 9,
    "page": 1,
    "pages": 1
   }

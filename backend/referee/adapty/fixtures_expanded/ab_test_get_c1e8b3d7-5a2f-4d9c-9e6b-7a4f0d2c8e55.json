@@ -21,14 +21,14 @@
    "flow_name": "Win-back - Monthly",
    "weight": 50,
    "title": "A",
-   "variation_id": "cd4e52a2-738a-4e8a-86a6-b520a3876ee6"
+   "variation_id": "7731dca2-83c8-4954-b9d1-5e4d206963e8"
   },
   {
-   "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+   "flow_id": "108b9a50-2682-4369-99a3-4867133483cc",
    "flow_name": "Win-back - Annual offer",
    "weight": 50,
    "title": "B",
-   "variation_id": "2716a554-8215-4c86-96d2-6b001be8891b"
+   "variation_id": "eb4af77d-ae55-412f-a429-36b43c57be25"
   }
  ],
  "created_at": "2026-09-23T17:00:00.000000Z"

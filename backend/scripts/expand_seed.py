@@ -210,8 +210,23 @@ FLOW_NAMES = {
     "main_social": "Main - Social proof",
     "onb_weekly_eur": "Onboarding - Weekly first (EUR prices)",
     "winback_annual": "Win-back - Annual offer",
+    "main_holiday": "Main - Holiday sale",
 }
-SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual"}
+SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual", "main_holiday"}
+FLOW_STATUS = {"main_holiday": "draft"}
+SYNTHETIC_PLACEMENTS = [
+    {"developer_id": "trial_reminder", "title": "Trial ending reminder", "is_active": True, "type": "flow"},
+    {"developer_id": "export_limit_reached", "title": "Export limit reached", "is_active": True, "type": "paywall"},
+    {"developer_id": "holiday_sale", "title": "Holiday sale", "is_active": False, "type": "paywall"},
+]
+SYNTHETIC_SEGMENTS = [
+    {"title": "Churn risk", "description": "Payers whose subscription is set not to renew"},
+    {"title": "Trial users", "description": "Users in an active free trial"},
+]
+SYNTHETIC_PRODUCTS = [
+    {"key": "annual_holiday", "title": "Premium Annual (Holiday 30% off)", "period": "annual", "price_usd": 34.99,
+     "store_product_id": "lumen.annual_holiday"},
+]
 SEGMENT_COUNTRIES = {"na": {"US", "CA"}, "eu1": {"GB", "DE", "FR", "NL", "SE"}}
 COUNTRY_NAMES = {
     "US": "United States", "CA": "Canada", "GB": "United Kingdom", "DE": "Germany", "FR": "France", "NL": "Netherlands",
@@ -225,7 +240,7 @@ COUNTRY_NAMES = {
 }
 STORE_NAMES = {"iOS": "App Store", "Android": "Google Play"}
 BREAKDOWNS = ("country", "store")
-SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers"}
+SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers", "churn_risk": "Churn risk", "trial_users": "Trial users"}
 ONBOARDING_SCREENS = [("scr_welcome", "1. Welcome", 1.0), ("scr_goal", "2. Goal", 0.9), ("scr_paywall", "3. Paywall", 0.8)]
 PAYWALL_SCREEN = [("scr_paywall", "Paywall", 1.0)]
 
@@ -273,6 +288,10 @@ SCENARIO: list[TestSpec] = [
              (ArmSpec("winback", 50, "A", source_flow_key="winback", shard=(0, 2)),
               ArmSpec("winback_annual", 50, "B", source_flow_key="winback", shard=(1, 2))),
              "completed", started_days_ago=45, stopped_days_ago=40, winner_flow_key="winback_annual"),
+    # A second draft, planned on the churn-risk segment, so the next-test ranking has two ready drafts to weigh.
+    TestSpec("e7a2d9c4-6b1f-4f3e-8c7d-0a5b3e9f1c66", "Win-back v2: annual offer vs monthly (churn risk)",
+             "Does the annual offer recover more revenue from payers about to churn?", "win_back", "churn_risk",
+             (ArmSpec("winback_annual", 50, "A"), ArmSpec("winback", 50, "B")), "draft", started_days_ago=None, created_days_ago=3),
 ]
 
 
@@ -286,18 +305,35 @@ class Reference:
         self.catalog = Catalog.load()
         self.flows = load_json(CAPTURED / "flows_list.json")["data"]
         self.flow_id_by_name = {f["name"]: f["id"] for f in self.flows}
+        self.placements: list[dict] = []
+        self.segments: list[dict] = []
+        self.products: list[dict] = []
         for key in sorted(SYNTHETIC_FLOWS):
             name = FLOW_NAMES[key]
             if name not in self.flow_id_by_name:
                 flow_id = stable_uuid(rng)
                 self.flow_id_by_name[name] = flow_id
-                self.flows.append({"id": flow_id, "name": name, "status": "published", "creation_source": "flow_builder",
-                                   "updated_at": iso(clock - timedelta(days=91))})
+                self.flows.append({"id": flow_id, "name": name, "status": FLOW_STATUS.get(key, "published"), "creation_source": "flow_builder",
+                                   "updated_at": iso(clock - timedelta(days=91 if FLOW_STATUS.get(key) != "draft" else 2))})
         self.placements = load_json(CAPTURED / "placements_list.json")["data"]
-        self.placement_by_key = {p["developer_id"]: p for p in self.placements}
+        for item in SYNTHETIC_PLACEMENTS:
+            self.placements.append({"id": stable_uuid(rng), **item})
         self.segments = load_json(CAPTURED / "segments_list.json")["data"]
-        self.segment_id_by_title = {s["title"]: s["id"] for s in self.segments}
+        for item in SYNTHETIC_SEGMENTS:
+            self.segments.append({"id": stable_uuid(rng), **item})
         self.products = load_json(CAPTURED / "products_list.json")["data"]
+        for item in SYNTHETIC_PRODUCTS:
+            product_id = next((pid for pid, p in Catalog.load().products.items() if p.title == item["title"]), stable_uuid(rng))
+            self.products.append({
+                "id": product_id, "title": item["title"], "period": item["period"],
+                "access_level_id": self.products[-1]["access_level_id"] if self.products else stable_uuid(rng), "price_usd": item["price_usd"],
+                "vendor_products": {"app_store": {"id": stable_uuid(rng), "product_id": item["store_product_id"], "base_plan_id": None, "store_status": None},
+                                    "play_store": {"id": stable_uuid(rng), "product_id": item["store_product_id"].replace(".", "_"),
+                                                   "base_plan_id": item["key"].replace("_", "-"), "store_status": None}},
+                "offers_count": 0,
+            })
+        self.placement_by_key = {p["developer_id"]: p for p in self.placements}
+        self.segment_id_by_title = {s["title"]: s["id"] for s in self.segments}
         self.variation_ids: dict[tuple[str, str], str] = {}
         for name in ("ab_test_get_onboarding.json", "ab_test_get_main_na.json", "ab_test_get_settings_completed.json", "ab_test_get_ai_limit_draft.json"):
             detail = load_json(CAPTURED / name)
@@ -711,9 +747,12 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         block["flow_id"] = ref.flow_id(key)
         flow_rows.append(block)
     write_json(out / "flows_metrics_list.json", {"data": flow_rows})
-    write_json(out / "flows_list.json", {"data": ref.flows, "meta": {"pagination": {"count": len(ref.flows), "page": 1, "pages": 1}}})
-    for name in ("placements_list.json", "segments_list.json", "products_list.json",
-                 "analytics_chart_revenue_week_by_product.json", "analytics_conversion_install_paid_by_flow.json", "analytics_conversion_trial_paid.json"):
+    page = lambda rows: {"data": rows, "meta": {"pagination": {"count": len(rows), "page": 1, "pages": 1}}}  # noqa: E731
+    write_json(out / "flows_list.json", page(ref.flows))
+    write_json(out / "placements_list.json", page(ref.placements))
+    write_json(out / "segments_list.json", page(ref.segments))
+    write_json(out / "products_list.json", page(ref.products))
+    for name in ("analytics_chart_revenue_week_by_product.json", "analytics_conversion_install_paid_by_flow.json", "analytics_conversion_trial_paid.json"):
         shutil.copy2(CAPTURED / name, out / name)
     write_json(out / "manifest.json", manifest)
     print(f"wrote {len(list(out.glob('*.json')))} files to {out}  (clock {clock.isoformat()}, shift {shift.days} days)")

@@ -21,14 +21,14 @@
    "flow_name": "Onboarding - Weekly first",
    "weight": 50,
    "title": "A",
-   "variation_id": "020be297-adaa-4e37-b382-03fcce03f19b"
+   "variation_id": "73a59898-a16f-47f1-80d3-aad5473f7f20"
   },
   {
    "flow_id": "1f573a07-f8e0-4800-aced-8838977f8246",
    "flow_name": "Onboarding - Annual trial",
    "weight": 50,
    "title": "B",
-   "variation_id": "51aa2576-44f3-4450-ab3b-3e62a83fc302"
+   "variation_id": "d1516475-2a2f-4317-b03b-c77562306343"
   }
  ],
  "created_at": "2026-07-10T17:00:00.000000Z"

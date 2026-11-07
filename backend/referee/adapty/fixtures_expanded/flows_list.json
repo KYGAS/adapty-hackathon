@@ -51,20 +51,27 @@
   },
   {
    "id": "9089d4fa-a92e-4615-9c41-08c3cec79213",
+   "name": "Main - Holiday sale",
+   "status": "draft",
+   "creation_source": "flow_builder",
+   "updated_at": "2026-11-05T17:00:00.000000Z"
+  },
+  {
+   "id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
    "name": "Main - Social proof",
    "status": "published",
    "creation_source": "flow_builder",
    "updated_at": "2026-08-08T17:00:00.000000Z"
   },
   {
-   "id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
+   "id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
    "name": "Onboarding - Weekly first (EUR prices)",
    "status": "published",
    "creation_source": "flow_builder",
    "updated_at": "2026-08-08T17:00:00.000000Z"
   },
   {
-   "id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+   "id": "108b9a50-2682-4369-99a3-4867133483cc",
    "name": "Win-back - Annual offer",
    "status": "published",
    "creation_source": "flow_builder",
@@ -73,7 +80,7 @@
  ],
  "meta": {
   "pagination": {
-   "count": 10,
+   "count": 11,
    "page": 1,
    "pages": 1
   }

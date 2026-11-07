@@ -32,13 +32,13 @@
     "users": 2181,
     "installs": 2181,
     "title": "A",
-    "variation_id": "020be297-adaa-4e37-b382-03fcce03f19b",
+    "variation_id": "73a59898-a16f-47f1-80d3-aad5473f7f20",
     "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
     "weight": 50,
     "active_trials_rate": 0.05154639175257732,
-    "low_boundary": 9163.704165182857,
+    "low_boundary": 9155.40538560078,
     "average_per_1000": 10186.41907381935,
-    "upper_boundary": 11210.04208226437,
+    "upper_boundary": 11191.43822072887,
     "probability": 100.0,
     "p_value": 1.588302382085921e-32
    },
@@ -73,13 +73,13 @@
     "users": 2177,
     "installs": 2177,
     "title": "B",
-    "variation_id": "51aa2576-44f3-4450-ab3b-3e62a83fc302",
+    "variation_id": "d1516475-2a2f-4317-b03b-c77562306343",
     "flow_id": "1f573a07-f8e0-4800-aced-8838977f8246",
     "weight": 50,
     "active_trials_rate": 0.08928571428571429,
-    "low_boundary": 4661.11818095702,
+    "low_boundary": 4635.96094553767,
     "average_per_1000": 5479.131832797427,
-    "upper_boundary": 6311.33520299242,
+    "upper_boundary": 6310.938342532406,
     "probability": 0.0,
     "p_value": 1.588302382085921e-32
    }
@@ -89,7 +89,7 @@
    "title": "Onboarding NA: weekly first vs annual trial",
    "goal": "Which onboarding offer maximises 60-day revenue per install in the US and Canada?",
    "paywalls_group": {
-    "paywalls_group_id": "ba516afa-1b6a-4b9e-ab31-60b96478e4eb",
+    "paywalls_group_id": "35ab829a-5a2b-4355-a834-f74162ba1304",
     "title": "Onboarding NA: weekly first vs annual trial"
    },
    "vars": {},

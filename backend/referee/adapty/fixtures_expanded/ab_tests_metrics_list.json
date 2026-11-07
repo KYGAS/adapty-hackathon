@@ -104,9 +104,9 @@
      "variation_id": "7c0f5a55-2925-47ed-9c4c-b9d5db53bf81",
      "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
      "weight": 50,
-     "low_boundary": 2844.2526285706986,
+     "low_boundary": 2822.30294864215,
      "average_per_1000": 3959.34554973822,
-     "upper_boundary": 5069.13055166296,
+     "upper_boundary": 5048.342403429285,
      "probability": 100.0,
      "p_value": 1.711168236255106e-14
     }
@@ -180,7 +180,7 @@
      "low_boundary": 0.0,
      "average_per_1000": 4505.642857142858,
      "upper_boundary": 9011.285714285716,
-     "probability": 0.245,
+     "probability": 0.22999999999999998,
      "p_value": 0.05921170432130022
     },
     {
@@ -219,7 +219,7 @@
      "low_boundary": 0.0,
      "average_per_1000": 11350.192307692307,
      "upper_boundary": 22700.384615384613,
-     "probability": 99.75500000000001,
+     "probability": 99.77000000000001,
      "p_value": 0.05921170432130022
     }
    ]
@@ -289,10 +289,10 @@
      "variation_id": "3af81889-7ed3-4c57-83eb-c0201255e170",
      "flow_id": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
      "weight": 50,
-     "low_boundary": 7280.694891243382,
+     "low_boundary": 7193.778185362053,
      "average_per_1000": 10430.924170616114,
-     "upper_boundary": 13569.765427526172,
-     "probability": 66.925,
+     "upper_boundary": 13625.675076764417,
+     "probability": 67.14,
      "p_value": 0.044055391588225364
     },
     {
@@ -328,10 +328,10 @@
      "variation_id": "b0f2ae00-ea84-426d-bc99-82657c46e215",
      "flow_id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
      "weight": 50,
-     "low_boundary": 6772.719595351155,
+     "low_boundary": 6711.922247675746,
      "average_per_1000": 9686.959619952495,
-     "upper_boundary": 12573.134300290594,
-     "probability": 33.074999999999996,
+     "upper_boundary": 12565.817120995185,
+     "probability": 32.86,
      "p_value": 0.044055391588225364
     }
    ]
@@ -398,12 +398,12 @@
      "trials_paid": 0,
      "users": 2294,
      "installs": 2294,
-     "variation_id": "0f2e8b45-6ece-494b-88f0-f1efb5f8198a",
+     "variation_id": "1ec18fae-786b-4937-9941-d6df9e984d1a",
      "flow_id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
      "weight": 34,
-     "low_boundary": 11796.509160292988,
+     "low_boundary": 11806.502303191992,
      "average_per_1000": 13317.441150828246,
-     "upper_boundary": 14803.690709427783,
+     "upper_boundary": 14782.350662302517,
      "probability": 100.0,
      "p_value": null
     },
@@ -437,12 +437,12 @@
      "trials_paid": 50,
      "users": 2283,
      "installs": 2283,
-     "variation_id": "f01cb88b-b6d2-40db-b4a1-67db2e7f935a",
+     "variation_id": "6e209e2c-cdd2-4db3-92d0-b094296214ae",
      "flow_id": "63861760-06be-4776-8185-5e53536cc72d",
      "weight": 33,
-     "low_boundary": 2094.7032803599304,
+     "low_boundary": 2085.8026636331597,
      "average_per_1000": 2572.4704336399477,
-     "upper_boundary": 3055.1884132169416,
+     "upper_boundary": 3050.9014030727817,
      "probability": 0.0,
      "p_value": null
     },
@@ -476,12 +476,12 @@
      "trials_paid": 52,
      "users": 2297,
      "installs": 2297,
-     "variation_id": "a2da7144-e17d-4dea-936c-7c2aeb863f21",
-     "flow_id": "9089d4fa-a92e-4615-9c41-08c3cec79213",
+     "variation_id": "7b4ef59a-746a-4d3b-808b-2755d3d0c8e4",
+     "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
      "weight": 33,
-     "low_boundary": 2070.614238665139,
+     "low_boundary": 2079.8467712758475,
      "average_per_1000": 2544.479756203744,
-     "upper_boundary": 3007.4757074377994,
+     "upper_boundary": 3005.3584459371455,
      "probability": 0.0,
      "p_value": null
     }
@@ -549,13 +549,13 @@
      "trials_paid": 188,
      "users": 1297,
      "installs": 1297,
-     "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428",
+     "variation_id": "da0c0050-edff-43d1-8178-19d98304bce8",
      "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
      "weight": 50,
-     "low_boundary": 8129.118680438689,
+     "low_boundary": 8150.7271795460965,
      "average_per_1000": 9530.601387818042,
-     "upper_boundary": 10910.955523586352,
-     "probability": 37.34,
+     "upper_boundary": 10902.94284107177,
+     "probability": 37.28,
      "p_value": 0.45133878352427576
     },
     {
@@ -588,13 +588,13 @@
      "trials_paid": 203,
      "users": 1263,
      "installs": 1263,
-     "variation_id": "ce75ac6a-57f6-471e-8681-1e50890a5de4",
-     "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
+     "variation_id": "d721582e-7bf1-4cd3-8065-69698b243bbd",
+     "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
      "weight": 50,
-     "low_boundary": 8388.491662369655,
+     "low_boundary": 8364.925238195348,
      "average_per_1000": 9781.290577988915,
-     "upper_boundary": 11191.264689851978,
-     "probability": 62.660000000000004,
+     "upper_boundary": 11221.930617446898,
+     "probability": 62.72,
      "p_value": 0.45133878352427576
     }
    ]
@@ -661,12 +661,12 @@
      "trials_paid": 351,
      "users": 2181,
      "installs": 2181,
-     "variation_id": "020be297-adaa-4e37-b382-03fcce03f19b",
+     "variation_id": "73a59898-a16f-47f1-80d3-aad5473f7f20",
      "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
      "weight": 50,
-     "low_boundary": 9163.704165182857,
+     "low_boundary": 9155.40538560078,
      "average_per_1000": 10186.41907381935,
-     "upper_boundary": 11210.04208226437,
+     "upper_boundary": 11191.43822072887,
      "probability": 100.0,
      "p_value": 1.588302382085921e-32
     },
@@ -700,12 +700,12 @@
      "trials_paid": 297,
      "users": 2177,
      "installs": 2177,
-     "variation_id": "51aa2576-44f3-4450-ab3b-3e62a83fc302",
+     "variation_id": "d1516475-2a2f-4317-b03b-c77562306343",
      "flow_id": "1f573a07-f8e0-4800-aced-8838977f8246",
      "weight": 50,
-     "low_boundary": 4661.11818095702,
+     "low_boundary": 4635.96094553767,
      "average_per_1000": 5479.131832797427,
-     "upper_boundary": 6311.33520299242,
+     "upper_boundary": 6310.938342532406,
      "probability": 0.0,
      "p_value": 1.588302382085921e-32
     }
@@ -773,13 +773,13 @@
      "trials_paid": 0,
      "users": 46,
      "installs": 46,
-     "variation_id": "cd4e52a2-738a-4e8a-86a6-b520a3876ee6",
+     "variation_id": "7731dca2-83c8-4954-b9d1-5e4d206963e8",
      "flow_id": "16f65c46-6a6a-4ad8-81ab-14e5a4ae03bf",
      "weight": 50,
      "low_boundary": 0.0,
      "average_per_1000": 564.7826086956522,
      "upper_boundary": 1129.5652173913045,
-     "probability": 42.535000000000004,
+     "probability": 42.89,
      "p_value": 0.7158904196788196
     },
     {
@@ -812,13 +812,13 @@
      "trials_paid": 0,
      "users": 50,
      "installs": 50,
-     "variation_id": "2716a554-8215-4c86-96d2-6b001be8891b",
-     "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f",
+     "variation_id": "eb4af77d-ae55-412f-a429-36b43c57be25",
+     "flow_id": "108b9a50-2682-4369-99a3-4867133483cc",
      "weight": 50,
      "low_boundary": 0.0,
      "average_per_1000": 662.4,
      "upper_boundary": 1324.8,
-     "probability": 57.464999999999996,
+     "probability": 57.11000000000001,
      "p_value": 0.7158904196788196
     }
    ]

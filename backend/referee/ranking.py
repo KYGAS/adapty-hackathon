@@ -41,7 +41,7 @@ def rank_placements(app_id: str, placements: list[dict], tests: list[dict], flow
             score = 0.0
         elif draft:
             suggestion = f"Start the draft '{draft['title']}': the placement is idle and the test is ready."
-            score = revenue + views * 0.1 + 1000.0
+            score = revenue + views * 0.1
         elif views == 0:
             suggestion = "No attributed traffic yet. Not worth a test until it has viewers."
             score = 0.0
@@ -55,5 +55,6 @@ def rank_placements(app_id: str, placements: list[dict], tests: list[dict], flow
             views=int(views), revenue=revenue, revenue_per_viewer=rpv, score=score, rank=0,
             suggestion=suggestion, action=action,
         ))
-    rows.sort(key=lambda r: (-r.score, r.title))
+    # Idle placements with a ready draft come first, then idle placements by the money they move, then busy ones.
+    rows.sort(key=lambda r: (r.has_live_test, r.draft_test_id is None, -r.score, r.title))
     return [row.model_copy(update={"rank": index + 1}) for index, row in enumerate(rows)]

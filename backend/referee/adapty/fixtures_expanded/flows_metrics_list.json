@@ -254,7 +254,7 @@
    "trials_paid": 52,
    "users": 2297,
    "installs": 2297,
-   "flow_id": "9089d4fa-a92e-4615-9c41-08c3cec79213"
+   "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc"
   },
   {
    "views": 1263,
@@ -286,7 +286,7 @@
    "trials_paid": 203,
    "users": 1263,
    "installs": 1263,
-   "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc"
+   "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f"
   },
   {
    "views": 50,
@@ -318,7 +318,39 @@
    "trials_paid": 0,
    "users": 50,
    "installs": 50,
-   "flow_id": "37b1584a-b022-4124-bf28-4fb98ea1269f"
+   "flow_id": "108b9a50-2682-4369-99a3-4867133483cc"
+  },
+  {
+   "views": 0,
+   "unique_profiles_views": 0,
+   "total_completions": 0,
+   "total_uniq_completions": 0,
+   "from_start_conversion": 0.0,
+   "revenue": 0,
+   "proceeds": 0.0,
+   "net_revenue": 0.0,
+   "purchases": 0,
+   "trials": 0,
+   "unique_subscribers": 0,
+   "unique_paid_subscribers": 0,
+   "arppu": 0.0,
+   "arpu": 0.0,
+   "conversion_rate_purchases": 0.0,
+   "conversion_rate_trials": 0.0,
+   "trials_cancelled": 0,
+   "refunds": 0,
+   "arpas": 0.0,
+   "apppu": 0.0,
+   "appas": 0.0,
+   "conversion_rate_refunds": 0.0,
+   "conversion_rate_purchases_by_users": 0.0,
+   "conversion_rate_trials_by_users": 0.0,
+   "conversion_rate_trial_paid": 0.0,
+   "trials_finished": 0,
+   "trials_paid": 0,
+   "users": 0,
+   "installs": 0,
+   "flow_id": "9089d4fa-a92e-4615-9c41-08c3cec79213"
   }
  ]
 }
