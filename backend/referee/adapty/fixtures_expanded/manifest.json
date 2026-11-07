@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T21:14:08.388961+00:00",
+ "generated_at": "2026-11-07T21:24:52.568929+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
  "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
@@ -17,25 +17,39 @@
  "metrics_list": "ab_tests_metrics_list.json",
  "metrics_trees": {
   "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": {
-   "lifetime": "ab_test_metrics_tree_b2c90b2b-59b0-48fc-b821-b90061d1ae1e_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_b2c90b2b-59b0-48fc-b821-b90061d1ae1e_lifetime.json",
+   "country": "ab_test_metrics_tree_b2c90b2b-59b0-48fc-b821-b90061d1ae1e_country.json",
+   "store": "ab_test_metrics_tree_b2c90b2b-59b0-48fc-b821-b90061d1ae1e_store.json"
   },
   "fa529c42-4d24-4dde-b63a-e15fda1aa93d": {
-   "lifetime": "ab_test_metrics_tree_fa529c42-4d24-4dde-b63a-e15fda1aa93d_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_fa529c42-4d24-4dde-b63a-e15fda1aa93d_lifetime.json",
+   "country": "ab_test_metrics_tree_fa529c42-4d24-4dde-b63a-e15fda1aa93d_country.json",
+   "store": "ab_test_metrics_tree_fa529c42-4d24-4dde-b63a-e15fda1aa93d_store.json"
   },
   "35299a82-0d41-4b50-a874-bf86e11c33d0": {
-   "lifetime": "ab_test_metrics_tree_35299a82-0d41-4b50-a874-bf86e11c33d0_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_35299a82-0d41-4b50-a874-bf86e11c33d0_lifetime.json",
+   "country": "ab_test_metrics_tree_35299a82-0d41-4b50-a874-bf86e11c33d0_country.json",
+   "store": "ab_test_metrics_tree_35299a82-0d41-4b50-a874-bf86e11c33d0_store.json"
   },
   "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11": {
-   "lifetime": "ab_test_metrics_tree_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11_lifetime.json",
+   "country": "ab_test_metrics_tree_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11_country.json",
+   "store": "ab_test_metrics_tree_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11_store.json"
   },
   "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33": {
-   "lifetime": "ab_test_metrics_tree_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33_lifetime.json",
+   "country": "ab_test_metrics_tree_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33_country.json",
+   "store": "ab_test_metrics_tree_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33_store.json"
   },
   "9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44": {
-   "lifetime": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_lifetime.json",
+   "country": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_country.json",
+   "store": "ab_test_metrics_tree_9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44_store.json"
   },
   "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55": {
-   "lifetime": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_lifetime.json"
+   "lifetime": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_lifetime.json",
+   "country": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_country.json",
+   "store": "ab_test_metrics_tree_c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55_store.json"
   }
  },
  "metrics_totals": {

@@ -213,6 +213,18 @@ FLOW_NAMES = {
 }
 SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual"}
 SEGMENT_COUNTRIES = {"na": {"US", "CA"}, "eu1": {"GB", "DE", "FR", "NL", "SE"}}
+COUNTRY_NAMES = {
+    "US": "United States", "CA": "Canada", "GB": "United Kingdom", "DE": "Germany", "FR": "France", "NL": "Netherlands",
+    "SE": "Sweden", "IN": "India", "BR": "Brazil", "MX": "Mexico", "PL": "Poland", "JP": "Japan", "RS": "Serbia", "TR": "Turkey",
+    "AU": "Australia", "ES": "Spain", "IT": "Italy", "ID": "Indonesia", "KR": "South Korea", "AR": "Argentina", "CO": "Colombia",
+    "PH": "Philippines", "VN": "Vietnam", "NG": "Nigeria", "EG": "Egypt", "ZA": "South Africa", "SA": "Saudi Arabia",
+    "AE": "United Arab Emirates", "UA": "Ukraine", "CZ": "Czechia", "RO": "Romania", "HU": "Hungary", "PT": "Portugal",
+    "GR": "Greece", "CH": "Switzerland", "AT": "Austria", "BE": "Belgium", "DK": "Denmark", "NO": "Norway", "FI": "Finland",
+    "IE": "Ireland", "NZ": "New Zealand", "TH": "Thailand", "MY": "Malaysia", "SG": "Singapore", "TW": "Taiwan", "HK": "Hong Kong",
+    "CL": "Chile", "PE": "Peru", "IL": "Israel", "PK": "Pakistan", "BD": "Bangladesh", "HR": "Croatia", "BA": "Bosnia and Herzegovina",
+}
+STORE_NAMES = {"iOS": "App Store", "Android": "Google Play"}
+BREAKDOWNS = ("country", "store")
 SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers"}
 ONBOARDING_SCREENS = [("scr_welcome", "1. Welcome", 1.0), ("scr_goal", "2. Goal", 0.9), ("scr_paywall", "3. Paywall", 0.8)]
 PAYWALL_SCREEN = [("scr_paywall", "Paywall", 1.0)]
@@ -494,12 +506,15 @@ def arm_row(a: ArmAgg, with_title: bool = False, with_active: bool = False) -> d
     return row
 
 
-def screen_nodes(ref: Reference, a: ArmAgg, end: datetime) -> list[dict]:
+def screen_nodes(ref: Reference, a: ArmAgg, end: datetime, users: list[User] | None = None) -> list[dict]:
+    """Screen funnel under a variation (or under one segment of it when `users` is a subset)."""
+    users = a.users if users is None else users
     screens = ONBOARDING_SCREENS if a.spec.flow_key.startswith("onb_") else PAYWALL_SCREEN
     nodes = []
+    base_views = len(users)
     for screen_id, title, share in screens:
-        node = strip_private(metric_block(a.users, None, end, completion_share=share))
-        views = int(round(a.metrics["views"] * share))
+        node = strip_private(metric_block(users, None, end, completion_share=share))
+        views = int(round(base_views * share))
         node.update({"views": views, "unique_profiles_views": views, "total_completions": views, "total_uniq_completions": views,
                      "from_start_conversion": share * 100.0, "level": "screen", "title": title, "screen_id": screen_id, "values": [], "items": []})
         if screen_id != "scr_paywall":
@@ -509,7 +524,7 @@ def screen_nodes(ref: Reference, a: ArmAgg, end: datetime) -> list[dict]:
                       "conversion_rate_trial_paid", "trials_finished", "trials_paid"):
                 node[k] = 0
         else:
-            for product_id, p in a.by_product.items():
+            for product_id, p in product_breakdown(ref, a, users, end).items():
                 child = {k: 0 for k in strip_private(a.metrics)}
                 child.update({"views": views, "unique_profiles_views": views, "total_completions": views, "total_uniq_completions": views,
                               "from_start_conversion": share * 100.0, "purchases": p["purchases"], "trials": p["trials"],
@@ -517,6 +532,38 @@ def screen_nodes(ref: Reference, a: ArmAgg, end: datetime) -> list[dict]:
                               "unique_paid_subscribers": p["payers"], "arpu": p["revenue"] / views if views else 0.0,
                               "level": "product", "title": p["title"], "product_id": product_id, "values": [], "items": []})
                 node["items"].append(child)
+        nodes.append(node)
+    return nodes
+
+
+def product_breakdown(ref: Reference, a: ArmAgg, users: list[User], end: datetime) -> dict[str, dict]:
+    if users is a.users:
+        return a.by_product
+    out: dict[str, dict] = {}
+    for product in ref.catalog.products_for_flow(FLOW_NAMES[a.spec.flow_key]):
+        key = next(k for k, p in ref.catalog.by_key.items() if p.product_id == product.product_id)
+        paid = [t for u in users for t in u.tx if t.product == key and not t.is_trial and t.purchased_at <= end]
+        trials = [t for u in users for t in u.tx if t.product == key and t.is_trial and t.purchased_at <= end]
+        out[product.product_id] = {"title": product.title, "purchases": len(paid), "trials": len(trials),
+                                   "revenue": sum(t.price_usd for t in paid), "payers": len({t.user_id for t in paid})}
+    return out
+
+
+def segment_nodes(ref: Reference, a: ArmAgg, end: datetime, by: str) -> list[dict]:
+    """Country or store breakdown of one variation, the way `metrics get --group-by` returns it."""
+    groups: dict[tuple[str, str], list[User]] = defaultdict(list)
+    for u in a.users:
+        if by == "country":
+            groups[(COUNTRY_NAMES.get(u.country, u.country), u.country)].append(u)
+        else:
+            groups[(STORE_NAMES.get(u.platform, u.platform), "app_store" if u.platform == "iOS" else "play_store")].append(u)
+    nodes = []
+    for title, code in sorted(groups):
+        subset = groups[(title, code)]
+        node = strip_private(metric_block(subset, None, end))
+        node.update({"variation_id": a.variation_id, "flow_id": a.flow_id, "weight": a.spec.weight,
+                     "low_boundary": 0, "average_per_1000": 0, "upper_boundary": 0, "probability": 0, "p_value": None,
+                     "level": "segment", "title": title, "segmentation": code, "values": [], "items": screen_nodes(ref, a, end, subset)})
         nodes.append(node)
     return nodes
 
@@ -637,6 +684,15 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         tree_name = f"ab_test_metrics_tree_{spec.test_id}_lifetime.json"
         write_json(out / tree_name, {"data": tree_root})
         manifest["metrics_trees"][spec.test_id] = {"lifetime": tree_name}
+        for by in BREAKDOWNS:
+            grouped_root = {**root, "level": "root", "title": spec.title, "values": [], "items": []}
+            for a in arms:
+                node = arm_row(a)
+                node.update({"level": "variation", "title": a.spec.title, "values": [], "items": segment_nodes(ref, a, end, by)})
+                grouped_root["items"].append(node)
+            name = f"ab_test_metrics_tree_{spec.test_id}_{by}.json"
+            write_json(out / name, {"data": grouped_root})
+            manifest["metrics_trees"][spec.test_id][by] = name
         summary.append(f"{spec.title}: {spec.state}, " + ", ".join(
             f"{a.spec.title} {a.metrics['views']} viewers / {a.metrics['unique_paid_subscribers']} payers / ${a.metrics['revenue']:,.0f} / P2BB {a.p2bb:.0f}% / open trials {a.metrics['trials'] - a.metrics['trials_finished']}"
             for a in arms))
