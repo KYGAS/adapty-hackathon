@@ -1,0 +1,34 @@
+{
+  "ab_test_id": "fa529c42-4d24-4dde-b63a-e15fda1aa93d",
+  "title": "Main: 3 plans vs lifetime anchor (NA)",
+  "type": "flow",
+  "state": "live",
+  "placement": {
+    "placement_id": "f495d564-fa96-4c0c-a52f-19a4ee7ee4eb",
+    "title": "Main paywall"
+  },
+  "segment_ids": [
+    "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
+  ],
+  "priority": 0,
+  "started_at": "2026-11-07T04:07:57.949947Z",
+  "stopped_at": null,
+  "goal": "Does a lifetime anchor lift annual share in North America?",
+  "paywalls": [],
+  "flows": [
+    {
+      "flow_id": "63861760-06be-4776-8185-5e53536cc72d",
+      "flow_name": "Main - 3 plans",
+      "weight": 50,
+      "title": "A",
+      "variation_id": "a51dc2f9-d483-4962-9c9d-0d74cc608cff"
+    },
+    {
+      "flow_id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
+      "flow_name": "Main - Lifetime anchor",
+      "weight": 50,
+      "title": "B",
+      "variation_id": "be8719fc-7d95-4762-9312-7dbebb076d88"
+    }
+  ]
+}

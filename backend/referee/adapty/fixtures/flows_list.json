@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "id": "16f65c46-6a6a-4ad8-81ab-14e5a4ae03bf",
+      "name": "Win-back - Monthly",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:29.348086Z"
+    },
+    {
+      "id": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
+      "name": "Settings - Upgrade",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:26.086754Z"
+    },
+    {
+      "id": "8d8103e8-f849-48ad-8a57-2cea40fe82d6",
+      "name": "AI limit reached - Pro",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:22.051171Z"
+    },
+    {
+      "id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
+      "name": "Main - Lifetime anchor",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:18.994699Z"
+    },
+    {
+      "id": "63861760-06be-4776-8185-5e53536cc72d",
+      "name": "Main - 3 plans",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:14.489667Z"
+    },
+    {
+      "id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
+      "name": "Onboarding - Weekly first",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:11.752366Z"
+    },
+    {
+      "id": "1f573a07-f8e0-4800-aced-8838977f8246",
+      "name": "Onboarding - Annual trial",
+      "status": "published",
+      "creation_source": "agent_skill_cli",
+      "updated_at": "2026-11-07T04:07:07.348415Z"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "count": 7,
+      "page": 1,
+      "pages": 1
+    }
+  }
+}

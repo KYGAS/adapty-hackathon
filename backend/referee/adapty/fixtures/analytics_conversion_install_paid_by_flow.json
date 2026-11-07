@@ -1,0 +1,381 @@
+{
+  "data": {
+    "value": 15.9,
+    "value_from": 6000,
+    "value_to": 954,
+    "compare": null,
+    "segments": [
+      {
+        "key": null,
+        "title": "Total",
+        "is_total": true,
+        "value": 15.9,
+        "value_from": 6000,
+        "value_to": 954,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 62.69230769230769,
+            "value_from": 260,
+            "value_to": 163,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 67.01846965699208,
+            "value_from": 379,
+            "value_to": 254,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 72.22222222222221,
+            "value_from": 324,
+            "value_to": 234,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 61.69014084507042,
+            "value_from": 355,
+            "value_to": 219,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 1.794105083297736,
+            "value_from": 4682,
+            "value_to": 84,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "00000000-0000-0000-0000-000000000000",
+        "title": "No Data",
+        "is_total": false,
+        "value": 15.133333333333333,
+        "value_from": 6000,
+        "value_to": 908,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 62.69230769230769,
+            "value_from": 260,
+            "value_to": 163,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 67.01846965699208,
+            "value_from": 379,
+            "value_to": 254,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 72.22222222222221,
+            "value_from": 324,
+            "value_to": 234,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 61.69014084507042,
+            "value_from": 355,
+            "value_to": 219,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.8116189662537376,
+            "value_from": 4682,
+            "value_to": 38,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "00ac93b0-487c-46a3-a72c-748fc64feadc",
+        "title": "Onboarding - Weekly first",
+        "is_total": false,
+        "value": 0.5833333333333334,
+        "value_from": 6000,
+        "value_to": 35,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.74754378470739,
+            "value_from": 4682,
+            "value_to": 35,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "8d8103e8-f849-48ad-8a57-2cea40fe82d6",
+        "title": "AI limit reached - Pro",
+        "is_total": false,
+        "value": 0.06666666666666667,
+        "value_from": 6000,
+        "value_to": 4,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.08543357539513029,
+            "value_from": 4682,
+            "value_to": 4,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "63861760-06be-4776-8185-5e53536cc72d",
+        "title": "Main - 3 plans",
+        "is_total": false,
+        "value": 0.06666666666666667,
+        "value_from": 6000,
+        "value_to": 4,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.08543357539513029,
+            "value_from": 4682,
+            "value_to": 4,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
+        "title": "Main - Lifetime anchor",
+        "is_total": false,
+        "value": 0.03333333333333333,
+        "value_from": 6000,
+        "value_to": 2,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.042716787697565144,
+            "value_from": 4682,
+            "value_to": 2,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      },
+      {
+        "key": "16f65c46-6a6a-4ad8-81ab-14e5a4ae03bf",
+        "title": "Win-back - Monthly",
+        "is_total": false,
+        "value": 0.016666666666666666,
+        "value_from": 6000,
+        "value_to": 1,
+        "values": [
+          {
+            "x": "2026-07-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-08-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-09-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-10-01T00:00:00.000000+0000",
+            "value": 0,
+            "value_from": 0,
+            "value_to": 0,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          },
+          {
+            "x": "2026-11-01T00:00:00.000000+0000",
+            "value": 0.021358393848782572,
+            "value_from": 4682,
+            "value_to": 1,
+            "value_from_unfinished": 0,
+            "has_unfinished": false
+          }
+        ]
+      }
+    ]
+  },
+  "meta": {
+    "query": {
+      "timezone": "UTC",
+      "timezone_source": "app",
+      "conversion_id": "install-paid",
+      "filters": {
+        "date": [
+          "2026-07-01",
+          "2026-11-07"
+        ]
+      },
+      "segmentation": "flow_id",
+      "period_unit": "month"
+    },
+    "recommended_period": null,
+    "definitions": {
+      "value": "If Х - the number of installs (the same for all products because there is no product chosen at the stage of installation) for the selected date, and Y - the amount of those among Х who paid (any possible time) for the 1st subscription, then Conversion = (Y / X) * 100%.",
+      "revenue_basis": null,
+      "freshness": "Transactions, installs, paywall views and flow events reach the analytics at least 15 minutes after Adapty receives them. Numbers of past days can still change: a refund that the store reports later takes the revenue out of the day of its purchase."
+    }
+  }
+}
