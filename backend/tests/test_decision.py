@@ -31,8 +31,15 @@ def test_insufficient_payers_blocks_a_call():
     d = decide(base(leader_payers=35, days_to_sample=4.0))
     assert d.code == VerdictCode.INSUFFICIENT_PAYERS
     assert d.wait_days == 4.0
-    d_inf = decide(base(leader_payers=35, days_to_sample=math.inf))
-    assert d_inf.wait_days == 60.0
+    reached = decide(base(leader_payers=35, days_to_sample=0.0))
+    assert reached.code == VerdictCode.INSUFFICIENT_PAYERS
+    assert reached.wait_days == 0.0
+
+
+def test_unreachable_sample_outranks_insufficient_payers():
+    d = decide(base(leader_payers=1, min_views_per_arm=40, days_to_sample=237.0))
+    assert d.code == VerdictCode.NOT_DECIDABLE
+    assert d.wait_days == 237.0
 
 
 def test_call_winner():

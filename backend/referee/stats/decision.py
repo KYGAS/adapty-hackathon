@@ -62,12 +62,16 @@ def decide(inp: DecisionInputs) -> Decision:
         return Decision(VerdictCode.WAIT_TRIAL_LAG, max(0.0, inp.days_to_maturity),
                         ("open_trials_can_flip_leader", "wait_for_maturation"))
 
+    sample_reached = inp.required_views_per_arm is not None and inp.min_views_per_arm >= inp.required_views_per_arm
+    if not sample_reached and (inp.required_views_per_arm is None or math.isinf(inp.days_to_sample)
+                               or inp.days_to_sample > inp.max_wait_days):
+        return Decision(VerdictCode.NOT_DECIDABLE, inp.days_to_sample,
+                        ("sample_unreachable_within_max_wait", "consider_bigger_change_or_wider_audience"))
+
     if inp.leader_payers < inp.payers_threshold:
-        wait = inp.days_to_sample if not math.isinf(inp.days_to_sample) else inp.max_wait_days
-        return Decision(VerdictCode.INSUFFICIENT_PAYERS, max(wait, 0.0),
+        return Decision(VerdictCode.INSUFFICIENT_PAYERS, max(inp.days_to_sample, 0.0),
                         (f"leader_payers_below_{inp.payers_threshold}", "revenue_range_not_estimable"))
 
-    sample_reached = inp.required_views_per_arm is not None and inp.min_views_per_arm >= inp.required_views_per_arm
     if sample_reached:
         if inp.days_running < inp.min_runtime_days:
             return Decision(VerdictCode.WAIT_MIN_RUNTIME, inp.min_runtime_days - inp.days_running,
@@ -81,7 +85,4 @@ def decide(inp: DecisionInputs) -> Decision:
         reasons.append("effect_below_mde")
         return Decision(VerdictCode.CALL_NO_DIFFERENCE, 0.0, tuple(reasons))
 
-    if inp.required_views_per_arm is None or math.isinf(inp.days_to_sample) or inp.days_to_sample > inp.max_wait_days:
-        return Decision(VerdictCode.NOT_DECIDABLE, inp.days_to_sample,
-                        ("sample_unreachable_within_max_wait", "consider_bigger_change_or_wider_audience"))
     return Decision(VerdictCode.WAIT_SAMPLE, inp.days_to_sample, ("sample_not_reached", "peeking_guard"))
