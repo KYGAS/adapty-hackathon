@@ -65,7 +65,7 @@ class Settings:
     anthropic_model: str = "claude-opus-5-5"
     claude_cli_path: str = "claude"
     claude_cli_model: str = "sonnet"
-    port: int = 8000
+    port: int = 8010
     cors_origins: tuple[str, ...] = ("http://localhost:5173", "http://127.0.0.1:5173")
     fixed_now: datetime | None = None
     data_dir: Path = field(default_factory=lambda: BACKEND_DIR / "data")
@@ -104,7 +104,7 @@ def settings_from_env() -> Settings:
         anthropic_model=env.get("ANTHROPIC_MODEL", "claude-opus-5-5"),
         claude_cli_path=env.get("CLAUDE_CLI_PATH", "claude"),
         claude_cli_model=env.get("CLAUDE_CLI_MODEL", "sonnet"),
-        port=int(env.get("REFEREE_PORT", "8000")),
+        port=int(env.get("REFEREE_PORT", "8010")),
         cors_origins=origins,
         fixed_now=parse_now(env.get("REFEREE_NOW")),
     )

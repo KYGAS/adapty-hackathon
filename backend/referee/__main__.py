@@ -1,4 +1,4 @@
-"""python -m referee  ->  uvicorn on REFEREE_PORT (default 8000)."""
+"""python -m referee  ->  uvicorn on REFEREE_PORT (default 8010)."""
 
 from __future__ import annotations
 
