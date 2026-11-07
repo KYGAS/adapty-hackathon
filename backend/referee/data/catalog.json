@@ -11,6 +11,7 @@
   "flow_products": {
     "Onboarding - Annual trial": ["annual_trial", "weekly"],
     "Onboarding - Weekly first": ["weekly", "annual"],
+    "Onboarding - Weekly first (EUR prices)": ["weekly", "annual"],
     "Main - 3 plans": ["annual", "monthly", "weekly"],
     "Main - Lifetime anchor": ["annual", "monthly", "lifetime"],
     "Main - Social proof": ["annual", "monthly", "weekly"],
@@ -19,7 +20,7 @@
     "Win-back - Monthly": ["monthly"]
   },
   "placement_flows": {
-    "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first"],
+    "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first", "Onboarding - Weekly first (EUR prices)"],
     "main": ["Main - 3 plans", "Main - Lifetime anchor", "Main - Social proof"],
     "ai_limit_reached": ["AI limit reached - Pro"],
     "settings_upgrade": ["Settings - Upgrade"],

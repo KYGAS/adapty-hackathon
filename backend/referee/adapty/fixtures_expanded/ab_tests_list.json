@@ -71,11 +71,27 @@
    "priority": 0,
    "started_at": "2026-08-09T17:00:00.000000Z",
    "stopped_at": null
+  },
+  {
+   "ab_test_id": "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33",
+   "title": "Onboarding EU: weekly first vs EUR prices",
+   "type": "flow",
+   "state": "live",
+   "placement": {
+    "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+    "title": "Onboarding"
+   },
+   "segment_ids": [
+    "3c32882d-80a8-46c5-8c1e-ea5d6d3c843c"
+   ],
+   "priority": 0,
+   "started_at": "2026-08-04T17:00:00.000000Z",
+   "stopped_at": null
   }
  ],
  "meta": {
   "pagination": {
-   "count": 5,
+   "count": 6,
    "page": 1,
    "pages": 1
   }

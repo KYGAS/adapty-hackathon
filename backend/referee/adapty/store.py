@@ -175,6 +175,7 @@ class Store:
         if listed is None:
             raise NotFound(placement_id)
         live_tests = [t for t in self.tests["data"] if t["placement"]["placement_id"] == placement_id and t["state"] == "live"]
+        live_tests.sort(key=lambda t: 0 if t["segment_ids"] else 1)  # segment audiences come before All users
         audiences = [{"content_type": "flow_ab_test", "ab_test_id": t["ab_test_id"], "ab_test_title": t["title"],
                       "segment_ids": t["segment_ids"], "priority": i} for i, t in enumerate(live_tests)]
         for test_id, winner in self.winners.items():

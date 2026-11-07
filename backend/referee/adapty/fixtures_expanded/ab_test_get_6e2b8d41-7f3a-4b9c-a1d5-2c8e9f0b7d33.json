@@ -1,0 +1,35 @@
+{
+ "ab_test_id": "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33",
+ "title": "Onboarding EU: weekly first vs EUR prices",
+ "type": "flow",
+ "state": "live",
+ "placement": {
+  "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+  "title": "Onboarding"
+ },
+ "segment_ids": [
+  "3c32882d-80a8-46c5-8c1e-ea5d6d3c843c"
+ ],
+ "priority": 0,
+ "started_at": "2026-08-04T17:00:00.000000Z",
+ "stopped_at": null,
+ "goal": "Do localized EUR prices lift 60-day revenue per install in Europe Tier-1?",
+ "paywalls": [],
+ "flows": [
+  {
+   "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
+   "flow_name": "Onboarding - Weekly first",
+   "weight": 50,
+   "title": "A",
+   "variation_id": "e19b2673-5806-4a71-b9c2-1064a7bf6984"
+  },
+  {
+   "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
+   "flow_name": "Onboarding - Weekly first (EUR prices)",
+   "weight": 50,
+   "title": "B",
+   "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428"
+  }
+ ],
+ "created_at": "2026-08-04T17:00:00.000000Z"
+}

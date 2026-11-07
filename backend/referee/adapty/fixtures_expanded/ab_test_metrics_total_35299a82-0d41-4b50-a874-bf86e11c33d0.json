@@ -36,10 +36,10 @@
     "flow_id": "a7c2595b-2c9b-4dc2-9e30-8ff715e6ecaa",
     "weight": 50,
     "active_trials_rate": 0.0,
-    "low_boundary": 7280.694891243382,
+    "low_boundary": 7193.778185362053,
     "average_per_1000": 10430.924170616114,
-    "upper_boundary": 13569.765427526172,
-    "probability": 66.935,
+    "upper_boundary": 13625.675076764417,
+    "probability": 67.125,
     "p_value": 0.044055391588225364
    },
    {
@@ -77,10 +77,10 @@
     "flow_id": "ed8bf97b-8da6-46e4-a47d-fb9e52610baf",
     "weight": 50,
     "active_trials_rate": 0.0,
-    "low_boundary": 6772.719595351155,
+    "low_boundary": 6711.922247675746,
     "average_per_1000": 9686.959619952495,
-    "upper_boundary": 12573.134300290594,
-    "probability": 33.065,
+    "upper_boundary": 12565.817120995185,
+    "probability": 32.875,
     "p_value": 0.044055391588225364
    }
   ],
@@ -89,7 +89,7 @@
    "title": "Settings: upgrade vs lifetime anchor",
    "goal": "Earlier test - stopped with a winner",
    "paywalls_group": {
-    "paywalls_group_id": "a27aeff5-186f-406f-bc38-a1ac43b3935c",
+    "paywalls_group_id": "91c7ad50-e805-43b1-b1c6-89e7cc752882",
     "title": "Settings: upgrade vs lifetime anchor"
    },
    "vars": {},

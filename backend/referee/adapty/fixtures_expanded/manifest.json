@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T20:55:50.317819+00:00",
+ "generated_at": "2026-11-07T21:06:33.634422+00:00",
  "clock": "2026-11-07T17:00:00+00:00",
  "seed": 20261107,
  "source": "offline Lumen dataset (50,000 users) shifted by 4 days so its last install lands on the clock",
@@ -9,7 +9,8 @@
   "ab_test_get_fa529c42-4d24-4dde-b63a-e15fda1aa93d.json",
   "ab_test_get_35299a82-0d41-4b50-a874-bf86e11c33d0.json",
   "ab_test_get_7c4c06ef-f5da-45a3-9ec1-05d644e78f03.json",
-  "ab_test_get_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json"
+  "ab_test_get_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json",
+  "ab_test_get_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33.json"
  ],
  "metrics_list": "ab_tests_metrics_list.json",
  "metrics_trees": {
@@ -24,20 +25,22 @@
   },
   "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11": {
    "lifetime": "ab_test_metrics_tree_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11_lifetime.json"
+  },
+  "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33": {
+   "lifetime": "ab_test_metrics_tree_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33_lifetime.json"
   }
  },
  "metrics_totals": {
   "b2c90b2b-59b0-48fc-b821-b90061d1ae1e": "ab_test_metrics_total_b2c90b2b-59b0-48fc-b821-b90061d1ae1e.json",
   "fa529c42-4d24-4dde-b63a-e15fda1aa93d": "ab_test_metrics_total_fa529c42-4d24-4dde-b63a-e15fda1aa93d.json",
   "35299a82-0d41-4b50-a874-bf86e11c33d0": "ab_test_metrics_total_35299a82-0d41-4b50-a874-bf86e11c33d0.json",
-  "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11": "ab_test_metrics_total_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json"
+  "3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11": "ab_test_metrics_total_3a7c1f2e-9b4d-4c6a-8e21-5d0f7b9c4a11.json",
+  "6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33": "ab_test_metrics_total_6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33.json"
  },
  "flows": "flows_list.json",
  "flow_metrics": "flows_metrics_list.json",
  "placements": "placements_list.json",
- "placement_details": [
-  "placement_get_onboarding.json"
- ],
+ "placement_details": [],
  "segments": "segments_list.json",
  "products": "products_list.json",
  "winners": {

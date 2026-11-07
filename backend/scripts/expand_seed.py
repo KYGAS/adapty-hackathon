@@ -198,6 +198,8 @@ class TestSpec:
     winner_flow_key: str | None = None
     source_title: str | None = None  # the ab_test value in the offline dataset
     created_days_ago: float | None = None
+    # Segments that have their own audience on the placement take those users first (Adapty audience priority).
+    exclude_segments: tuple[str, ...] = ()
 
 
 FLOW_NAMES = {
@@ -206,8 +208,10 @@ FLOW_NAMES = {
     "winback": "Win-back - Monthly",
     # flows that exist only in the expanded set
     "main_social": "Main - Social proof",
+    "onb_weekly_eur": "Onboarding - Weekly first (EUR prices)",
 }
-SYNTHETIC_FLOWS = {"main_social"}
+SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur"}
+SEGMENT_COUNTRIES = {"na": {"US", "CA"}, "eu1": {"GB", "DE", "FR", "NL", "SE"}}
 SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers"}
 ONBOARDING_SCREENS = [("scr_welcome", "1. Welcome", 1.0), ("scr_goal", "2. Goal", 0.9), ("scr_paywall", "3. Paywall", 0.8)]
 PAYWALL_SCREEN = [("scr_paywall", "Paywall", 1.0)]
@@ -216,7 +220,7 @@ SCENARIO: list[TestSpec] = [
     TestSpec("b2c90b2b-59b0-48fc-b821-b90061d1ae1e", "Onboarding: annual trial vs weekly first",
              "Find which onboarding offer maximises 60-day revenue per install", "onboarding", None,
              (ArmSpec("onb_trial", 50, "A"), ArmSpec("onb_weekly", 50, "B")), "live", started_days_ago=9,
-             source_title="Onboarding: annual trial vs weekly first"),
+             source_title="Onboarding: annual trial vs weekly first", exclude_segments=("eu1",)),
     TestSpec("fa529c42-4d24-4dde-b63a-e15fda1aa93d", "Main: 3 plans vs lifetime anchor (NA)",
              "Does a lifetime anchor lift annual share in North America?", "main", "na",
              (ArmSpec("main", 50, "A"), ArmSpec("main_lifetime", 50, "B")), "live", started_days_ago=9,
@@ -235,6 +239,14 @@ SCENARIO: list[TestSpec] = [
               ArmSpec("main", 33, "B", source_flow_key="main", shard=(0, 2)),
               ArmSpec("main_social", 33, "C", source_flow_key="main", shard=(1, 2))),
              "live", started_days_ago=90),
+    # Synthetic Europe Tier-1 onboarding test: weekly-first users of the five EU1 countries split in two shards; the
+    # second shard is relabelled as a localized-price flow. Same outcome distribution, so the honest answer is "no
+    # difference", and after 95 days the sample is a week short of the plan: the WAIT_SAMPLE state.
+    TestSpec("6e2b8d41-7f3a-4b9c-a1d5-2c8e9f0b7d33", "Onboarding EU: weekly first vs EUR prices",
+             "Do localized EUR prices lift 60-day revenue per install in Europe Tier-1?", "onboarding", "eu1",
+             (ArmSpec("onb_weekly", 50, "A", source_flow_key="onb_weekly", shard=(0, 2)),
+              ArmSpec("onb_weekly_eur", 50, "B", source_flow_key="onb_weekly", shard=(1, 2))),
+             "live", started_days_ago=95),
 ]
 
 
@@ -516,17 +528,25 @@ def test_users(users: dict[str, User], spec: TestSpec, start: datetime | None, e
     by_flow: dict[str, list[User]] = {arm.flow_key: [] for arm in spec.arms}
     if start is None:
         return by_flow
+    excluded = set().union(*(SEGMENT_COUNTRIES[s] for s in spec.exclude_segments)) if spec.exclude_segments else set()
+    wanted = SEGMENT_COUNTRIES[spec.segment_key] if spec.segment_key in SEGMENT_COUNTRIES else None
+
+    def in_audience(u: User) -> bool:
+        if u.country in excluded or not (start <= u.install_at <= end):
+            return False
+        return wanted is None or u.country in wanted
+
     if spec.source_title is not None:
         for u in users.values():
-            if u.ab_test == spec.source_title and u.flow in by_flow and start <= u.install_at <= end:
+            if u.ab_test == spec.source_title and u.flow in by_flow and in_audience(u):
                 by_flow[u.flow].append(u)
     else:
         for arm in spec.arms:
             source = arm.source_flow_key or arm.flow_key
             index, count = arm.shard
             for u in users.values():
-                if (u.ab_test is None and u.placement == spec.placement_key and u.flow == source
-                        and user_shard(u, count) == index and start <= u.install_at <= end):
+                if (u.placement == spec.placement_key and u.flow == source and user_shard(u, count) == index
+                        and (u.ab_test is None or wanted is not None) and in_audience(u)):
                     by_flow[arm.flow_key].append(u)
     for bucket in by_flow.values():
         bucket.sort(key=lambda u: u.install_at)
@@ -548,7 +568,7 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         "source": f"offline Lumen dataset ({len(users):,} users) shifted by {shift.days} days so its last install lands on the clock",
         "tests_list": "ab_tests_list.json", "tests": [], "metrics_list": "ab_tests_metrics_list.json", "metrics_trees": {},
         "metrics_totals": {}, "flows": "flows_list.json", "flow_metrics": "flows_metrics_list.json", "placements": "placements_list.json",
-        "placement_details": ["placement_get_onboarding.json"], "segments": "segments_list.json", "products": "products_list.json",
+        "placement_details": [], "segments": "segments_list.json", "products": "products_list.json",
         "winners": {}, "charts": {"revenue": "analytics_chart_revenue_week_by_product.json"},
         "conversions": {"install-paid": "analytics_conversion_install_paid_by_flow.json", "trial-paid": "analytics_conversion_trial_paid.json"},
     }
@@ -622,7 +642,7 @@ def build(users: dict[str, User], clock: datetime, seed: int, out: Path) -> None
         flow_rows.append(block)
     write_json(out / "flows_metrics_list.json", {"data": flow_rows})
     write_json(out / "flows_list.json", {"data": ref.flows, "meta": {"pagination": {"count": len(ref.flows), "page": 1, "pages": 1}}})
-    for name in ("placements_list.json", "placement_get_onboarding.json", "segments_list.json", "products_list.json",
+    for name in ("placements_list.json", "segments_list.json", "products_list.json",
                  "analytics_chart_revenue_week_by_product.json", "analytics_conversion_install_paid_by_flow.json", "analytics_conversion_trial_paid.json"):
         shutil.copy2(CAPTURED / name, out / name)
     write_json(out / "manifest.json", manifest)

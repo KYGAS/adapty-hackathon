@@ -55,11 +55,18 @@
    "status": "published",
    "creation_source": "flow_builder",
    "updated_at": "2026-08-08T17:00:00.000000Z"
+  },
+  {
+   "id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
+   "name": "Onboarding - Weekly first (EUR prices)",
+   "status": "published",
+   "creation_source": "flow_builder",
+   "updated_at": "2026-08-08T17:00:00.000000Z"
   }
  ],
  "meta": {
   "pagination": {
-   "count": 8,
+   "count": 9,
    "page": 1,
    "pages": 1
   }
