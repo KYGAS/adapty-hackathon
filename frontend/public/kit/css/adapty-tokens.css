@@ -1,0 +1,273 @@
+/* =====================================================================
+   ADAPTY DASHBOARD — DESIGN TOKENS
+   Extracted from app.adapty.io production CSS (Nov 2026).
+   Variable names mirror the ones Adapty uses in its own :root so
+   snippets copied from DevTools work unchanged.
+   Font: Inter (UI) + Inter Tight (marketing/hero headings) + Fira Code (IDs)
+   ===================================================================== */
+
+/* Fonts are bundled in ../fonts (SIL OFL) so the kit works offline.
+   Online alternative (what app.adapty.io does):
+   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"); */
+@font-face { font-family: "Inter"; font-weight: 400; font-display: swap; src: url("../fonts/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url("../fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url("../fonts/inter-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; font-display: swap; src: url("../fonts/inter-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 400; font-display: swap; src: url("../fonts/inter-tight-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 500; font-display: swap; src: url("../fonts/inter-tight-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 600; font-display: swap; src: url("../fonts/inter-tight-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fira Code"; font-weight: 400; font-display: swap; src: url("../fonts/fira-code-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fira Code"; font-weight: 500; font-display: swap; src: url("../fonts/fira-code-latin-500-normal.woff2") format("woff2"); }
+
+:root {
+  /* ---------- Brand / primary ---------- */
+  --purplePrimary: #6720ff;      /* primary buttons, active tabs, focus borders, links */
+  --purpleSecondary: #7e41ff;    /* hover of anything purple */
+  --purpleDarken: #6322ee;       /* :active of purple */
+  --purpleSoft: #b3a9f4;
+  --common-primary: #7018ff;
+  --hover: var(--purpleSecondary);
+
+  /* ---------- Text ---------- */
+  --blackPrimary: #111;          /* default text */
+  --blackSecondary: #11111140;   /* disabled text, breadcrumb "/" */
+  --blackTrietary: #11111160;
+  --blackTextSecondary: var(--black-600); /* captions, meta text (#696969) */
+  --white: #fff;
+  --black: #000;
+  --dark: #211b29;
+
+  /* ---------- Surfaces ---------- */
+  --silver: #faf9fc;             /* table header bg, empty-state icon bg, hero bg */
+  --neutralBackground: #faf9fc;
+  --softBackground: #f8f4ff;
+  --bgDisabled: var(--black-50);
+  --bgHover: var(--black-50);
+  --bgError: var(--red-50);
+  --menuHover: #11111110;
+  --dropdown-item-hover: #e7e7e7;
+  --borderColor: var(--black-100);
+
+  /* ---------- Neutral scale ("black") — the workhorse greys ---------- */
+  --black-50: #f3f3f3;   /* hover bg, segmented bg, disabled bg, table inner borders */
+  --black-100: #e7e7e7;  /* card borders, dividers, v2 button borders */
+  --black-200: #cfcfcf;
+  --black-300: #b8b8b8;  /* input borders, placeholders, empty icons */
+  --black-400: #a1a1a1;
+  --black-500: #7f7f7f;  /* sidebar icon color */
+  --black-600: #696969;  /* secondary text */
+  --black-700: #4c4c4c;
+  --black-800: #313131;  /* sidebar labels, segmented text */
+  --black-900: #232323;
+
+  /* ---------- Cool gray scale (used for code chips, gray tags, totals) ---------- */
+  --gray-50: #f7fafc;
+  --gray-100: #e3e8ee;
+  --gray-200: #c1c9d2;
+  --gray-300: #90a1b9;
+  --gray-400: #8792a2;
+  --gray-500: #697386;
+  --gray-600: #4f566b;
+  --gray-700: #3c4257;
+  --gray-800: #2a2f45;
+  --gray-900: #202642;
+
+  /* ---------- Violet (tags, footer bars, A/B accents) ---------- */
+  --violet-50: #f5f5ff;
+  --violet-100: #e7e6fc;  /* sticky form footer bg */
+  --violet-200: #c9c5fa;
+  --violet-300: #b1a9ef;
+  --violet-400: #9178e3;
+  --violet-500: #6f54c0;  /* A/B TEST / FLOW tag text */
+  --violet-600: #5136b5;
+  --violet-700: #42309c;
+  --violet-800: #2d2475;
+  --violet-900: #1f184e;
+
+  /* ---------- Purple ---------- */
+  --purple-50: #f9f5fc;
+  --purple-100: #f1dffb;
+  --purple-200: #e2c4f2;
+  --purple-300: #d5a5e5;
+  --purple-400: #bb6ed0;  /* "Completed" state */
+  --purple-500: #a14fc4;
+  --purple-600: #682d7a;
+  --purple-700: #4f2b5c;
+  --purple-800: #45224d;
+  --purple-900: #341c36;
+
+  /* ---------- Blue ---------- */
+  --blue-50: #f2f7ff;
+  --blue-100: #d6e9ff;
+  --blue-200: #9fc1fc;
+  --blue-300: #6d9dfc;
+  --blue-400: #4777ff;
+  --blue-500: #2b57d4;   /* "New" badge, focus-visible ring */
+  --blue-600: #123fba;
+  --blue-700: #10369d;
+  --blue-800: #1b2969;
+  --blue-900: #0d205e;
+
+  /* ---------- Cyan ---------- */
+  --cyan-50: #f2fafc;
+  --cyan-100: #cdeffe;
+  --cyan-200: #aae1fa;
+  --cyan-300: #71c3f9;
+  --cyan-400: #2ea2ef;
+  --cyan-500: #2094e0;
+  --cyan-600: #0062b0;
+  --cyan-700: #105693;
+  --cyan-800: #074388;
+  --cyan-900: #013565;
+
+  /* ---------- Green (Live / Published / winners) ---------- */
+  --green-50: #f2faf5;   /* winner cell bg */
+  --green-100: #e1f7eb;
+  --green-200: #b3e8c7;
+  --green-300: #6bcf9d;
+  --green-400: #1ea672;  /* "Live" text + dot */
+  --green-500: #09825d;  /* winning probability % */
+  --green-600: #0e6245;
+  --green-700: #0d4b3b;
+  --green-800: #0b3733;
+  --green-900: #082429;
+
+  /* ---------- Yellow (warnings / callouts) ---------- */
+  --yellow-50: #faf7ed;  /* callout bg */
+  --yellow-100: #faecbe;
+  --yellow-200: #fcdb86; /* callout border */
+  --yellow-300: #f2cd66;
+  --yellow-400: #eeae40; /* warning text */
+  --yellow-500: #cf9128; /* warning icon */
+  --yellow-600: #a36a0d;
+  --yellow-700: #805617;
+  --yellow-800: #5c4200;
+  --yellow-900: #3b2808;
+
+  /* ---------- Orange (cross-placement, variant B color) ---------- */
+  --orange-50: #fff0e6;
+  --orange-100: #fae0cf;
+  --orange-200: #fabb93;
+  --orange-300: #f1916a;
+  --orange-400: #e56f4a;
+  --orange-500: #cc5335;
+  --orange-600: #96472d;
+  --orange-700: #783828;
+  --orange-800: #4f2820;
+  --orange-900: #361b11;
+
+  /* ---------- Red (destructive) ---------- */
+  --red-50: #fcedef;
+  --red-100: #fad2d2;
+  --red-200: #fab9bb;
+  --red-300: #f5706c;  /* destructive hover */
+  --red-400: #d74247;  /* destructive base, error borders */
+  --red-500: #c42323;  /* destructive active */
+  --red-600: #911f24;
+  --red-700: #7a1627;
+  --red-800: #521726;
+  --red-900: #45151f;
+
+  /* ---------- Data-viz series (variant colors seen in metrics) ---------- */
+  --series-a: var(--purplePrimary);  /* Variant A / first series */
+  --series-b: var(--orange-400);     /* Variant B */
+  --series-c: #a3e3c4;               /* 3rd series (mint, seen on placement metrics) */
+  --series-d: var(--cyan-400);
+  --series-e: var(--yellow-400);
+  --chart-grid: #e7e7e7;
+  --chart-tick: #111;
+
+  /* ---------- Typography ---------- */
+  --a-font-family-sans: "Inter", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --a-font-family-tight: "Inter Tight", sans-serif;
+  --a-font-family-mono: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --a-font-size-root: 14px;           /* html font-size is 14px */
+
+  /* Headings used in the app (Typography component "containerHx") */
+  --fs-h1: 28px;  --lh-h1: 32px;      /* rarely used */
+  --fs-h2: 24px;  --lh-h2: 28px;      /* PAGE TITLE, modal title */
+  --fs-h3: 20px;  --lh-h3: 24px;      /* form page title, breadcrumb title, KPI numbers */
+  --fs-h4: 16px;  --lh-h4: 24px;      /* section titles inside forms, chart titles */
+  --fs-h5: 14px;  --lh-h5: 18px;      /* card titles, field labels in modals */
+  --fs-body: 14px; --lh-body: 24px;   /* default text */
+  --fs-caption: 14px; --lh-caption: 18px;       /* secondary text (black-600) */
+  --fs-caption-sm: 12px; --lh-caption-sm: 16px; /* meta rows, tooltips */
+  --fs-tag: 11px; --lh-tag: 16px;               /* uppercase pill tags */
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+
+  /* ---------- Spacing (4px grid) ---------- */
+  --a-spacing-base: 4px;
+  --a-spacing-half: 2px;
+  --a-spacing-1: 4px;
+  --a-spacing-2: 8px;
+  --a-spacing-3: 12px;
+  --a-spacing-4: 16px;
+  --a-spacing-5: 20px;
+  --a-spacing-6: 24px;
+  --a-spacing-7: 28px;
+  --a-spacing-8: 32px;
+  --a-spacing-9: 36px;
+  --a-spacing-10: 40px;
+  --a-spacing-12: 48px;
+  --a-spacing-14: 56px;
+  --a-spacing-16: 64px;
+  --a-spacing-18: 72px;
+  --a-spacing-20: 80px;
+
+  /* ---------- Radii ---------- */
+  --a-border-radius-xxs: 1px;
+  --a-border-radius-xs: 4px;   /* badges, code chips, thumbnails, checkboxes */
+  --a-border-radius-s: 6px;    /* sidebar items, segmented buttons, icon tiles */
+  --a-border-radius-m: 8px;    /* buttons, inputs, menus, modals, popovers */
+  --a-border-radius-l: 12px;   /* content cards (A/B test card) */
+  --a-border-radius-xl: 16px;  /* callouts, feature heroes */
+  --radius-pill: 99px;         /* tags */
+
+  /* ---------- Shadows ---------- */
+  --shadow-popover: 0 0 18px 0 rgba(1, 0, 48, 0.15);            /* tooltips, react-select menu */
+  --shadow-dropdown: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+                     0 6px 16px 0 rgba(0, 0, 0, 0.08),
+                     0 9px 28px 8px rgba(0, 0, 0, 0.05);         /* kebab menus, date picker, modals */
+  --shadow-card: 0 1px 8px 0 rgba(1, 0, 48, 0.1);               /* KPI / chart cards */
+  --shadow-card-hover: 0 0 18px 0 rgba(1, 0, 48, 0.15);
+  --shadow-segment-active: 0 1px 1px 0 rgba(15, 23, 41, 0.06), 0 1px 1.5px 0 rgba(15, 23, 41, 0.1);
+  --shadow-tooltip-dark: 0 10px 10px -5px rgba(15, 15, 16, 0.04), 0 20px 25px -5px rgba(15, 15, 16, 0.1);
+  --shadow-button-3d: 0 1px 3px 0 rgba(0, 0, 0, 0.12), inset 0 1px 2px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 3px 0 rgba(42, 39, 48, 0.25);
+  --shadow-scroll-left: inset 10px 0 8px -8px rgba(0, 0, 0, 0.15);
+  --shadow-scroll-right: inset -10px 0 8px -8px rgba(0, 0, 0, 0.15);
+  --focus-ring: 0 0 0 2px rgba(103, 32, 255, 0.2);
+
+  /* ---------- Gradients ---------- */
+  --gradient-heading: linear-gradient(70deg, #1e00b8 42%, #863dff 70%);
+  --gradient-body: linear-gradient(69deg, #1a00b0 20%, #7d41ff 70%);
+  --gradient-icon-tile: linear-gradient(180deg, #7d41ff 0%, #4925cf 100%);
+  --gradient-predict: linear-gradient(92deg, #fdb8b9 -0.37%, #9f5de9 34.26%, #7b3dff 73.28%, #b1eaff 104.06%);
+  --skeleton-gradient: linear-gradient(90deg, #faf9fc 25%, #f4f4f9 37%, #faf9fc 63%);
+
+  /* ---------- Layout ---------- */
+  --main-sidebar-width: 240px;
+  --header-height: 48px;
+  --content-padding: 24px;
+  --content-padding-bottom: 100px;
+  --form-width: 520px;
+  --modal-width: 620px;
+  --modal-width-wide: 880px;
+  --search-width: 368px;
+
+  /* ---------- Motion ---------- */
+  --t-fast: 0.15s;
+  --t-input: 0.17s ease-in-out;   /* input border color */
+  --t-base: 0.3s;                 /* buttons, links, tabs (ease) */
+  --t-tab: 0.3s ease-in;
+  --t-select: 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --t-checkbox: 0.2s;
+
+  /* ---------- Z-index ---------- */
+  --z-sidebar: 100;
+  --z-header: 1002;
+  --z-dropdown: 10000;
+  --z-modal: 10000;
+  --z-popover: 10001;
+  --z-select-menu: 19999;
+  --z-toast: 9999;
+}
