@@ -209,8 +209,9 @@ FLOW_NAMES = {
     # flows that exist only in the expanded set
     "main_social": "Main - Social proof",
     "onb_weekly_eur": "Onboarding - Weekly first (EUR prices)",
+    "winback_annual": "Win-back - Annual offer",
 }
-SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur"}
+SYNTHETIC_FLOWS = {"main_social", "onb_weekly_eur", "winback_annual"}
 SEGMENT_COUNTRIES = {"na": {"US", "CA"}, "eu1": {"GB", "DE", "FR", "NL", "SE"}}
 SEGMENT_TITLES = {"na": "US & Canada", "eu1": "Europe Tier-1", "payers": "Payers"}
 ONBOARDING_SCREENS = [("scr_welcome", "1. Welcome", 1.0), ("scr_goal", "2. Goal", 0.9), ("scr_paywall", "3. Paywall", 0.8)]
@@ -247,6 +248,19 @@ SCENARIO: list[TestSpec] = [
              (ArmSpec("onb_weekly", 50, "A", source_flow_key="onb_weekly", shard=(0, 2)),
               ArmSpec("onb_weekly_eur", 50, "B", source_flow_key="onb_weekly", shard=(1, 2))),
              "live", started_days_ago=95),
+    # Completed, well-run: US and Canada onboarding users, weekly first as control against the annual trial, 60 days,
+    # stopped with the control as winner. Sample reached, significant, payers in the hundreds: an audit grade A.
+    TestSpec("9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44", "Onboarding NA: weekly first vs annual trial",
+             "Which onboarding offer maximises 60-day revenue per install in the US and Canada?", "onboarding", "na",
+             (ArmSpec("onb_weekly", 50, "A", source_flow_key="onb_weekly"), ArmSpec("onb_trial", 50, "B", source_flow_key="onb_trial")),
+             "completed", started_days_ago=120, stopped_days_ago=60, winner_flow_key="onb_weekly"),
+    # Completed, badly run: five days on the win-back placement for the Payers segment, a handful of payers, stopped with
+    # the new annual offer declared winner. The kind of call the referee exists to prevent.
+    TestSpec("c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55", "Win-back: monthly vs annual offer",
+             "Does an annual offer win back more revenue from lapsed payers?", "win_back", "payers",
+             (ArmSpec("winback", 50, "A", source_flow_key="winback", shard=(0, 2)),
+              ArmSpec("winback_annual", 50, "B", source_flow_key="winback", shard=(1, 2))),
+             "completed", started_days_ago=45, stopped_days_ago=40, winner_flow_key="winback_annual"),
 ]
 
 

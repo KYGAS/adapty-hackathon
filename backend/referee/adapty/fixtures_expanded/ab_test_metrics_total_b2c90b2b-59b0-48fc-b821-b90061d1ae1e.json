@@ -77,9 +77,9 @@
     "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
     "weight": 50,
     "active_trials_rate": 0.32663316582914576,
-    "low_boundary": 2822.30294864215,
+    "low_boundary": 2844.2526285706986,
     "average_per_1000": 3959.34554973822,
-    "upper_boundary": 5049.679136184774,
+    "upper_boundary": 5069.13055166296,
     "probability": 100.0,
     "p_value": 1.711168236255106e-14
    }
@@ -89,7 +89,7 @@
    "title": "Onboarding: annual trial vs weekly first",
    "goal": "Find which onboarding offer maximises 60-day revenue per install",
    "paywalls_group": {
-    "paywalls_group_id": "474bfdd6-7553-4e96-b187-8ed9301acb87",
+    "paywalls_group_id": "6216eb29-ba3e-4a49-a1e2-ac2a2504ad0a",
     "title": "Onboarding: annual trial vs weekly first"
    },
    "vars": {},

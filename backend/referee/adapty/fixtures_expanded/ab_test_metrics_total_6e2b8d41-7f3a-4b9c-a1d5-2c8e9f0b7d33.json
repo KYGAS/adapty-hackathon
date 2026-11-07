@@ -32,14 +32,14 @@
     "users": 1297,
     "installs": 1297,
     "title": "A",
-    "variation_id": "e19b2673-5806-4a71-b9c2-1064a7bf6984",
+    "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428",
     "flow_id": "00ac93b0-487c-46a3-a72c-748fc64feadc",
     "weight": 50,
     "active_trials_rate": 0.014778325123152709,
-    "low_boundary": 8150.7271795460965,
+    "low_boundary": 8129.118680438689,
     "average_per_1000": 9530.601387818042,
-    "upper_boundary": 10902.94284107177,
-    "probability": 37.29,
+    "upper_boundary": 10910.955523586352,
+    "probability": 37.34,
     "p_value": 0.45133878352427576
    },
    {
@@ -73,14 +73,14 @@
     "users": 1263,
     "installs": 1263,
     "title": "B",
-    "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428",
+    "variation_id": "ce75ac6a-57f6-471e-8681-1e50890a5de4",
     "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
     "weight": 50,
     "active_trials_rate": 0.028423772609819122,
-    "low_boundary": 8364.925238195348,
+    "low_boundary": 8388.491662369655,
     "average_per_1000": 9781.290577988915,
-    "upper_boundary": 11221.930617446898,
-    "probability": 62.71,
+    "upper_boundary": 11191.264689851978,
+    "probability": 62.660000000000004,
     "p_value": 0.45133878352427576
    }
   ],
@@ -89,7 +89,7 @@
    "title": "Onboarding EU: weekly first vs EUR prices",
    "goal": "Do localized EUR prices lift 60-day revenue per install in Europe Tier-1?",
    "paywalls_group": {
-    "paywalls_group_id": "66036b30-f51b-4c8c-8273-a0c87e3b9f02",
+    "paywalls_group_id": "f02a0dbd-3218-4275-b27a-1628bec231b2",
     "title": "Onboarding EU: weekly first vs EUR prices"
    },
    "vars": {},

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from .models import AuditResult, EvidenceAtStop, RealizedOutcome, TestDossier
 
-MIN_VIEWS_FOR_REALIZED = 30
+MIN_VIEWS_FOR_REALIZED = 200  # below this, a 5% gap in revenue per viewer is noise, so the realized verdict stays inconclusive
 
 
 def grade_from_score(score: int) -> str:

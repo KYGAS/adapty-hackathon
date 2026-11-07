@@ -17,13 +17,14 @@
     "Main - Social proof": ["annual", "monthly", "weekly"],
     "AI limit reached - Pro": ["pro_annual", "annual"],
     "Settings - Upgrade": ["annual", "lifetime"],
-    "Win-back - Monthly": ["monthly"]
+    "Win-back - Monthly": ["monthly"],
+    "Win-back - Annual offer": ["annual", "monthly"]
   },
   "placement_flows": {
     "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first", "Onboarding - Weekly first (EUR prices)"],
     "main": ["Main - 3 plans", "Main - Lifetime anchor", "Main - Social proof"],
     "ai_limit_reached": ["AI limit reached - Pro"],
     "settings_upgrade": ["Settings - Upgrade"],
-    "win_back": ["Win-back - Monthly"]
+    "win_back": ["Win-back - Monthly", "Win-back - Annual offer"]
   }
 }

@@ -12,14 +12,15 @@ def test_grades():
     assert [grade_from_score(s) for s in (100, 90, 80, 60, 45, 10)] == ["A", "A", "B", "C", "D", "F"]
 
 
-def test_settings_audit_is_an_f_and_reversed(make_dossier, client):
+def test_settings_audit_is_an_f_and_inconclusive_on_one_day(make_dossier, client):
     d = make_dossier(SETTINGS)
     winner = client.store.winners[SETTINGS]
     metrics = {m["flow_id"]: m for m in client.flow_metrics([a.flow_id for a in d.arms])}
     audit = audit_completed(d, winner, metrics)
     assert audit.grade == "F" and audit.score == 0
     assert audit.declared_winner_title.startswith("A (Settings - Upgrade)")
-    assert audit.realized.status == "reversed"
+    # 41 and 135 lifetime views are not enough to confirm or reverse anything
+    assert audit.realized.status == "inconclusive"
     assert audit.realized.winner_rpv == 0.0 and audit.realized.alternative_rpv > 0
 
 

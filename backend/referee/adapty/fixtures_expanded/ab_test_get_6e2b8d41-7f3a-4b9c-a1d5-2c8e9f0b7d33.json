@@ -21,14 +21,14 @@
    "flow_name": "Onboarding - Weekly first",
    "weight": 50,
    "title": "A",
-   "variation_id": "e19b2673-5806-4a71-b9c2-1064a7bf6984"
+   "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428"
   },
   {
    "flow_id": "265ede5b-bb51-49ba-93fd-fca33e6caabc",
    "flow_name": "Onboarding - Weekly first (EUR prices)",
    "weight": 50,
    "title": "B",
-   "variation_id": "897aa161-3079-4789-9bb2-4c4db6ff8428"
+   "variation_id": "ce75ac6a-57f6-471e-8681-1e50890a5de4"
   }
  ],
  "created_at": "2026-08-04T17:00:00.000000Z"

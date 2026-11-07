@@ -87,11 +87,43 @@
    "priority": 0,
    "started_at": "2026-08-04T17:00:00.000000Z",
    "stopped_at": null
+  },
+  {
+   "ab_test_id": "9d4f6a28-3c1e-4e7b-b5a9-8f2d1c6e0b44",
+   "title": "Onboarding NA: weekly first vs annual trial",
+   "type": "flow",
+   "state": "completed",
+   "placement": {
+    "placement_id": "2d81af2b-6159-4416-924b-e3d927e468e5",
+    "title": "Onboarding"
+   },
+   "segment_ids": [
+    "70d12a72-e25b-4fc2-bd5a-817c27cfa397"
+   ],
+   "priority": 0,
+   "started_at": "2026-07-10T17:00:00.000000Z",
+   "stopped_at": "2026-09-08T17:00:00.000000Z"
+  },
+  {
+   "ab_test_id": "c1e8b3d7-5a2f-4d9c-9e6b-7a4f0d2c8e55",
+   "title": "Win-back: monthly vs annual offer",
+   "type": "flow",
+   "state": "completed",
+   "placement": {
+    "placement_id": "75dae32c-b1a6-415b-a87b-834819e08a80",
+    "title": "Win-back"
+   },
+   "segment_ids": [
+    "0ad858a5-5fda-49f7-9186-b4d1a747825a"
+   ],
+   "priority": 0,
+   "started_at": "2026-09-23T17:00:00.000000Z",
+   "stopped_at": "2026-09-28T17:00:00.000000Z"
   }
  ],
  "meta": {
   "pagination": {
-   "count": 6,
+   "count": 8,
    "page": 1,
    "pages": 1
   }
