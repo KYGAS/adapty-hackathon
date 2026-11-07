@@ -1,0 +1,27 @@
+{
+  "_comment": "Lumen product catalog. The Adapty products endpoint returns price_usd 0 and no trial length for these store products, so prices and trial days come from the seed definitions (adapty-seed-data-hack/seed_adapty.py). Keys are Adapty product ids; store_product_id is kept for matching live data.",
+  "products": {
+    "0334d3e2-b118-48fe-a19d-99b0ad49c36b": {"key": "weekly", "title": "Premium Weekly (3-day trial)", "store_product_id": "lumen.weekly", "price_usd": 6.99, "trial_days": 3},
+    "44fc7422-5c58-4e40-8f48-bd3df0c0ddb8": {"key": "monthly", "title": "Premium Monthly", "store_product_id": "lumen.monthly", "price_usd": 12.99, "trial_days": 0},
+    "4fc247e0-2643-44cc-841e-5247981656cd": {"key": "annual", "title": "Premium Annual", "store_product_id": "lumen.annual", "price_usd": 49.99, "trial_days": 0},
+    "ed2c0f9d-4935-4c3b-901b-93c5b942bfff": {"key": "annual_trial", "title": "Premium Annual (7-day trial)", "store_product_id": "lumen.annual_trial", "price_usd": 49.99, "trial_days": 7},
+    "2e73350f-ad79-4035-b951-2c2a177716b5": {"key": "lifetime", "title": "Premium Lifetime", "store_product_id": "lumen.lifetime", "price_usd": 99.99, "trial_days": 0},
+    "7e2aff3a-25ce-4576-a40f-484f8fdd1e17": {"key": "pro_annual", "title": "Pro Annual - AI Studio", "store_product_id": "lumen.pro_annual", "price_usd": 89.99, "trial_days": 0}
+  },
+  "flow_products": {
+    "Onboarding - Annual trial": ["annual_trial", "weekly"],
+    "Onboarding - Weekly first": ["weekly", "annual"],
+    "Main - 3 plans": ["annual", "monthly", "weekly"],
+    "Main - Lifetime anchor": ["annual", "monthly", "lifetime"],
+    "AI limit reached - Pro": ["pro_annual", "annual"],
+    "Settings - Upgrade": ["annual", "lifetime"],
+    "Win-back - Monthly": ["monthly"]
+  },
+  "placement_flows": {
+    "onboarding": ["Onboarding - Annual trial", "Onboarding - Weekly first"],
+    "main": ["Main - 3 plans", "Main - Lifetime anchor"],
+    "ai_limit_reached": ["AI limit reached - Pro"],
+    "settings_upgrade": ["Settings - Upgrade"],
+    "win_back": ["Win-back - Monthly"]
+  }
+}
