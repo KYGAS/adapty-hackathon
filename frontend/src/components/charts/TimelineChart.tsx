@@ -44,8 +44,8 @@ export default function TimelineChart({ timeline }: { timeline: Timeline }) {
           <text x={x(start)} y={axisY + 28} textAnchor="start" className="rf-muted-text">Started {fmtDate(timeline.started_at)}</text>
         </g>
         <g onMouseMove={(e) => tooltip.show(e, <><b>Today</b>{fmtDateTime(timeline.now)}</>)} onMouseLeave={tooltip.hide}>
-          <line x1={nowX} x2={nowX} y1={axisY - 24} y2={axisY + 14} stroke="var(--black-800)" strokeWidth={1} strokeDasharray="3 3" />
-          <text x={nowX} y={axisY - 30} textAnchor="middle" fontWeight={600}>Today</text>
+          <line x1={nowX} x2={nowX} y1={axisY - 38} y2={axisY + 14} stroke="var(--black-800)" strokeWidth={1} strokeDasharray="3 3" />
+          <text x={nowX} y={axisY - 44} textAnchor="middle" fontWeight={600}>Today</text>
         </g>
         {sorted.map((m, i) => {
           const mx = x(new Date(m.at).getTime());
