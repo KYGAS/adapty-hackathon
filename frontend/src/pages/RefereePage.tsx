@@ -9,16 +9,7 @@ import { daysText, fmtDate, fmtDateTime, money, num } from '../lib/format';
 import { useAsync } from '../lib/useAsync';
 import type { ActionPreview, Opportunity } from '../lib/types';
 
-const INTRO_KEY = 'referee_intro_dismissed';
-
 export default function RefereePage() {
-  const [intro, setIntro] = useState(() => {
-    try {
-      return !localStorage.getItem(INTRO_KEY);
-    } catch {
-      return true;
-    }
-  });
   const [approval, setApproval] = useState<{ testId: string; action: ActionPreview } | null>(null);
   const overview = useAsync(() => referee.overview(), []);
   const opportunities = useAsync(() => referee.opportunities(), []);
@@ -28,14 +19,8 @@ export default function RefereePage() {
     opportunities.reload();
     log.reload();
   };
-  const dismiss = () => {
-    try {
-      localStorage.setItem(INTRO_KEY, '1');
-    } catch {
-      /* private mode */
-    }
-    setIntro(false);
-  };
+  // The hero stays, like the dashboard's own feature heroes; the call to action scrolls to the verdicts.
+  const showVerdicts = () => document.getElementById('verdicts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const rows = overview.data ?? [];
   const waiting = rows.filter((r) => r.verdict && !r.verdict.is_call && r.state === 'live').length;
   const callable = rows.filter((r) => r.verdict?.is_call).length;
@@ -43,8 +28,7 @@ export default function RefereePage() {
     <>
       <PageHeader title="Experiment Referee" pill={<span className="ad-pill ad-pill--beta" style={{ verticalAlign: 'middle', marginLeft: 8 }}>Beta</span>} right={<button className="ad-btn ad-btn--secondary ad-btn--with-icon" onClick={reloadAll}><Icon name="sync" />Re-evaluate</button>} />
 
-      {intro && (
-        <div className="ad-hero ad-hero--grid rf-mb-24">
+      <div className="ad-hero ad-hero--grid rf-mb-24">
           <div className="ad-hero__art">
             <div className="ad-stat-card" style={{ width: 300 }}>
               <div className="ad-row" style={{ gap: 12 }}>
@@ -73,14 +57,13 @@ export default function RefereePage() {
             </div>
             <div className="ad-inline-alert"><Icon name="warning" />Writes to Adapty stay off until an action is approved here</div>
             <div className="ad-hero__cta">
-              <div className="ad-hero__cta-frame"><button className="ad-btn ad-btn--primary ad-btn--3d" onClick={dismiss}>Show my verdicts <Icon name="chevron-right" size={16} /></button></div>
+              <div className="ad-hero__cta-frame"><button className="ad-btn ad-btn--primary ad-btn--3d" onClick={showVerdicts}>Show my verdicts <Icon name="chevron-right" size={16} /></button></div>
               <a className="ad-btn ad-btn--link ad-btn--muted" href="https://adapty.io/docs/ab-tests" target="_blank" rel="noreferrer">Read docs <Icon name="external" size={16} /></a>
             </div>
           </div>
         </div>
-      )}
 
-      <h4 className="ad-h4 rf-mb-16">Verdicts</h4>
+      <h4 id="verdicts" className="ad-h4 rf-mb-16">Verdicts</h4>
       <ErrorBox error={overview.error} />
       {overview.loading && !overview.data && <Skeleton width="100%" height={200} className="rf-mb-24" />}
       {overview.data && (
