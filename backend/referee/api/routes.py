@@ -7,7 +7,7 @@ from typing import Any
 from fastapi import APIRouter, HTTPException, Query, Request
 from pydantic import BaseModel, Field
 
-from ..adapty.client import AdaptyError
+from ..adapty.client import AdaptyError, make_client
 from ..llm.providers import discover_claude_cli
 from ..models import Assumptions
 from ..service import ExecutionRefused, RefereeService
@@ -112,3 +112,18 @@ def execute(request: Request, body: ExecuteRequest):
 @router.get("/referee/audit-log")
 def audit_log(request: Request, limit: int = Query(100, ge=1, le=1000)) -> list[dict[str, Any]]:
     return _service(request).audit_log(limit)
+
+
+@router.post("/dev/reset")
+def dev_reset(request: Request) -> dict[str, Any]:
+    """Mock mode only: reload the fixture set and clear the decision log so a demo can be replayed from a clean state."""
+    app = request.app
+    if app.state.client.mode != "mock":
+        raise HTTPException(status_code=403, detail={"message": "Reset is only available in mock mode."})
+    client = make_client(app.state.settings)
+    app.state.client = client
+    app.state.service = RefereeService(client, app.state.settings)
+    log_path = app.state.service.audit_log_path
+    if log_path.exists():
+        log_path.unlink()
+    return {"status": "reset", "fixture_set": getattr(getattr(client, "store", None), "fixture_set", None)}

@@ -90,3 +90,14 @@ def test_live_writes_are_blocked_without_the_flag(settings, client, monkeypatch)
     assert blocked.status_code == 403
     assert "REFEREE_ALLOW_LIVE_WRITES" in blocked.json()["detail"]["message"]
     assert api.get("/api/referee/audit-log").json()[0]["event"] == "blocked"
+
+
+def test_dev_reset_restores_the_draft_and_clears_the_log(api):
+    action = next(a for a in api.get(f"/api/referee/tests/{DRAFT}/dossier").json()["actions"] if a["kind"] == "start_draft")
+    body = api.post("/api/referee/actions/execute", json={"test_id": DRAFT, "action_id": action["id"], "approved": True, "approver": "demo"}).json()
+    assert body["status"] == "executed"
+    assert api.get(f"/api/referee/tests/{DRAFT}/dossier").json()["test"]["state"] == "live"
+    assert len(api.get("/api/referee/audit-log").json()) >= 1
+    assert api.post("/api/dev/reset").json()["status"] == "reset"
+    assert api.get(f"/api/referee/tests/{DRAFT}/dossier").json()["test"]["state"] == "draft"
+    assert api.get("/api/referee/audit-log").json() == []
