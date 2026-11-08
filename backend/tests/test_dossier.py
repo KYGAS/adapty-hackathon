@@ -17,7 +17,9 @@ def test_onboarding_waits_for_trial_lag_despite_p2bb_100(make_dossier):
     assert d.trial_lag.leader_could_flip
     assert d.trial_lag.pending_trials_total == 137
     assert control.projected_rpv_high > leader.projected_rpv_low
-    assert "15 Nov 2026" in d.verdict.headline
+    assert "They resolve on 15 Nov 2026" in d.verdict.headline
+    # Resolved trials are not a call date: the headline must also name the sample gate.
+    assert "safe call" not in d.verdict.headline and "planned sample" in d.verdict.headline
     assert d.actions[0].kind == "keep_running" and d.actions[0].recommended
     override = d.actions[1]
     assert override.kind == "stop_winner" and not override.recommended
@@ -93,3 +95,16 @@ def test_three_arm_tests_get_pairwise_correction(make_dossier, client, catalog):
     assert len(d.pairwise) == 2
     assert "three_or_more_arms_adapty_p_value_absent_pairwise_holm_used" in d.warnings
     assert all(p.adjusted_p >= p.p_value for p in d.pairwise)
+
+
+@pytest.mark.parametrize("reached, days, has_date, expected", [
+    (True, 400.0, True, ""),
+    (False, float("inf"), False, ", but the planned sample is out of reach at this traffic"),
+    (False, 171.8, True, ", but the planned sample needs until 28 Apr 2027, past the 60-day limit"),
+    (False, 20.0, True, "; the planned sample is reached around 28 Apr 2027"),
+])
+def test_after_trials_clause_names_the_sample_gate(reached, days, has_date, expected):
+    from datetime import datetime, timezone
+    from referee.dossier import after_trials_clause
+    when = datetime(2027, 4, 28, 12, tzinfo=timezone.utc) if has_date else None
+    assert after_trials_clause(reached, days, when, 60.0) == expected

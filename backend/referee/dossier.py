@@ -114,9 +114,21 @@ def _pick_leader(arms: list[ArmStats]) -> tuple[ArmStats | None, ArmStats | None
     return leader, runner
 
 
+def after_trials_clause(sample_reached: bool, days_to_sample: float, sample_date: datetime | None,
+                        max_wait_days: float) -> str:
+    """What the sample gate says once the open trials resolve, so a trial-lag wait never reads as a promised call date."""
+    if sample_reached:
+        return ""
+    if math.isinf(days_to_sample) or sample_date is None:
+        return ", but the planned sample is out of reach at this traffic"
+    if days_to_sample > max_wait_days:
+        return f", but the planned sample needs until {fmt_date(sample_date)}, past the {max_wait_days:.0f}-day limit"
+    return f"; the planned sample is reached around {fmt_date(sample_date)}"
+
+
 def _headline(code: str, d: dict) -> str:
     return {
-        "WAIT_TRIAL_LAG": "Wait: {pending} open trials can still flip the leader. Earliest safe call {maturity}.",
+        "WAIT_TRIAL_LAG": "Wait: {pending} open trials can still flip the leader. They resolve on {maturity}{after_trials}.",
         "NOT_DECIDABLE": "Not decidable at this traffic: {required} viewers per arm needed, {days} days away (limit {max_wait}).",
         "INSUFFICIENT_PAYERS": "Not yet: the leader has {payers} payers and Adapty needs {threshold} before the revenue range means anything.",
         "WAIT_MIN_RUNTIME": "Wait {wait} more days: a test should cover a full week before a call.",
@@ -272,6 +284,8 @@ def build_dossier(test: TestInput, history: HistoryInput, app_id: str, now: date
     else:
         headline = _headline(decision.code.value, {
             "pending": trial_lag.pending_trials_total, "maturity": fmt_date(maturity_date),
+            "after_trials": after_trials_clause(required is not None and min_views >= required, days_to_sample,
+                                                sample_date, assumptions.max_wait_days),
             "required": required if required is not None else "an unknown number of",
             "days": f"{days_to_sample:.0f}" if not math.isinf(days_to_sample) else "more than the limit of",
             "max_wait": f"{assumptions.max_wait_days:.0f}",
