@@ -48,7 +48,7 @@ Log
 
 | Test | Audience | State | Viewers per arm | Referee |
 |---|---|---|---|---|
-| Onboarding: annual trial vs weekly first | All users (minus EU1 and NA) | live, 9 days | 460 / 447 | WAIT_TRIAL_LAG, safe call 15 Nov |
+| Onboarding: annual trial vs weekly first | All users (minus EU1 and NA) | live, 9 days | 460 / 447 | WAIT_TRIAL_LAG, trials resolve 15 Nov |
 | Onboarding EU: weekly first vs EUR prices | Europe Tier-1 | live, 95 days | 1,297 / 1,263 | WAIT_SAMPLE, sample reached 10 Nov |
 | Onboarding NA v2: weekly first vs annual anchor copy | US and Canada | live, 69 days | 1,228 / 1,207 | CALL_NO_DIFFERENCE |
 | Main paywall: lifetime anchor vs 3 plans vs social proof | All users | live, 90 days | 2,294 / 2,283 / 2,297 | CALL_WINNER (A) |

@@ -18,7 +18,7 @@ P2BB says who is ahead. Two things still make teams call too early. Peeking: che
 | Safe actions | Each action is a dry-run `adapty ab-tests` command; running it needs a named approval and is logged |
 | Memo | Claude writes a short explanation from the statistics; a guard rejects any number that is not in them |
 
-On the demo data, "Onboarding: annual trial vs weekly first" shows P2BB 100% for B. The referee says "Wait: 85 open trials can still flip the leader. Earliest safe call 15 Nov 2026." The North America main paywall test is not decidable at its traffic: 2,402 viewers per arm are needed, 145 days away. The three-arm main paywall test is a winner after Holm correction. Completed tests grade A, C and F, and the realized revenue reversed the winner of the C-grade test.
+On the demo data, "Onboarding: annual trial vs weekly first" shows P2BB 100% for B. The referee says "Wait: 85 open trials can still flip the leader. They resolve on 15 Nov 2026, but the planned sample needs until 28 Apr 2027, past the 60-day limit." B is still the likely winner, but A's best case passes B, so the 100% is really "probably". The North America main paywall test is not decidable at its traffic: 2,402 viewers per arm are needed, 145 days away. The three-arm main paywall test is a winner after Holm correction. Completed tests grade A, C and F, and the realized revenue reversed the winner of the C-grade test.
 
 ## Who it's for
 
