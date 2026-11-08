@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Shell from './components/Shell';
 import ABTestMetricsPage from './pages/ABTestMetricsPage';
 import ABTestsListPage from './pages/ABTestsListPage';
@@ -10,6 +10,15 @@ import RefereeTestPage from './pages/RefereeTestPage';
 import StubPage from './pages/StubPage';
 import { loadHealth } from './lib/api';
 import type { Health } from './lib/types';
+
+/** A new page starts at the top, as in the dashboard; hash links within a page keep their position. */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
   const [health, setHealth] = useState<Health | null>(null);
@@ -22,6 +31,7 @@ export default function App() {
   }, []);
   return (
     <Shell health={health}>
+      <ScrollToTop />
       {!ready ? null : (
         <Routes>
           <Route path="/" element={<Navigate to="/ab-tests/flows" replace />} />
